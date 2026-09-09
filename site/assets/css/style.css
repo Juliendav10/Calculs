@@ -138,6 +138,20 @@ body::after {
   --line-strong:  rgba(142, 42, 51, 0.48);
 }
 
+/* Halo clair et très diffus derrière le texte posé sur une photographie.
+   Invisible à l'œil, il tient la lisibilité là où le voile s'efface. */
+.hero__inner,
+.page-hero__inner,
+.band__inner,
+.cta-band__inner,
+.card__body {
+  text-shadow: 0 1px 16px rgba(255, 252, 246, 0.88), 0 0 4px rgba(255, 252, 246, 0.55);
+}
+/* Les boutons ont déjà un fond ou un contour : pas de halo. */
+.hero__inner .btn,
+.page-hero__inner .btn,
+.cta-band__inner .btn { text-shadow: none; }
+
 /* En-tête transparent posé sur le hero : mêmes gris soutenus. */
 .site-header:not(.is-stuck) {
   --text-muted: rgba(23, 19, 15, 0.82);
@@ -806,9 +820,9 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   z-index: 1;
   background: linear-gradient(180deg,
     rgba(255,252,246,0) 0%,
-    rgba(255,252,246,.06) 32%,
-    rgba(255,248,238,.68) 62%,
-    rgba(255,244,230,.96) 100%);
+    rgba(255,252,246,0) 46%,
+    rgba(255,250,241,.38) 66%,
+    rgba(255,246,233,.92) 100%);
   pointer-events: none;
 }
 
@@ -838,17 +852,14 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(102deg,
-      rgba(255,252,246,.97) 0%,
-      rgba(255,247,236,.91) 27%,
-      rgba(255,234,207,.60) 47%,
-      rgba(255,220,180,.26) 67%,
-      rgba(255,214,170,.05) 88%),
-    linear-gradient(180deg,
-      rgba(255,251,244,.78) 0%,
-      rgba(255,251,244,.12) 22%,
-      rgba(255,249,240,.14) 58%,
-      rgba(255,242,226,.86) 100%);
+    radial-gradient(86% 76% at 13% 80%,
+      rgba(255,252,246,.95) 0%,
+      rgba(255,250,242,.78) 26%,
+      rgba(255,245,231,.40) 48%,
+      rgba(255,240,222,.12) 68%,
+      transparent 84%),
+    linear-gradient(180deg, rgba(255,251,244,.74) 0%, rgba(255,251,244,.26) 11%, transparent 20%),
+    linear-gradient(0deg, rgba(255,247,235,.38) 0%, transparent 17%);
 }
 @keyframes kenburns {
   from { transform: scale(1) translate3d(0,0,0); }
@@ -958,15 +969,13 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   content: "";
   position: absolute; inset: 0;
   background:
-    linear-gradient(102deg,
-      rgba(255,252,246,.96) 0%,
-      rgba(255,246,234,.88) 30%,
-      rgba(255,232,202,.52) 54%,
-      rgba(255,219,178,.18) 80%),
-    linear-gradient(180deg,
-      rgba(255,251,244,.82) 0%,
-      rgba(255,251,244,.22) 34%,
-      rgba(255,243,228,.80) 100%);
+    radial-gradient(90% 82% at 11% 78%,
+      rgba(255,252,246,.95) 0%,
+      rgba(255,250,242,.78) 26%,
+      rgba(255,245,231,.36) 50%,
+      rgba(255,240,222,.08) 70%,
+      transparent 84%),
+    linear-gradient(180deg, rgba(255,251,244,.76) 0%, rgba(255,251,244,.28) 12%, transparent 22%);
 }
 .page-hero__inner { position: relative; z-index: 2; }
 
@@ -1131,12 +1140,12 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(62% 76% at 50% 50%,
-      rgba(255,252,246,.88) 0%,
-      rgba(255,243,228,.66) 46%,
-      rgba(255,226,192,.28) 76%,
-      rgba(255,219,178,.06) 100%),
-    linear-gradient(180deg, rgba(255,250,242,.34), rgba(255,244,230,.52));
+    radial-gradient(46% 58% at 50% 50%,
+      rgba(255,252,246,.90) 0%,
+      rgba(255,248,238,.66) 38%,
+      rgba(255,242,225,.26) 68%,
+      transparent 88%),
+    linear-gradient(180deg, rgba(255,250,242,.12), rgba(255,246,233,.20));
 }
 /* L'unité ch se calcule sur la police héritée, pas sur celle du titre :
    une mesure en ch ici étranglait la phrase. On plafonne en pixels, et la
@@ -1231,12 +1240,12 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   content: "";
   position: absolute; inset: 0;
   background:
-    radial-gradient(66% 80% at 50% 50%,
-      rgba(255,252,246,.90) 0%,
-      rgba(255,244,230,.70) 46%,
-      rgba(255,228,196,.34) 76%,
-      rgba(255,219,178,.08) 100%),
-    linear-gradient(180deg, rgba(255,250,242,.36), rgba(255,244,230,.50));
+    radial-gradient(50% 62% at 50% 50%,
+      rgba(255,252,246,.92) 0%,
+      rgba(255,248,238,.68) 38%,
+      rgba(255,242,225,.28) 68%,
+      transparent 88%),
+    linear-gradient(180deg, rgba(255,250,242,.12), rgba(255,246,233,.20));
 }
 .cta-band__inner { position: relative; z-index: 2; }
 .cta-band h2 { margin-bottom: 1.5rem; }
