@@ -129,6 +129,7 @@ body::after {
 .hero,
 .page-hero,
 .cta-band,
+.band,
 .card,
 .lightbox,
 .site-header:not(.is-stuck) {
@@ -236,6 +237,16 @@ p:last-child { margin-bottom: 0; }
   background: currentColor;
   opacity: 0.75;
 }
+/* Variante dont le filet devient les trois marbres. À réserver aux ouvertures
+   de page : c'est la signature, elle perd sa force si on la répète. */
+.eyebrow--marble::before,
+.eyebrow--marble::after {
+  height: 2px;
+  opacity: 1;
+  background: linear-gradient(to right,
+    var(--verde) 0 34%, var(--carrara-3) 34% 66%, var(--rosso) 66% 100%);
+}
+
 .eyebrow--center { justify-content: center; }
 .eyebrow--center::after {
   content: "";
@@ -741,6 +752,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .hero__media,
 .page-hero__media .frame,
 .cta-band__media .frame,
+.band__media .frame,
 .card .frame {
   background-color: var(--notte);
   background-image:
@@ -750,9 +762,11 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 }
 .page-hero__media .frame::before,
 .cta-band__media .frame::before,
+.band__media .frame::before,
 .card .frame::before { border-color: rgba(251,250,247,.22); }
 .page-hero__media .frame::after,
 .cta-band__media .frame::after,
+.band__media .frame::after,
 .card .frame::after { color: rgba(251,250,247,.42); }
 .frame::before {
   /* arche de pierre stylisée — visible seulement sur le placeholder */
@@ -889,6 +903,21 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   margin-top: clamp(2.5rem, 5vw, 4rem);
 }
 .hero__blurb { max-width: 42ch; color: var(--text-muted); }
+
+.hero__rail {
+  position: absolute;
+  left: clamp(1rem, 1.8vw, 1.75rem);
+  bottom: clamp(3rem, 9vw, 8rem);
+  z-index: 3;
+  display: none;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: var(--fs-label);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+@media (min-width: 1280px) { .hero__rail { display: block; } }
 
 .scroll-cue {
   position: absolute;
@@ -1042,7 +1071,8 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 }
 .card__index {
   font-size: var(--fs-label);
-  letter-spacing: 0.26em;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
   color: var(--gold);
 }
 .card__title {
@@ -1066,6 +1096,83 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 }
 @media (hover: none), (pointer: coarse) {
   .card__text { max-height: 9rem; opacity: 1; }
+}
+
+/* Guillemet d'ouverture surdimensionné */
+.quote-mark {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 9vw, 7.5rem);
+  line-height: 0.55;
+  color: var(--verde);
+  opacity: 0.42;
+  margin-bottom: 0.75rem;
+  user-select: none;
+}
+
+/* Bande pleine largeur : une seule phrase sur une photographie */
+.band {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(340px, 54vh, 580px);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: clamp(3.5rem, 8vw, 7rem) var(--gutter);
+}
+.band__media {
+  position: absolute;
+  inset: -8% 0 0 0;
+  height: 116%;
+  z-index: 0;
+}
+.band__media .frame { height: 100%; }
+.band__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11,9,8,.52) 0%, rgba(11,9,8,.62) 50%, rgba(11,9,8,.78) 100%);
+}
+/* L'unité ch se calcule sur la police héritée, pas sur celle du titre :
+   une mesure en ch ici étranglait la phrase. On plafonne en pixels, et la
+   mesure de lecture se règle sur la ligne elle-même, en em. */
+.band__inner { position: relative; z-index: 2; max-width: min(880px, 100%); }
+.band__line {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.9rem, 4.6vw, 3.6rem);
+  line-height: 1.16;
+  margin: 0 auto;
+  max-width: 15em;
+  text-wrap: balance;
+}
+.band__source {
+  margin-top: 1.75rem;
+  font-size: var(--fs-label);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Trois espaces en quinconce : la grille régulière écrasait le rythme */
+@media (min-width: 900px) {
+  .cards--staggered .card:nth-child(2) { transform: translateY(clamp(2rem, 5vw, 4.5rem)); }
+  .cards--staggered .card:nth-child(3) { transform: translateY(clamp(0.75rem, 2vw, 1.75rem)); }
+}
+
+/* Plats signature : une photographie en portrait, la liste en regard */
+.signature {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+@media (min-width: 1000px) {
+  .signature { grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr); }
+}
+.signature__list { display: grid; gap: clamp(1.25rem, 2.2vw, 1.75rem); }
+.signature__list .menu-item + .menu-item {
+  border-top: 1px solid var(--line);
+  padding-top: clamp(1.25rem, 2.2vw, 1.75rem);
 }
 
 /* Bandeau défilant */

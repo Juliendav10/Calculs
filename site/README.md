@@ -1,4 +1,4 @@
-# GIOIA — site vitrine d'un restaurant italien gastronomique
+# GIOIA Odéon — site vitrine
 
 Site statique de 4 pages, sans dépendance ni étape de build : du HTML, une
 feuille de style et deux fichiers JavaScript. Il se déploie tel quel sur
@@ -46,29 +46,60 @@ Tant qu'une photo est absente, son cadre affiche automatiquement un dégradé
 chaud et une arche de pierre stylisée : la mise en page ne bouge pas, rien ne
 casse. Détails et tailles conseillées dans `assets/images/README.md`.
 
-## 2. Remplacer les informations de démonstration
+## 2. Ce qui est réel, ce qui reste à confirmer
 
-Les coordonnées ci-dessous sont **fictives** (le numéro appartient à la plage
-`01 99 00 XX XX` réservée à la fiction). Remplacez-les partout avant la mise en
-ligne :
+Les coordonnées du restaurant sont **réelles**, reprises des annuaires publics
+(Pages Jaunes, TheFork, Tripadvisor, Instagram) :
 
-| Élément                | Valeur de démonstration            | Où                                             |
-|------------------------|------------------------------------|------------------------------------------------|
-| Nom de domaine         | `https://www.gioia-paris.fr`       | balises `canonical`, `og:`, JSON-LD, `sitemap.xml`, `robots.txt` |
-| Téléphone              | `+33 1 99 00 12 34`                | les 4 pages + `assets/js/reservation.js`       |
-| E-mail                 | `contact@gioia-paris.fr`           | les 4 pages                                    |
-| Adresse                | `12 rue Dauphine, 75006 Paris`     | les 4 pages + JSON-LD + `reservation.js` (.ics)|
-| Coordonnées GPS        | `48.8556 / 2.3395`                 | JSON-LD de `index.html`                        |
-| Réseaux sociaux        | liens Instagram / Facebook vides   | pied de page des 4 pages + `sameAs` du JSON-LD |
+| Élément        | Valeur en place                                        |
+|----------------|--------------------------------------------------------|
+| Nom            | GIOIA Odéon                                            |
+| Adresse        | 35 rue Dauphine, 75006 Paris                           |
+| Téléphone      | +33 1 84 75 41 75                                      |
+| E-mail         | gioia.odeon@gmail.com                                  |
+| Domaine        | `https://gioiaodeon.fr`                                |
+| Instagram      | `@gioia.odeon`                                         |
+| Facebook       | page « Gioia Paris Odéon »                             |
+| TheFork        | `thefork.fr/restaurant/gioia-r831587`                  |
 
-Recherche-remplacement rapide :
+### À vérifier avant mise en ligne
+
+1. **Horaires** — le site annonce un service continu de 12h à 22h30, sept jours
+   sur sept, avec dernière table à 22h. C'est ce que publient les annuaires ;
+   confirmez-le, et notamment l'existence éventuelle d'un jour de fermeture.
+   Un seul endroit à corriger de chaque côté :
+   `CONFIG.serviceGroups` / `CONFIG.closedDays` dans `assets/js/reservation.js`,
+   et `BOOKABLE` / `CLOSED_DAYS` dans `server/reservations.mjs`. Pensez aussi
+   au `openingHoursSpecification` du JSON-LD dans `index.html` et aux tableaux
+   d'horaires en pied de page.
+2. **Coordonnées GPS** — `48.8543 / 2.3385` est une approximation au niveau de
+   la rue. Relevez les vraies coordonnées sur Google Maps et corrigez le bloc
+   `geo` du JSON-LD dans `index.html`.
+3. **Si le site reste bilingue** (`gioiaodeon.fr/fr`), préfixez les `canonical`,
+   les `og:url`, le `sitemap.xml` et les liens internes en conséquence.
+
+### Contenus de proposition, à remplacer par les vôtres
+
+Ces éléments ont été écrits pour donner corps à la maquette. Ils ne décrivent
+pas le restaurant réel et doivent être remplacés :
+
+- **La carte** (`la-carte.html`) — tous les plats, descriptions et prix, le menu
+  dégustation, les formules et la sélection de vins.
+- **Les chiffres de l'accueil** — 72 couverts, 240 références, 18 producteurs.
+  Un commentaire HTML le signale au-dessus du bloc.
+- **La frise du Lieu** — les éléments d'histoire portent sur la rue Dauphine et
+  le quartier, pas sur la maison. Un commentaire HTML le signale également.
+- **Les textes d'ambiance** — manifeste, descriptions des trois salles,
+  privatisation.
+
+Aucun nom de personne ni date de fondation n'est avancé : ces mentions ont été
+retirées plutôt que d'inventer une identité ou une histoire.
+
+Pour repérer ce qui reste à modifier :
 
 ```bash
-grep -rn "gioia-paris.fr\|99 00 12 34\|+33199001234" --include=*.html --include=*.js .
+grep -rn "à confirmer\|proposition à remplacer" --include=*.html .
 ```
-
-Les textes (histoire, plats, prix, horaires) se modifient directement dans le
-HTML : aucune donnée n'est chargée depuis l'extérieur.
 
 ## 3. Le système de réservation
 
@@ -110,8 +141,11 @@ dans le fichier).
 
 ### Option B — un logiciel de réservation du marché
 
-Pointez `window.GIOIA_BOOKING_ENDPOINT` vers un webhook (Zapier, Make, Formspree)
-ou vers l'API de votre outil (TheFork, Zenchef, SevenRooms, Guestonline). Le
+Le restaurant dispose déjà d'une fiche TheFork
+(`thefork.fr/restaurant/gioia-r831587`) : le plus simple est de pointer
+`window.GIOIA_BOOKING_ENDPOINT` vers leur API, ou de remplacer le panneau du
+formulaire par le widget TheFork (option C). Un webhook (Zapier, Make,
+Formspree) fonctionne également. Le
 corps envoyé est un JSON plat :
 
 ```json

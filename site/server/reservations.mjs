@@ -50,16 +50,14 @@ const MIME = {
 };
 
 /* ----------------------------- Jours d'ouverture -------------------------- */
-/* 0 = dimanche … 6 = samedi — doit rester aligné sur assets/js/reservation.js */
-const SERVICES = {
-  0: [['12:00', '14:00']],
-  1: [],
-  2: [['12:00', '14:00'], ['19:00', '22:00']],
-  3: [['12:00', '14:00'], ['19:00', '22:00']],
-  4: [['12:00', '14:00'], ['19:00', '22:00']],
-  5: [['12:00', '14:00'], ['19:00', '22:30']],
-  6: [['12:00', '14:00'], ['19:00', '22:30']]
-};
+/* Service continu de 12h à 22h30, sept jours sur sept ; dernière table à 22h.
+   Doit rester aligné sur assets/js/reservation.js. */
+const BOOKABLE = [['12:00', '22:00']];
+const CLOSED_DAYS = [];   /* 0 = dimanche … 6 = samedi */
+
+function servicesForDay(day) {
+  return CLOSED_DAYS.includes(day) ? [] : BOOKABLE;
+}
 
 const MAX_PARTY = 8;
 const SEATS_PER_SLOT = 14;
@@ -96,7 +94,7 @@ function minutes(time) {
 function isOpen(dateISO, time) {
   const [y, mo, d] = String(dateISO).split('-').map(Number);
   const day = new Date(y, mo - 1, d).getDay();
-  const ranges = SERVICES[day] || [];
+  const ranges = servicesForDay(day);
   const t = minutes(time);
   return ranges.some(([from, to]) => t >= minutes(from) && t <= minutes(to));
 }
@@ -174,7 +172,9 @@ async function handleApi(req, res, url) {
       party: Number(body.party),
       date: body.date,
       time: body.time,
-      service: body.service || (minutes(body.time) < 16 * 60 ? 'dejeuner' : 'diner'),
+      service: body.service ||
+        (minutes(body.time) < 15 * 60 ? 'dejeuner'
+          : minutes(body.time) < 18 * 60 ? 'apresmidi' : 'diner'),
       area: body.area || 'indifferent',
       occasion: body.occasion || '',
       firstName: String(body.firstName).slice(0, 80),

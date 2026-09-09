@@ -15,30 +15,29 @@
   /* ====================== Paramètres du restaurant ======================= */
 
   var CONFIG = {
-    // 0 = dimanche … 6 = samedi
-    services: {
-      0: [{ id: 'dejeuner', label: 'Déjeuner', from: '12:00', to: '14:00' }],
-      1: [],
-      2: [{ id: 'dejeuner', label: 'Déjeuner', from: '12:00', to: '14:00' },
-          { id: 'diner', label: 'Dîner', from: '19:00', to: '22:00' }],
-      3: [{ id: 'dejeuner', label: 'Déjeuner', from: '12:00', to: '14:00' },
-          { id: 'diner', label: 'Dîner', from: '19:00', to: '22:00' }],
-      4: [{ id: 'dejeuner', label: 'Déjeuner', from: '12:00', to: '14:00' },
-          { id: 'diner', label: 'Dîner', from: '19:00', to: '22:00' }],
-      5: [{ id: 'dejeuner', label: 'Déjeuner', from: '12:00', to: '14:00' },
-          { id: 'diner', label: 'Dîner', from: '19:00', to: '22:30' }],
-      6: [{ id: 'dejeuner', label: 'Déjeuner', from: '12:00', to: '14:00' },
-          { id: 'diner', label: 'Dîner', from: '19:00', to: '22:30' }]
-    },
-    stepMinutes: 15,
+    // Le restaurant sert en continu de 12h à 22h30, sept jours sur sept.
+    // Les trois groupes ci-dessous ne coupent pas le service : ils découpent
+    // la grille de créneaux pour qu'elle reste lisible.
+    // La dernière table est prise à 22h00, une demi-heure avant la fermeture.
+    serviceGroups: [
+      { id: 'dejeuner',  label: 'Déjeuner',   from: '12:00', to: '15:00' },
+      { id: 'apresmidi', label: 'Après-midi', from: '15:30', to: '18:00' },
+      { id: 'diner',     label: 'Dîner',      from: '18:30', to: '22:00' }
+    ],
+    closedDays: [],         // 0 = dimanche … 6 = samedi. Aucune fermeture.
+    stepMinutes: 30,
     maxPartyOnline: 8,
-    leadTimeMinutes: 120,   // délai minimum avant le service
+    leadTimeMinutes: 120,   // délai minimum avant le créneau, le jour même
     horizonDays: 120,       // réservation possible jusqu'à 4 mois
     seatsPerSlot: 14,       // capacité indicative par créneau
     storageKey: 'gioia:reservations',
-    phone: '+33199001234',
-    phoneDisplay: '+33 1 99 00 12 34'
+    phone: '+33184754175',
+    phoneDisplay: '+33 1 84 75 41 75'
   };
+
+  function servicesForDay(day) {
+    return CONFIG.closedDays.indexOf(day) > -1 ? [] : CONFIG.serviceGroups;
+  }
 
   var DAY_NAMES = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
   var MONTH_NAMES = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet',
@@ -159,11 +158,10 @@
     }
 
     var day = parseISODate(state.date).getDay();
-    var services = CONFIG.services[day] || [];
+    var services = servicesForDay(day);
 
     if (!services.length) {
-      slotsHost.innerHTML = '<p class="slots__empty">Le restaurant est fermé le ' + DAY_NAMES[day] +
-        '. Nous vous accueillons du mardi au dimanche.</p>';
+      slotsHost.innerHTML = '<p class="slots__empty">Le restaurant est fermé le ' + DAY_NAMES[day] + '.</p>';
       return;
     }
 
@@ -178,7 +176,7 @@
 
       var title = document.createElement('p');
       title.className = 'slots__title';
-      title.textContent = service.label + ' · ' + service.from + ' – ' + service.to;
+      title.textContent = service.label;
       group.appendChild(title);
 
       var grid = document.createElement('div');
@@ -247,7 +245,10 @@
   }
 
   function serviceLabel(id) {
-    return id === 'dejeuner' ? 'Déjeuner' : (id === 'diner' ? 'Dîner' : '—');
+    for (var i = 0; i < CONFIG.serviceGroups.length; i++) {
+      if (CONFIG.serviceGroups[i].id === id) { return CONFIG.serviceGroups[i].label; }
+    }
+    return '—';
   }
 
   function renderSummary() {
@@ -333,7 +334,7 @@
       var max = new Date(today.getTime()); max.setDate(max.getDate() + CONFIG.horizonDays);
       if (d < today) { setError('date', 'Cette date est déjà passée.'); ok = false; }
       else if (d > max) { setError('date', 'Réservations ouvertes jusqu’à ' + CONFIG.horizonDays + ' jours.'); ok = false; }
-      else if (!(CONFIG.services[d.getDay()] || []).length) {
+      else if (!servicesForDay(d.getDay()).length) {
         setError('date', 'Nous sommes fermés le ' + DAY_NAMES[d.getDay()] + '.');
         ok = false;
       } else { clearError('date'); }
@@ -458,13 +459,13 @@
       'VERSION:2.0',
       'PRODID:-//GIOIA//Reservation//FR',
       'BEGIN:VEVENT',
-      'UID:' + data.reference + '@gioia-paris.fr',
+      'UID:' + data.reference + '@gioiaodeon.fr',
       'DTSTAMP:' + stamp(new Date()),
       'DTSTART:' + stamp(start),
       'DTEND:' + stamp(end),
       'SUMMARY:Dîner chez GIOIA — ' + data.party + ' couverts',
       'DESCRIPTION:Référence ' + data.reference + '. Pour toute modification : ' + CONFIG.phoneDisplay,
-      'LOCATION:GIOIA\\, 12 rue Dauphine\\, 75006 Paris',
+      'LOCATION:GIOIA Odéon\\, 35 rue Dauphine\\, 75006 Paris',
       'END:VEVENT',
       'END:VCALENDAR'
     ].join('\r\n');
@@ -569,13 +570,9 @@
       clearError('date');
       if (dateNote) {
         var day = state.date ? parseISODate(state.date).getDay() : -1;
-        if (day === 1) {
-          dateNote.textContent = 'Le restaurant est fermé le lundi.';
-        } else if (day === 0) {
-          dateNote.textContent = 'Le dimanche, nous servons uniquement le déjeuner.';
-        } else {
-          dateNote.textContent = '';
-        }
+        dateNote.textContent = CONFIG.closedDays.indexOf(day) > -1
+          ? 'Le restaurant est fermé ce jour-là.'
+          : '';
       }
       renderSlots();
       renderSummary();
