@@ -29,6 +29,7 @@
   --carrara:      #FBFAF7;   /* blanc chaud — fond principal */
   --carrara-2:    #F3F0E9;   /* surface alternée */
   --carrara-3:    #E9E4DA;   /* surface appuyée */
+  --marmo-mezzo:  #D5CBB8;   /* bande centrale du filet, lisible sur le papier */
   --inchiostro:   #17130F;   /* encre — texte */
   --notte:        #14100C;   /* rideaux, visionneuse, voiles photographiques */
 
@@ -122,42 +123,36 @@ body::after {
 }
 
 /* ------------------------------------------------------------------------ */
-/* Îlots sombres : hero, bandeaux d'appel, cartes d'espaces et visionneuse    */
-/* portent du texte par-dessus une photographie. On y bascule le jeu de       */
-/* variables plutôt que de redéclarer chaque couleur.                        */
+/* Sur photographie : le texte reste à l'encre — les images sont couvertes    */
+/* d'un voile de lumière chaude, pas d'un fond noir. Seuls les gris moyens    */
+/* sont soutenus, parce qu'une image reste plus agitée qu'un aplat.          */
 /* ------------------------------------------------------------------------ */
 .hero,
 .page-hero,
 .cta-band,
 .band,
-.card,
-.lightbox,
-.site-header:not(.is-stuck) {
-  --stone:        var(--carrara);
-  --stone-2:      rgba(251, 250, 247, 0.80);
-  --text:         var(--carrara);
-  --text-muted:   rgba(251, 250, 247, 0.74);
-  --text-faint:   rgba(251, 250, 247, 0.52);
-  --line:         rgba(251, 250, 247, 0.20);
-  --line-strong:  rgba(251, 250, 247, 0.45);
-  --gold:         var(--rosso-chiaro);
-  --gold-2:       #F3DEE0;
-  --verde:        #86AB93;   /* verde chiaro — lisible sur photographie */
-  color: var(--text);
+.card {
+  --text-muted:   rgba(23, 19, 15, 0.78);
+  --text-faint:   rgba(23, 19, 15, 0.60);
+  --line:         rgba(23, 19, 15, 0.22);
+  --line-strong:  rgba(142, 42, 51, 0.48);
 }
 
-/* Menu mobile ouvert : l'en-tête se pose sur un fond clair, il repasse donc
-   à l'encre même s'il n'est pas encore compacté. */
-body.is-locked .site-header:not(.is-stuck) {
-  --stone:        var(--inchiostro);
-  --stone-2:      #4A423A;
-  --text:         var(--inchiostro);
-  --text-muted:   rgba(23, 19, 15, 0.66);
-  --text-faint:   rgba(23, 19, 15, 0.44);
-  --line:         rgba(23, 19, 15, 0.13);
-  --line-strong:  rgba(142, 42, 51, 0.34);
-  --gold:         var(--rosso);
-  --gold-2:       var(--rosso-scuro);
+/* En-tête transparent posé sur le hero : mêmes gris soutenus. */
+.site-header:not(.is-stuck) {
+  --text-muted: rgba(23, 19, 15, 0.82);
+  --text-faint: rgba(23, 19, 15, 0.62);
+}
+
+/* La visionneuse reste le seul espace sombre du site : on y regarde une
+   photographie, le noir est là pour l'isoler. */
+.lightbox {
+  --stone:        var(--carrara);
+  --text:         var(--carrara);
+  --text-muted:   rgba(251, 250, 247, 0.74);
+  --line:         rgba(251, 250, 247, 0.20);
+  --gold:         var(--rosso-chiaro);
+  color: var(--text);
 }
 
 ::selection { background: var(--gold); color: var(--ink); }
@@ -244,7 +239,7 @@ p:last-child { margin-bottom: 0; }
   height: 2px;
   opacity: 1;
   background: linear-gradient(to right,
-    var(--verde) 0 34%, var(--carrara-3) 34% 66%, var(--rosso) 66% 100%);
+    var(--verde) 0 34%, var(--marmo-mezzo) 34% 66%, var(--rosso) 66% 100%);
 }
 
 .eyebrow--center { justify-content: center; }
@@ -318,7 +313,7 @@ p:last-child { margin-bottom: 0; }
   height: clamp(56px, 9vw, 120px);
   background: linear-gradient(to bottom,
     var(--verde)     0%,   var(--verde)     34%,
-    var(--carrara-3) 34%,  var(--carrara-3) 66%,
+    var(--marmo-mezzo) 34%,  var(--marmo-mezzo) 66%,
     var(--rosso)     66%,  var(--rosso)     100%);
   margin-inline: auto;
 }
@@ -329,7 +324,7 @@ p:last-child { margin-bottom: 0; }
   margin-top: 1.75rem;
   background: linear-gradient(to right,
     var(--verde)     0%,   var(--verde)     34%,
-    var(--carrara-3) 34%,  var(--carrara-3) 66%,
+    var(--marmo-mezzo) 34%,  var(--marmo-mezzo) 66%,
     var(--rosso)     66%,  var(--rosso)     100%);
 }
 
@@ -747,27 +742,9 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   isolation: isolate;
 }
 
-/* Les cadres qui portent du texte gardent un fond profond : la typographie
-   claire doit rester lisible avec ou sans photographie déposée. */
-.hero__media,
-.page-hero__media .frame,
-.cta-band__media .frame,
-.band__media .frame,
-.card .frame {
-  background-color: var(--notte);
-  background-image:
-    radial-gradient(110% 85% at 24% 14%, rgba(142,42,51,.32), transparent 58%),
-    radial-gradient(90% 80% at 82% 88%, rgba(53,80,63,.36), transparent 62%),
-    linear-gradient(150deg, #1F1A14 0%, #14100C 50%, #191E18 100%);
-}
-.page-hero__media .frame::before,
-.cta-band__media .frame::before,
-.band__media .frame::before,
-.card .frame::before { border-color: rgba(251,250,247,.22); }
-.page-hero__media .frame::after,
-.cta-band__media .frame::after,
-.band__media .frame::after,
-.card .frame::after { color: rgba(251,250,247,.42); }
+/* Tous les cadres partagent désormais le même repli clair : le texte posé
+   par-dessus est à l'encre, il tient sur le marbre comme sur la photo. */
+.hero__media { background: var(--carrara-2); }
 .frame::before {
   /* arche de pierre stylisée — visible seulement sur le placeholder */
   content: "";
@@ -815,7 +792,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .frame--inset .frame__border {
   position: absolute;
   inset: 14px;
-  border: 1px solid rgba(244,236,226,.16);
+  border: 1px solid rgba(255,252,246,.42);
   pointer-events: none;
   z-index: 2;
 }
@@ -827,7 +804,11 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(180deg, rgba(11,9,8,.12) 0%, rgba(11,9,8,.02) 38%, rgba(11,9,8,.58) 72%, rgba(11,9,8,.92) 100%);
+  background: linear-gradient(180deg,
+    rgba(255,252,246,0) 0%,
+    rgba(255,252,246,.06) 32%,
+    rgba(255,248,238,.68) 62%,
+    rgba(255,244,230,.96) 100%);
   pointer-events: none;
 }
 
@@ -857,8 +838,17 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(11,9,8,.88) 0%, rgba(11,9,8,.56) 42%, rgba(11,9,8,.16) 78%),
-    linear-gradient(180deg, rgba(11,9,8,.70) 0%, rgba(11,9,8,.28) 28%, rgba(11,9,8,.48) 62%, rgba(11,9,8,.93) 100%);
+    linear-gradient(102deg,
+      rgba(255,252,246,.97) 0%,
+      rgba(255,247,236,.91) 27%,
+      rgba(255,234,207,.60) 47%,
+      rgba(255,220,180,.26) 67%,
+      rgba(255,214,170,.05) 88%),
+    linear-gradient(180deg,
+      rgba(255,251,244,.78) 0%,
+      rgba(255,251,244,.12) 22%,
+      rgba(255,249,240,.14) 58%,
+      rgba(255,242,226,.86) 100%);
 }
 @keyframes kenburns {
   from { transform: scale(1) translate3d(0,0,0); }
@@ -968,8 +958,15 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   content: "";
   position: absolute; inset: 0;
   background:
-    linear-gradient(90deg, rgba(11,9,8,.86) 0%, rgba(11,9,8,.58) 46%, rgba(11,9,8,.30) 82%),
-    linear-gradient(180deg, rgba(11,9,8,.78) 0%, rgba(11,9,8,.42) 42%, rgba(11,9,8,.90) 100%);
+    linear-gradient(102deg,
+      rgba(255,252,246,.96) 0%,
+      rgba(255,246,234,.88) 30%,
+      rgba(255,232,202,.52) 54%,
+      rgba(255,219,178,.18) 80%),
+    linear-gradient(180deg,
+      rgba(255,251,244,.82) 0%,
+      rgba(255,251,244,.22) 34%,
+      rgba(255,243,228,.80) 100%);
 }
 .page-hero__inner { position: relative; z-index: 2; }
 
@@ -1134,8 +1131,12 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(70% 85% at 50% 50%, rgba(11,9,8,.62), transparent 72%),
-    linear-gradient(180deg, rgba(11,9,8,.52) 0%, rgba(11,9,8,.58) 50%, rgba(11,9,8,.76) 100%);
+    radial-gradient(62% 76% at 50% 50%,
+      rgba(255,252,246,.88) 0%,
+      rgba(255,243,228,.66) 46%,
+      rgba(255,226,192,.28) 76%,
+      rgba(255,219,178,.06) 100%),
+    linear-gradient(180deg, rgba(255,250,242,.34), rgba(255,244,230,.52));
 }
 /* L'unité ch se calcule sur la police héritée, pas sur celle du titre :
    une mesure en ch ici étranglait la phrase. On plafonne en pixels, et la
@@ -1230,8 +1231,12 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   content: "";
   position: absolute; inset: 0;
   background:
-    radial-gradient(80% 90% at 50% 50%, rgba(11,9,8,.70), transparent 75%),
-    rgba(11,9,8,.74);
+    radial-gradient(66% 80% at 50% 50%,
+      rgba(255,252,246,.90) 0%,
+      rgba(255,244,230,.70) 46%,
+      rgba(255,228,196,.34) 76%,
+      rgba(255,219,178,.08) 100%),
+    linear-gradient(180deg, rgba(255,250,242,.36), rgba(255,244,230,.50));
 }
 .cta-band__inner { position: relative; z-index: 2; }
 .cta-band h2 { margin-bottom: 1.5rem; }
@@ -1462,7 +1467,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   display: grid;
   place-items: center;
   padding: clamp(1rem, 4vw, 3rem);
-  background: rgba(16, 13, 10, 0.95);
+  background: rgba(18, 14, 11, 0.96);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   opacity: 0;

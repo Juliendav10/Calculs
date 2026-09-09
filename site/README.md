@@ -229,8 +229,18 @@ Les alias `--ink`, `--stone` et `--gold` pointent vers ces valeurs : c'est sur
 eux que s'appuie le reste de la feuille. Changer `--rosso` et `--font-display`
 suffit donc à donner une autre identité à l'ensemble du site.
 
-**Îlots sombres.** Le hero, les bandeaux d'appel, les cartes d'espaces et la
-visionneuse posent du texte clair sur une photographie. Un seul bloc CSS y
-redéfinit le jeu de variables (recherchez « Îlots sombres » dans la feuille) :
-aucune couleur n'est réécrite composant par composant. Si vous ajoutez une
-section de ce type, ajoutez son sélecteur à cette liste.
+**Voiles sur photographie.** Le hero, les bandeaux, les cartes d'espaces posent
+du texte par-dessus une image. Le texte y reste à l'encre : les photographies
+sont couvertes d'un voile de lumière chaude (ivoire → abricot), jamais d'un
+fond noir. Un seul bloc CSS renforce les gris moyens dans ces zones
+(recherchez « Sur photographie » dans la feuille) ; si vous ajoutez une section
+de ce type, ajoutez son sélecteur à cette liste et donnez-lui un voile dense
+là où le texte se pose.
+
+Deux règles pratiques tirées de l'expérience :
+
+- **une photographie sombre ne supporte pas un voile clair** — elle vire au
+  beige boueux. Réservez ces emplacements aux images lumineuses ; la façade de
+  nuit, par exemple, est en galerie et sert de visuel de partage, pas de fond.
+- la visionneuse est le seul espace resté sombre du site, parce qu'on y regarde
+  une photographie et que le noir sert à l'isoler.
