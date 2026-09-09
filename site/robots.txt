@@ -1,0 +1,6 @@
+# GIOIA — Ristorante, Paris 6e
+User-agent: *
+Allow: /
+Disallow: /server/
+
+Sitemap: https://www.gioia-paris.fr/sitemap.xml
