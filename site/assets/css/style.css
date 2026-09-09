@@ -23,22 +23,35 @@
 /* ========================= 01. TOKENS & RESET ============================ */
 
 :root {
-  /* Palette — inspirée de la pierre de taille, du cuir cognac et du laiton */
-  --ink:          #0B0908;
-  --ink-2:        #120E0B;
-  --ink-3:        #1B1512;
-  --stone:        #F4ECE2;
-  --stone-2:      #DDCDBA;
-  --gold:         #C3A264;
-  --gold-2:       #E3CB9B;
-  --terracotta:   #A65B39;
-  --wine:         #6E1F2A;
+  /* Palette — marbre polychrome florentin : le bianco di Carrara des façades
+     toscanes, le verde di Prato de leurs bandes, le rosso di Maremma de leurs
+     rosaces. Trois pierres, pas un drapeau. */
+  --carrara:      #FBFAF7;   /* blanc chaud — fond principal */
+  --carrara-2:    #F3F0E9;   /* surface alternée */
+  --carrara-3:    #E9E4DA;   /* surface appuyée */
+  --inchiostro:   #17130F;   /* encre — texte */
+  --notte:        #14100C;   /* rideaux, visionneuse, voiles photographiques */
+
+  --rosso:        #8E2A33;   /* rosso di Maremma — accent principal */
+  --rosso-scuro:  #6E1F26;   /* prix, chiffres, italiques appuyées */
+  --rosso-chiaro: #E3A9AD;   /* version lisible sur photographie sombre */
+  --verde:        #35503F;   /* verde di Prato — titres en italique */
+  --terracotta:   #9A4E2E;   /* terre de Sienne — alertes, fermetures */
+
+  /* Alias : toute la suite de la feuille s'appuie sur ces noms. */
+  --ink:          var(--carrara);
+  --ink-2:        var(--carrara-2);
+  --ink-3:        var(--carrara-3);
+  --stone:        var(--inchiostro);
+  --stone-2:      #4A423A;
+  --gold:         var(--rosso);
+  --gold-2:       var(--rosso-scuro);
 
   --text:         var(--stone);
-  --text-muted:   rgba(244, 236, 226, 0.62);
-  --text-faint:   rgba(244, 236, 226, 0.38);
-  --line:         rgba(244, 236, 226, 0.14);
-  --line-strong:  rgba(195, 162, 100, 0.42);
+  --text-muted:   rgba(23, 19, 15, 0.66);
+  --text-faint:   rgba(23, 19, 15, 0.44);
+  --line:         rgba(23, 19, 15, 0.13);
+  --line-strong:  rgba(142, 42, 51, 0.34);
 
   /* Typographie */
   --font-display: "Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
@@ -103,9 +116,47 @@ body::after {
   inset: 0;
   z-index: 9998;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
+  mix-blend-mode: multiply;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Îlots sombres : hero, bandeaux d'appel, cartes d'espaces et visionneuse    */
+/* portent du texte par-dessus une photographie. On y bascule le jeu de       */
+/* variables plutôt que de redéclarer chaque couleur.                        */
+/* ------------------------------------------------------------------------ */
+.hero,
+.page-hero,
+.cta-band,
+.card,
+.lightbox,
+.site-header:not(.is-stuck) {
+  --stone:        var(--carrara);
+  --stone-2:      rgba(251, 250, 247, 0.80);
+  --text:         var(--carrara);
+  --text-muted:   rgba(251, 250, 247, 0.74);
+  --text-faint:   rgba(251, 250, 247, 0.52);
+  --line:         rgba(251, 250, 247, 0.20);
+  --line-strong:  rgba(251, 250, 247, 0.45);
+  --gold:         var(--rosso-chiaro);
+  --gold-2:       #F3DEE0;
+  --verde:        #86AB93;   /* verde chiaro — lisible sur photographie */
+  color: var(--text);
+}
+
+/* Menu mobile ouvert : l'en-tête se pose sur un fond clair, il repasse donc
+   à l'encre même s'il n'est pas encore compacté. */
+body.is-locked .site-header:not(.is-stuck) {
+  --stone:        var(--inchiostro);
+  --stone-2:      #4A423A;
+  --text:         var(--inchiostro);
+  --text-muted:   rgba(23, 19, 15, 0.66);
+  --text-faint:   rgba(23, 19, 15, 0.44);
+  --line:         rgba(23, 19, 15, 0.13);
+  --line-strong:  rgba(142, 42, 51, 0.34);
+  --gold:         var(--rosso);
+  --gold-2:       var(--rosso-scuro);
 }
 
 ::selection { background: var(--gold); color: var(--ink); }
@@ -119,8 +170,8 @@ body::after {
 /* Barre de défilement */
 ::-webkit-scrollbar { width: 9px; }
 ::-webkit-scrollbar-track { background: var(--ink); }
-::-webkit-scrollbar-thumb { background: rgba(195,162,100,.28); }
-::-webkit-scrollbar-thumb:hover { background: rgba(195,162,100,.5); }
+::-webkit-scrollbar-thumb { background: rgba(142,42,51,.32); }
+::-webkit-scrollbar-thumb:hover { background: rgba(142,42,51,.55); }
 
 .skip-link {
   position: absolute;
@@ -157,7 +208,7 @@ h3 { font-size: var(--fs-h3); line-height: 1.15; }
 p { margin: 0 0 1.25em; }
 p:last-child { margin-bottom: 0; }
 
-.display-italic { font-style: italic; color: var(--gold-2); }
+.display-italic { font-style: italic; color: var(--verde); }
 
 .lead {
   font-size: var(--fs-lead);
@@ -249,12 +300,26 @@ p:last-child { margin-bottom: 0; }
 .bg-ink-2 { background: var(--ink-2); }
 .bg-ink-3 { background: var(--ink-3); }
 
-/* Filet vertical décoratif */
+/* Filets « trois marbres » — verde di Prato, bianco di Carrara,
+   rosso di Maremma, dans l'ordre des façades toscanes. */
 .rule-v {
-  width: 1px;
+  width: 2px;
   height: clamp(56px, 9vw, 120px);
-  background: linear-gradient(to bottom, var(--gold), transparent);
+  background: linear-gradient(to bottom,
+    var(--verde)     0%,   var(--verde)     34%,
+    var(--carrara-3) 34%,  var(--carrara-3) 66%,
+    var(--rosso)     66%,  var(--rosso)     100%);
   margin-inline: auto;
+}
+
+.rule-tricolore {
+  width: 84px;
+  height: 2px;
+  margin-top: 1.75rem;
+  background: linear-gradient(to right,
+    var(--verde)     0%,   var(--verde)     34%,
+    var(--carrara-3) 34%,  var(--carrara-3) 66%,
+    var(--rosso)     66%,  var(--rosso)     100%);
 }
 
 /* ========================= 04. BOUTONS & LIENS =========================== */
@@ -288,14 +353,14 @@ p:last-child { margin-bottom: 0; }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--gold);
+  background: var(--rosso);
   transform: scaleY(0);
   transform-origin: bottom;
   transition: transform 0.55s var(--ease);
 }
 .btn:hover, .btn:focus-visible {
-  color: var(--ink);
-  border-color: var(--gold);
+  color: var(--carrara);
+  border-color: var(--rosso);
 }
 .btn:hover::before, .btn:focus-visible::before {
   transform: scaleY(1);
@@ -304,12 +369,12 @@ p:last-child { margin-bottom: 0; }
 .btn:active { transform: scale(0.98); }
 
 .btn--gold {
-  --btn-fg: var(--ink);
-  --btn-bd: var(--gold);
-  background: var(--gold);
+  --btn-fg: var(--carrara);
+  --btn-bd: var(--rosso);
+  background: var(--rosso);
 }
-.btn--gold::before { background: var(--stone); }
-.btn--gold:hover, .btn--gold:focus-visible { color: var(--ink); border-color: var(--stone); }
+.btn--gold::before { background: var(--inchiostro); }
+.btn--gold:hover, .btn--gold:focus-visible { color: var(--carrara); border-color: var(--inchiostro); }
 
 .btn--ghost { --btn-bd: var(--line); }
 
@@ -429,7 +494,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   grid-template-columns: repeat(4, 1fr);
 }
 .curtain span {
-  background: var(--ink-2);
+  background: var(--notte);
   transform: scaleY(0);
   transform-origin: bottom;
 }
@@ -462,21 +527,20 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   z-index: 9997;
   width: 34px; height: 34px;
   margin: -17px 0 0 -17px;
-  border: 1px solid var(--line-strong);
+  border: 1px solid rgba(142, 42, 51, 0.62);
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s, width 0.35s var(--ease), height 0.35s var(--ease),
               margin 0.35s var(--ease), background-color 0.35s var(--ease),
               border-color 0.35s var(--ease);
-  mix-blend-mode: difference;
 }
 .cursor.is-active { opacity: 1; }
 .cursor.is-hover {
   width: 62px; height: 62px;
   margin: -31px 0 0 -31px;
-  background: rgba(195,162,100,.16);
-  border-color: var(--gold);
+  background: rgba(142,42,51,.14);
+  border-color: var(--rosso);
 }
 @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
@@ -502,7 +566,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   transition: transform 0.7s var(--ease);
 }
 .site-header.is-stuck {
-  background: rgba(11, 9, 8, 0.82);
+  background: rgba(251, 250, 247, 0.88);
   backdrop-filter: blur(14px) saturate(1.2);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   padding-block: 0.85rem;
@@ -664,13 +728,32 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .frame {
   position: relative;
   overflow: hidden;
-  background-color: var(--ink-3);
+  background-color: var(--carrara-2);
   background-image:
-    radial-gradient(120% 90% at 22% 12%, rgba(195,162,100,.20), transparent 58%),
-    radial-gradient(90% 80% at 82% 88%, rgba(166,91,57,.20), transparent 60%),
-    linear-gradient(148deg, #241b15 0%, #14100d 48%, #1d1712 100%);
+    radial-gradient(120% 90% at 22% 12%, rgba(53,80,63,.12), transparent 58%),
+    radial-gradient(90% 80% at 82% 88%, rgba(142,42,51,.11), transparent 60%),
+    linear-gradient(148deg, #F8F5EF 0%, #E7E2D7 50%, #F1EDE4 100%);
   isolation: isolate;
 }
+
+/* Les cadres qui portent du texte gardent un fond profond : la typographie
+   claire doit rester lisible avec ou sans photographie déposée. */
+.hero__media,
+.page-hero__media .frame,
+.cta-band__media .frame,
+.card .frame {
+  background-color: var(--notte);
+  background-image:
+    radial-gradient(110% 85% at 24% 14%, rgba(142,42,51,.32), transparent 58%),
+    radial-gradient(90% 80% at 82% 88%, rgba(53,80,63,.36), transparent 62%),
+    linear-gradient(150deg, #1F1A14 0%, #14100C 50%, #191E18 100%);
+}
+.page-hero__media .frame::before,
+.cta-band__media .frame::before,
+.card .frame::before { border-color: rgba(251,250,247,.22); }
+.page-hero__media .frame::after,
+.cta-band__media .frame::after,
+.card .frame::after { color: rgba(251,250,247,.42); }
 .frame::before {
   /* arche de pierre stylisée — visible seulement sur le placeholder */
   content: "";
@@ -679,7 +762,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   width: min(46%, 240px);
   aspect-ratio: 3 / 4;
   transform: translate(-50%, -50%);
-  border: 1px solid rgba(195,162,100,.24);
+  border: 1px solid rgba(23,19,15,.18);
   border-radius: 50% 50% 4px 4px / 38% 38% 2px 2px;
   opacity: 0;
   transition: opacity 0.5s var(--ease);
@@ -693,7 +776,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   font-size: var(--fs-label);
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: rgba(195,162,100,.6);
+  color: rgba(23,19,15,.40);
   opacity: 0;
   transition: opacity 0.5s var(--ease);
   pointer-events: none;
@@ -749,11 +832,6 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   inset: -6% 0 0 0;
   height: 112%;
   z-index: 0;
-  background-color: var(--ink-3);
-  background-image:
-    radial-gradient(90% 70% at 26% 18%, rgba(195,162,100,.22), transparent 60%),
-    radial-gradient(80% 70% at 80% 86%, rgba(166,91,57,.22), transparent 62%),
-    linear-gradient(150deg, #241b15 0%, #14100d 52%, #1d1712 100%);
 }
 .hero__media img {
   width: 100%; height: 100%;
@@ -952,7 +1030,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   position: relative;
   display: block;
   text-decoration: none;
-  color: inherit;
+  color: var(--text);
   overflow: hidden;
 }
 .card .frame { aspect-ratio: 3 / 4; }
@@ -1102,7 +1180,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   position: sticky;
   top: var(--header-h);
   z-index: 500;
-  background: rgba(11,9,8,.96);
+  background: rgba(251,250,247,.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-block: 1px solid var(--line);
@@ -1209,7 +1287,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   padding: clamp(2rem, 5vw, 4rem);
   text-align: center;
   background:
-    radial-gradient(90% 120% at 50% 0%, rgba(195,162,100,.10), transparent 62%),
+    radial-gradient(90% 120% at 50% 0%, rgba(142,42,51,.07), transparent 62%),
     var(--ink-2);
 }
 .tasting__price {
@@ -1271,7 +1349,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   display: grid;
   place-items: center;
   padding: clamp(1rem, 4vw, 3rem);
-  background: rgba(6, 5, 4, 0.94);
+  background: rgba(16, 13, 10, 0.95);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   opacity: 0;
@@ -1308,7 +1386,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   place-items: center;
   transition: border-color 0.35s var(--ease), background-color 0.35s var(--ease);
 }
-.lightbox__close:hover, .lightbox__nav:hover { border-color: var(--gold); background: rgba(195,162,100,.14); }
+.lightbox__close:hover, .lightbox__nav:hover { border-color: var(--carrara); background: rgba(251,250,247,.16); }
 .lightbox__close { top: clamp(1rem, 3vw, 2rem); right: clamp(1rem, 3vw, 2rem); }
 .lightbox__nav--prev { left: clamp(0.5rem, 2vw, 2rem); top: 50%; transform: translateY(-50%); }
 .lightbox__nav--next { right: clamp(0.5rem, 2vw, 2rem); top: 50%; transform: translateY(-50%); }
@@ -1419,7 +1497,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   appearance: none;
 }
 .field select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23C3A264' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238E2A33' stroke-width='1.2'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.25rem center;
   padding-right: 2rem;
@@ -1535,7 +1613,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .checkbox input:checked {
   background: var(--gold);
   border-color: var(--gold);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1.5' fill='none' stroke='%230B0908' stroke-width='1.8'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1.5' fill='none' stroke='%23FBFAF7' stroke-width='1.8'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -1555,7 +1633,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .summary {
   border: 1px solid var(--line);
   background:
-    radial-gradient(90% 60% at 50% 0%, rgba(195,162,100,.08), transparent 60%),
+    radial-gradient(90% 60% at 50% 0%, rgba(142,42,51,.06), transparent 60%),
     var(--ink-2);
   padding: clamp(1.5rem, 3vw, 2.25rem);
 }
@@ -1620,7 +1698,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .alert {
   border: 1px solid var(--line-strong);
   border-left-width: 2px;
-  background: rgba(195,162,100,.06);
+  background: rgba(142,42,51,.05);
   padding: 1rem 1.25rem;
   font-size: var(--fs-small);
   color: var(--text-muted);
@@ -1628,8 +1706,8 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 }
 .alert--error {
   border-color: var(--terracotta);
-  background: rgba(166,91,57,.1);
-  color: #E9B79E;
+  background: rgba(154,78,46,.09);
+  color: #7E3F22;
 }
 
 /* Réservations mémorisées */

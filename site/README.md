@@ -171,14 +171,28 @@ Déjà en place :
 Tout part des variables CSS en tête de `assets/css/style.css` :
 
 ```css
---ink: #0B0908;        /* fond */
---stone: #F4ECE2;      /* texte */
---gold: #C3A264;       /* accent */
---terracotta: #A65B39; /* accent secondaire, erreurs */
+--carrara:     #FBFAF7;  /* fond principal, blanc chaud */
+--carrara-2:   #F3F0E9;  /* surface alternée */
+--inchiostro:  #17130F;  /* texte */
+--rosso:       #8E2A33;  /* rosso di Maremma — accent principal */
+--verde:       #35503F;  /* verde di Prato — titres en italique */
+--terracotta:  #9A4E2E;  /* terre de Sienne — alertes, fermetures */
+--notte:       #14100C;  /* rideaux, visionneuse, voiles sur photo */
 --font-display: "Cormorant Garamond", …
 --font-sans: "Jost", …
 --section-y, --gutter, --maxw, --ease, --dur
 ```
 
-Changer `--gold` et `--font-display` suffit à donner une autre identité à
-l'ensemble du site.
+La palette reprend les trois marbres des façades toscanes : bianco di Carrara,
+verde di Prato, rosso di Maremma. Le filet `.rule-tricolore` (pied de page) et
+`.rule-v` (accueil) les empilent dans cet ordre.
+
+Les alias `--ink`, `--stone` et `--gold` pointent vers ces valeurs : c'est sur
+eux que s'appuie le reste de la feuille. Changer `--rosso` et `--font-display`
+suffit donc à donner une autre identité à l'ensemble du site.
+
+**Îlots sombres.** Le hero, les bandeaux d'appel, les cartes d'espaces et la
+visionneuse posent du texte clair sur une photographie. Un seul bloc CSS y
+redéfinit le jeu de variables (recherchez « Îlots sombres » dans la feuille) :
+aucune couleur n'est réécrite composant par composant. Si vous ajoutez une
+section de ce type, ajoutez son sélecteur à cette liste.
