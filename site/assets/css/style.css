@@ -827,7 +827,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(180deg, rgba(11,9,8,.15) 0%, rgba(11,9,8,.05) 45%, rgba(11,9,8,.72) 100%);
+  background: linear-gradient(180deg, rgba(11,9,8,.12) 0%, rgba(11,9,8,.02) 38%, rgba(11,9,8,.58) 72%, rgba(11,9,8,.92) 100%);
   pointer-events: none;
 }
 
@@ -857,12 +857,12 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(11,9,8,.78) 0%, rgba(11,9,8,.30) 32%, rgba(11,9,8,.55) 66%, rgba(11,9,8,.95) 100%),
-    radial-gradient(120% 80% at 50% 100%, rgba(11,9,8,.6), transparent 70%);
+    linear-gradient(90deg, rgba(11,9,8,.88) 0%, rgba(11,9,8,.56) 42%, rgba(11,9,8,.16) 78%),
+    linear-gradient(180deg, rgba(11,9,8,.70) 0%, rgba(11,9,8,.28) 28%, rgba(11,9,8,.48) 62%, rgba(11,9,8,.93) 100%);
 }
 @keyframes kenburns {
   from { transform: scale(1) translate3d(0,0,0); }
-  to   { transform: scale(1.12) translate3d(0,-1.5%,0); }
+  to   { transform: scale(1.06) translate3d(0,-1%,0); }
 }
 
 .hero__inner { position: relative; z-index: 2; }
@@ -967,7 +967,9 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .page-hero__media::after {
   content: "";
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(11,9,8,.86) 0%, rgba(11,9,8,.5) 45%, rgba(11,9,8,.93) 100%);
+  background:
+    linear-gradient(90deg, rgba(11,9,8,.86) 0%, rgba(11,9,8,.58) 46%, rgba(11,9,8,.30) 82%),
+    linear-gradient(180deg, rgba(11,9,8,.78) 0%, rgba(11,9,8,.42) 42%, rgba(11,9,8,.90) 100%);
 }
 .page-hero__inner { position: relative; z-index: 2; }
 
@@ -1131,7 +1133,9 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(11,9,8,.52) 0%, rgba(11,9,8,.62) 50%, rgba(11,9,8,.78) 100%);
+  background:
+    radial-gradient(70% 85% at 50% 50%, rgba(11,9,8,.62), transparent 72%),
+    linear-gradient(180deg, rgba(11,9,8,.52) 0%, rgba(11,9,8,.58) 50%, rgba(11,9,8,.76) 100%);
 }
 /* L'unité ch se calcule sur la police héritée, pas sur celle du titre :
    une mesure en ch ici étranglait la phrase. On plafonne en pixels, et la
@@ -1225,7 +1229,9 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .cta-band__media::after {
   content: "";
   position: absolute; inset: 0;
-  background: rgba(11,9,8,.78);
+  background:
+    radial-gradient(80% 90% at 50% 50%, rgba(11,9,8,.70), transparent 75%),
+    rgba(11,9,8,.74);
 }
 .cta-band__inner { position: relative; z-index: 2; }
 .cta-band h2 { margin-bottom: 1.5rem; }

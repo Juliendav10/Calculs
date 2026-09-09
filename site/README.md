@@ -38,13 +38,17 @@ python3 -m http.server 4173
 
 ## 1. Déposer les photographies
 
-Placez vos images dans `assets/images/` avec **exactement** ces noms :
-`salle.jpg`, `cave-voutee.jpg`, `bar.jpg`, `facade.jpg`, `fusilli.jpg`,
-`salle-detail.jpg`, `og-image.jpg` (1200 × 630 pour les partages sociaux).
+Les photographies du restaurant sont en place dans `assets/images/`, au format
+WebP : `salle`, `cave-voutee`, `bar`, `facade`, `facade-nuit`, `fusilli`,
+`aperitivo`, plus `og-image.jpg` (1200 × 630) pour les partages sociaux.
 
-Tant qu'une photo est absente, son cadre affiche automatiquement un dégradé
-chaud et une arche de pierre stylisée : la mise en page ne bouge pas, rien ne
-casse. Détails et tailles conseillées dans `assets/images/README.md`.
+**Elles sont en basse résolution** — 680 px de large au maximum, ce qui est
+insuffisant pour un hero plein écran. Remplacez-les par les fichiers d'origine
+du photographe dès que possible : voir `assets/images/README.md` pour les
+tailles à viser.
+
+Si un fichier venait à manquer, son cadre afficherait automatiquement un
+dégradé de marbre et une arche stylisée : la mise en page ne bouge pas.
 
 ## 2. Ce qui est réel, ce qui reste à confirmer
 

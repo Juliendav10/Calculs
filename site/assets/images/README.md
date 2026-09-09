@@ -1,27 +1,44 @@
 # Photographies
 
-Déposez vos photos **dans ce dossier**, en respectant exactement ces noms de
-fichiers. Tant qu'un fichier est absent, le site affiche automatiquement un
-cadre décoratif (dégradé chaud + arche de pierre) : rien ne casse, la mise en
-page reste identique.
+Les photographies du restaurant sont en place, au format WebP.
 
-| Fichier             | Sujet attendu                                   | Format conseillé      |
-|---------------------|--------------------------------------------------|-----------------------|
-| `salle.jpg`         | La salle du rez-de-chaussée                      | paysage, 2000 × 1333  |
-| `cave-voutee.jpg`   | La cave voûtée en pierre                         | paysage, 2000 × 1333  |
-| `bar.jpg`           | Le comptoir du bar                               | paysage, 2000 × 1333  |
-| `facade.jpg`        | La façade rue Dauphine                           | paysage, 2000 × 1125  |
-| `fusilli.jpg`       | Une assiette signature                           | portrait ou carré     |
-| `salle-detail.jpg`  | Un détail de salle (galerie)                     | paysage, 1600 × 1000  |
-| `og-image.jpg`      | Visuel de partage réseaux sociaux                | **1200 × 630** exact  |
+| Fichier             | Sujet                                        | Dimensions | Où il apparaît                                          |
+|---------------------|----------------------------------------------|------------|---------------------------------------------------------|
+| `salle.webp`        | La salle du rez-de-chaussée                  | 680 × 510  | hero de l'accueil, carte « La Salle », hero réservation, galerie |
+| `cave-voutee.webp`  | La cave voûtée                               | 680 × 453  | carte « La Cave voûtée », hero du Lieu, bandeau de la Carte, galerie |
+| `bar.webp`          | Le comptoir                                  | 680 × 453  | carte « Il Bar », section Bar du Lieu, galerie           |
+| `facade.webp`       | La façade de jour                            | 680 × 453  | bande « Si mangia bene », bandeau du Lieu, galerie       |
+| `facade-nuit.webp`  | La façade le soir                            | 680 × 453  | bandeau d'appel de l'accueil                             |
+| `fusilli.webp`      | Fusilli et verre de vin blanc                | 382 × 510  | hero de la Carte, section Cuisine, galerie               |
+| `aperitivo.webp`    | Cocktails et pâtes                           | 408 × 510  | section Signatures de l'accueil, galerie                 |
+| `og-image.jpg`      | Visuel de partage (façade de nuit recadrée)  | 1200 × 630 | balises `og:image` et `twitter:image` des 4 pages        |
+
+## ⚠️ Résolution : à remplacer dès que possible
+
+Ces fichiers font **680 pixels de large au maximum**. C'est très insuffisant
+pour les emplacements pleine largeur :
+
+- un hero occupe jusqu'à 2560 px sur un grand écran, et le double sur un écran
+  Retina — l'image est donc agrandie 3 à 4 fois et paraît floue ;
+- les cartes en portrait recadrent une photo paysage : il ne reste qu'une
+  bande verticale de la source, encore réduite en résolution utile.
+
+Ce qui a été fait pour limiter la casse : l'amplitude du zoom lent du hero a été
+réduite (1,06 au lieu de 1,12) et les voiles sombres ont été renforcés, ce qui
+masque une partie du manque de netteté.
+
+**Ce qu'il faudrait :** les fichiers d'origine du photographe, en **2400 px de
+large minimum** pour `salle`, `facade`, `facade-nuit` et `cave-voutee`, et
+**1400 px minimum** pour les autres. Déposez-les ici sous les mêmes noms — le
+HTML n'a alors rien à changer, seuls les attributs `width` / `height` sont à
+mettre à jour (ils servent à réserver le bon rapport d'image).
 
 ## Bonnes pratiques
 
-- Compressez avant mise en ligne (viser 200–350 Ko par image) : par exemple avec
-  [Squoosh](https://squoosh.app) ou `cwebp`.
-- Vous pouvez servir du WebP ou de l'AVIF en gardant l'extension `.jpg`, ou bien
-  remplacer les extensions dans les quatre fichiers HTML.
-- Les dimensions `width` / `height` sont déjà déclarées dans le HTML pour éviter
-  tout décalage de mise en page (bon pour le score Core Web Vitals).
-- L'attribut `alt` de chaque image est rédigé pour le référencement : adaptez-le
-  si le sujet de votre photo diffère.
+- Le WebP est conservé : à qualité égale il pèse 25 à 35 % de moins que le JPEG
+  et il est lu par tous les navigateurs actuels.
+- Le visuel de partage reste en JPEG : certains robots de réseaux sociaux ne
+  savent toujours pas lire le WebP.
+- Viser 200 à 350 Ko par photographie une fois en pleine résolution.
+- Les attributs `alt` sont rédigés pour le référencement et pour les lecteurs
+  d'écran : adaptez-les si vous changez le sujet d'une photographie.
