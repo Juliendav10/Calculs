@@ -156,38 +156,42 @@
 
   <!-- ============================== HERO ============================== -->
   <section class="hero" aria-label="Présentation">
-    <div class="hero__media">
-      <img src="assets/images/salle.webp" alt="La salle principale du restaurant GIOIA, tables dressées et suspensions en rotin" width="680" height="510" fetchpriority="high" decoding="async">
-    </div>
+    <div class="hero__grid">
 
-    <div class="container hero__inner">
-      <p class="eyebrow eyebrow--marble" data-reveal="fade">Ristorante · Odéon · Paris 6e</p>
+      <div class="hero__text">
+        <p class="eyebrow eyebrow--marble" data-reveal="fade">Ristorante · Odéon · Paris 6e</p>
 
-      <h1 class="hero__title">
-        <span class="word"><span>Gioia</span></span>
-        <span class="visually-hidden">— restaurant italien, 35 rue Dauphine, Paris 6e</span>
-      </h1>
+        <h1 class="hero__title">
+          <span class="word"><span>Gioia</span></span>
+          <span class="visually-hidden">— restaurant italien, 35 rue Dauphine, Paris 6e</span>
+        </h1>
 
-      <div class="hero__foot">
-        <div class="btn-group" data-reveal="up" style="--reveal-delay:340ms">
-          <a class="btn btn--gold" href="reservation.html" data-magnetic="0.22">
-            Réserver
-            <span class="btn__arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="btn" href="la-carte.html" data-magnetic="0.18">Découvrir la carte</a>
+        <div class="hero__foot">
+          <div class="btn-group" data-reveal="up" style="--reveal-delay:340ms">
+            <a class="btn btn--gold" href="reservation.html" data-magnetic="0.22">
+              Réserver
+              <span class="btn__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="btn" href="la-carte.html" data-magnetic="0.18">Découvrir la carte</a>
+          </div>
+        </div>
+
+        <div class="hero__meta" data-reveal="fade" style="--reveal-delay:460ms">
+          <span>35 rue Dauphine</span><span class="dot" aria-hidden="true"></span>
+          <span>Métro Odéon</span><span class="dot" aria-hidden="true"></span>
+          <span>Service continu 7j/7</span>
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true">
+          <span class="scroll-cue__line"></span>
+          <span>Défiler</span>
         </div>
       </div>
 
-      <div class="hero__meta" data-reveal="fade" style="--reveal-delay:460ms">
-        <span>35 rue Dauphine</span><span class="dot" aria-hidden="true"></span>
-        <span>Métro Odéon</span><span class="dot" aria-hidden="true"></span>
-        <span>Service continu 7j/7</span>
+      <div class="hero__media">
+        <img src="assets/images/salle.webp" alt="La salle principale du restaurant GIOIA Odéon, tables dressées et suspensions en rotin" width="680" height="510" fetchpriority="high" decoding="async">
       </div>
-    </div>
 
-    <div class="scroll-cue" aria-hidden="true">
-      <span class="scroll-cue__line"></span>
-      <span>Défiler</span>
     </div>
   </section>
 
@@ -241,12 +245,12 @@
 
   <!-- ============================== BANDE ============================= -->
   <section class="band" aria-label="La maison en une phrase">
-    <div class="band__media" data-parallax="0.06">
+    <div class="photo-band" data-reveal="mask">
       <div class="frame" data-caption="facade.webp">
         <img src="assets/images/facade.webp" alt="La façade de GIOIA Odéon, 35 rue Dauphine, et son store bleu et blanc" width="680" height="453" loading="lazy" decoding="async">
       </div>
     </div>
-    <div class="band__inner" data-reveal="up">
+    <div class="container band__inner" data-reveal="up">
       <p class="band__line">Si mangia bene<br>dove si torna volentieri.</p>
       <p class="band__source">On mange bien là où l’on revient</p>
     </div>
@@ -280,10 +284,8 @@
 
       <div class="cards cards--staggered" data-reveal-group="140">
         <a class="card" href="le-lieu.html#la-salle" data-reveal="zoom">
-          <div class="frame frame--hoverable frame--inset" data-caption="salle.webp">
+          <div class="frame frame--hoverable" data-caption="salle.webp">
             <img src="assets/images/salle.webp" alt="Salle principale de GIOIA avec tables rondes, marbre noir et suspensions en rotin" width="680" height="510" loading="lazy" decoding="async">
-            <span class="frame__veil"></span>
-            <span class="frame__border"></span>
           </div>
           <div class="card__body">
             <span class="card__index">Rez-de-chaussée</span>
@@ -293,10 +295,8 @@
         </a>
 
         <a class="card" href="le-lieu.html#la-cave" data-reveal="zoom">
-          <div class="frame frame--hoverable frame--inset" data-caption="cave-voutee.webp">
+          <div class="frame frame--hoverable" data-caption="cave-voutee.webp">
             <img src="assets/images/cave-voutee.webp" alt="La cave voûtée en pierre de taille de GIOIA, tables dressées sous les arches" width="680" height="453" loading="lazy" decoding="async">
-            <span class="frame__veil"></span>
-            <span class="frame__border"></span>
           </div>
           <div class="card__body">
             <span class="card__index">Sous-sol</span>
@@ -306,15 +306,13 @@
         </a>
 
         <a class="card" href="le-lieu.html#il-bar" data-reveal="zoom">
-          <div class="frame frame--hoverable frame--inset" data-caption="bar.webp">
+          <div class="frame frame--hoverable" data-caption="bar.webp">
             <img src="assets/images/bar.webp" alt="Le bar de GIOIA, comptoir de marbre et tabourets en cuir cognac sous les voûtes" width="680" height="453" loading="lazy" decoding="async">
-            <span class="frame__veil"></span>
-            <span class="frame__border"></span>
           </div>
           <div class="card__body">
             <span class="card__index">Au comptoir</span>
             <h3 class="card__title">Il Bar</h3>
-            <p class="card__text">Dix places au comptoir pour l’aperitivo, de 18h à 20h, amaro et cicchetti à l’appui.</p>
+            <p class="card__text">Quelques places au comptoir pour l’aperitivo, amaro et cicchetti à l’appui.</p>
           </div>
         </a>
       </div>
@@ -419,8 +417,8 @@
 
   <!-- ============================ APPEL =============================== -->
   <section class="cta-band" aria-labelledby="cta-title">
-    <div class="cta-band__media">
-      <div class="frame" data-caption="cave-voutee.webp" style="height:100%">
+    <div class="photo-band" data-reveal="mask">
+      <div class="frame" data-caption="cave-voutee.webp">
         <img src="assets/images/cave-voutee.webp" alt="Les tables dressées sous les voûtes de pierre de GIOIA Odéon" width="680" height="453" loading="lazy" decoding="async">
       </div>
     </div>

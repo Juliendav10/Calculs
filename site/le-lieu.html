@@ -115,14 +115,9 @@
 
 <main id="main">
 
-  <section class="page-hero" aria-labelledby="page-title">
-    <div class="page-hero__media">
-      <div class="frame" data-caption="cave-voutee.webp" style="height:100%">
-        <img src="assets/images/cave-voutee.webp" alt="La cave voûtée en pierre de taille du restaurant GIOIA" width="680" height="453" fetchpriority="high" decoding="async">
-      </div>
-    </div>
-    <div class="container page-hero__inner">
-      <p class="eyebrow" data-reveal="fade">35 rue Dauphine · Odéon</p>
+  <section class="page-head">
+    <div class="container">
+      <p class="eyebrow eyebrow--marble" data-reveal="fade">35 rue Dauphine · Odéon</p>
       <h1 id="page-title" data-reveal="up">Le Lieu</h1>
       <nav aria-label="Fil d'Ariane">
         <ol class="breadcrumb" data-reveal="fade" style="--reveal-delay:220ms">
@@ -132,6 +127,12 @@
       </nav>
     </div>
   </section>
+
+  <div class="photo-band" data-reveal="mask">
+    <div class="frame" data-caption="cave-voutee.webp">
+      <img src="assets/images/cave-voutee.webp" alt="La cave voûtée en pierre de taille du restaurant GIOIA" width="680" height="453" fetchpriority="high" decoding="async">
+    </div>
+  </div>
 
   <!-- HISTOIRE -->
   <section class="section" aria-labelledby="histoire-title">
@@ -416,8 +417,8 @@
   </section>
 
   <section class="cta-band">
-    <div class="cta-band__media">
-      <div class="frame" data-caption="facade.webp" style="height:100%">
+    <div class="photo-band" data-reveal="mask">
+      <div class="frame" data-caption="facade.webp">
         <img src="assets/images/facade.webp" alt="La façade du restaurant GIOIA rue Dauphine" width="680" height="453" loading="lazy" decoding="async">
       </div>
     </div>

@@ -123,40 +123,13 @@ body::after {
 }
 
 /* ------------------------------------------------------------------------ */
-/* Sur photographie : le texte reste à l'encre — les images sont couvertes    */
-/* d'un voile de lumière chaude, pas d'un fond noir. Seuls les gris moyens    */
-/* sont soutenus, parce qu'une image reste plus agitée qu'un aplat.          */
+/* Règle du site : on n'écrit jamais par-dessus une photographie. Les images  */
+/* sont montrées telles quelles, sans voile ni dégradé ; le texte qui les     */
+/* accompagne se pose sur le papier, à côté ou en dessous.                    */
+/* Mesuré avant de trancher : sur ces images, l'encre tombe à 0,20–0,47 de    */
+/* luminance de fond, et le blanc à 1,6:1 de contraste dans le pire cas —     */
+/* une lampe ou un reflet derrière une lettre. Aucun des deux ne tenait.      */
 /* ------------------------------------------------------------------------ */
-.hero,
-.page-hero,
-.cta-band,
-.band,
-.card {
-  --text-muted:   rgba(23, 19, 15, 0.78);
-  --text-faint:   rgba(23, 19, 15, 0.60);
-  --line:         rgba(23, 19, 15, 0.22);
-  --line-strong:  rgba(142, 42, 51, 0.48);
-}
-
-/* Halo clair et très diffus derrière le texte posé sur une photographie.
-   Invisible à l'œil, il tient la lisibilité là où le voile s'efface. */
-.hero__inner,
-.page-hero__inner,
-.band__inner,
-.cta-band__inner,
-.card__body {
-  text-shadow: 0 1px 16px rgba(255, 252, 246, 0.88), 0 0 4px rgba(255, 252, 246, 0.55);
-}
-/* Les boutons ont déjà un fond ou un contour : pas de halo. */
-.hero__inner .btn,
-.page-hero__inner .btn,
-.cta-band__inner .btn { text-shadow: none; }
-
-/* En-tête transparent posé sur le hero : mêmes gris soutenus. */
-.site-header:not(.is-stuck) {
-  --text-muted: rgba(23, 19, 15, 0.82);
-  --text-faint: rgba(23, 19, 15, 0.62);
-}
 
 /* La visionneuse reste le seul espace sombre du site : on y regarde une
    photographie, le noir est là pour l'isoler. */
@@ -814,59 +787,53 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .frame--hoverable img { will-change: transform; }
 .frame--hoverable:hover img { transform: scale(1.06); }
 
-.frame__veil {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(180deg,
-    rgba(255,252,246,0) 0%,
-    rgba(255,252,246,0) 46%,
-    rgba(255,250,241,.38) 66%,
-    rgba(255,246,233,.92) 100%);
-  pointer-events: none;
-}
-
 /* ================================ 08. HERO =============================== */
 
 .hero {
   position: relative;
-  min-height: 100svh;
-  display: grid;
-  align-items: end;
+  padding-top: var(--header-h);
   overflow: hidden;
-  padding-bottom: clamp(3rem, 7vw, 6rem);
 }
-.hero__media {
-  position: absolute;
-  inset: -6% 0 0 0;
-  height: 112%;
-  z-index: 0;
+
+.hero__grid { display: grid; }
+
+@media (min-width: 900px) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 0.46fr) minmax(0, 0.54fr);
+    min-height: calc(100svh - var(--header-h));
+  }
 }
+
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(3rem, 8vw, 6rem) var(--gutter) clamp(3rem, 7vw, 5.5rem);
+}
+
+/* La colonne de texte s'aligne sur la gouttière de la page ; à droite, la
+   photographie file jusqu'au bord de l'écran. */
+@media (min-width: 900px) {
+  .hero__text { padding-right: clamp(2rem, 4vw, 4rem); }
+}
+
+.hero__media { position: relative; overflow: hidden; }
 .hero__media img {
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  animation: kenburns 22s var(--ease-in-out) infinite alternate;
+  animation: kenburns 24s var(--ease-in-out) infinite alternate;
 }
-.hero__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(86% 76% at 13% 80%,
-      rgba(255,252,246,.95) 0%,
-      rgba(255,250,242,.78) 26%,
-      rgba(255,245,231,.40) 48%,
-      rgba(255,240,222,.12) 68%,
-      transparent 84%),
-    linear-gradient(180deg, rgba(255,251,244,.74) 0%, rgba(255,251,244,.26) 11%, transparent 20%),
-    linear-gradient(0deg, rgba(255,247,235,.38) 0%, transparent 17%);
+
+@media (max-width: 899px) {
+  .hero__media { order: -1; aspect-ratio: 4 / 3; }
+  .hero__media img { animation: none; }
 }
+
 @keyframes kenburns {
   from { transform: scale(1) translate3d(0,0,0); }
   to   { transform: scale(1.06) translate3d(0,-1%,0); }
 }
-
-.hero__inner { position: relative; z-index: 2; }
 
 .hero__title {
   font-size: var(--fs-hero);
@@ -886,57 +853,31 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.9rem 1.6rem;
-  margin-top: 2rem;
+  gap: 0.7rem 1.1rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
   font-size: var(--fs-label);
-  letter-spacing: 0.28em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
 .hero__meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
 
-.hero__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2.5rem;
-  margin-top: clamp(2.5rem, 5vw, 4rem);
-}
-.hero__blurb { max-width: 42ch; color: var(--text-muted); }
-
-.hero__rail {
-  position: absolute;
-  left: clamp(1rem, 1.8vw, 1.75rem);
-  bottom: clamp(3rem, 9vw, 8rem);
-  z-index: 3;
-  display: none;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: var(--fs-label);
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-@media (min-width: 1280px) { .hero__rail { display: block; } }
+.hero__foot { margin-top: clamp(2.5rem, 5vw, 4rem); }
 
 .scroll-cue {
-  position: absolute;
-  left: 50%;
-  bottom: 1.75rem;
-  transform: translateX(-50%);
-  z-index: 3;
-  display: grid;
-  justify-items: center;
-  gap: 0.8rem;
+  display: none;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  align-items: center;
+  gap: 0.9rem;
   font-size: 0.5625rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--text-faint);
 }
+@media (min-width: 900px) { .scroll-cue { display: flex; } }
 .scroll-cue__line {
-  width: 1px; height: 52px;
-  background: linear-gradient(to bottom, transparent, var(--gold));
+  width: 52px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold));
   overflow: hidden;
   position: relative;
 }
@@ -948,36 +889,21 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   animation: cueSlide 2.4s var(--ease-in-out) infinite;
 }
 @keyframes cueSlide {
-  0%   { transform: translateY(-100%); }
-  55%  { transform: translateY(100%); }
-  100% { transform: translateY(100%); }
+  0%   { transform: translateX(-100%); }
+  55%  { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
 }
 
-/* Hero secondaire (pages intérieures) */
-.page-hero {
-  position: relative;
-  min-height: clamp(52vh, 62vh, 70vh);
-  display: grid;
-  align-items: end;
-  padding-top: calc(var(--header-h) + 4rem);
-  padding-bottom: clamp(2.5rem, 6vw, 5rem);
-  overflow: hidden;
+/* Ouverture des pages intérieures : le titre sur le papier, la photographie
+   en bande pleine largeur juste en dessous. */
+.page-head {
+  padding-top: calc(var(--header-h) + clamp(3rem, 7vw, 5.5rem));
+  padding-bottom: clamp(2rem, 4vw, 3.25rem);
 }
-.page-hero__media { position: absolute; inset: 0; z-index: 0; }
-.page-hero__media img { width: 100%; height: 100%; object-fit: cover; }
-.page-hero__media::after {
-  content: "";
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(90% 82% at 11% 78%,
-      rgba(255,252,246,.95) 0%,
-      rgba(255,250,242,.78) 26%,
-      rgba(255,245,231,.36) 50%,
-      rgba(255,240,222,.08) 70%,
-      transparent 84%),
-    linear-gradient(180deg, rgba(255,251,244,.76) 0%, rgba(255,251,244,.28) 12%, transparent 22%);
-}
-.page-hero__inner { position: relative; z-index: 2; }
+
+.photo-band { overflow: hidden; }
+.photo-band .frame { aspect-ratio: 2 / 1; }
+@media (max-width: 760px) { .photo-band .frame { aspect-ratio: 4 / 3; } }
 
 .breadcrumb {
   display: flex;
@@ -1064,19 +990,13 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
 }
 .card {
-  position: relative;
   display: block;
   text-decoration: none;
   color: var(--text);
-  overflow: hidden;
 }
 .card .frame { aspect-ratio: 3 / 4; }
-.card__body {
-  position: absolute;
-  inset: auto 0 0 0;
-  z-index: 3;
-  padding: clamp(1.5rem, 2.5vw, 2.25rem);
-}
+
+.card__body { padding-top: clamp(1.1rem, 2vw, 1.5rem); }
 .card__index {
   font-size: var(--fs-label);
   letter-spacing: 0.24em;
@@ -1087,23 +1007,14 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 2.2vw, 2rem);
   margin: 0.5rem 0 0.6rem;
+  transition: color 0.4s var(--ease);
 }
+.card:hover .card__title { color: var(--rosso); }
 .card__text {
   font-size: var(--fs-small);
   color: var(--text-muted);
   max-width: 34ch;
   margin: 0;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.7s var(--ease), opacity 0.5s var(--ease), margin 0.7s var(--ease);
-}
-.card:hover .card__text, .card:focus-visible .card__text {
-  max-height: 8rem;
-  opacity: 1;
-}
-@media (hover: none), (pointer: coarse) {
-  .card__text { max-height: 9rem; opacity: 1; }
 }
 
 /* Guillemet d'ouverture surdimensionné */
@@ -1118,54 +1029,27 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   user-select: none;
 }
 
-/* Bande pleine largeur : une seule phrase sur une photographie */
-.band {
-  position: relative;
-  overflow: hidden;
-  min-height: clamp(340px, 54vh, 580px);
-  display: grid;
-  place-items: center;
+/* Bande : la photographie occupe toute la largeur, la phrase se pose sur le
+   papier juste en dessous. */
+.band__inner {
   text-align: center;
-  padding: clamp(3.5rem, 8vw, 7rem) var(--gutter);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
 }
-.band__media {
-  position: absolute;
-  inset: -8% 0 0 0;
-  height: 116%;
-  z-index: 0;
-}
-.band__media .frame { height: 100%; }
-.band__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(46% 58% at 50% 50%,
-      rgba(255,252,246,.90) 0%,
-      rgba(255,248,238,.66) 38%,
-      rgba(255,242,225,.26) 68%,
-      transparent 88%),
-    linear-gradient(180deg, rgba(255,250,242,.12), rgba(255,246,233,.20));
-}
-/* L'unité ch se calcule sur la police héritée, pas sur celle du titre :
-   une mesure en ch ici étranglait la phrase. On plafonne en pixels, et la
-   mesure de lecture se règle sur la ligne elle-même, en em. */
-.band__inner { position: relative; z-index: 2; max-width: min(880px, 100%); }
 .band__line {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(1.9rem, 4.6vw, 3.6rem);
+  font-size: clamp(1.9rem, 4.6vw, 3.4rem);
   line-height: 1.16;
   margin: 0 auto;
   max-width: 15em;
   text-wrap: balance;
 }
 .band__source {
-  margin-top: 1.75rem;
+  margin-top: 1.5rem;
   font-size: var(--fs-label);
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-faint);
 }
 
 /* Trois espaces en quinconce : la grille régulière écrasait le rythme */
@@ -1227,27 +1111,11 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   to   { transform: translate3d(-50%, 0, 0); }
 }
 
-/* Bandeau d'appel à réservation */
-.cta-band {
-  position: relative;
-  overflow: hidden;
+/* Bandeau d'appel : photographie pleine largeur, puis l'appel sur le papier. */
+.cta-band__inner {
   text-align: center;
-  padding-block: clamp(5rem, 11vw, 9rem);
+  padding-block: clamp(3rem, 7vw, 5.5rem);
 }
-.cta-band__media { position: absolute; inset: 0; z-index: 0; }
-.cta-band__media img { width: 100%; height: 100%; object-fit: cover; }
-.cta-band__media::after {
-  content: "";
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(50% 62% at 50% 50%,
-      rgba(255,252,246,.92) 0%,
-      rgba(255,248,238,.68) 38%,
-      rgba(255,242,225,.28) 68%,
-      transparent 88%),
-    linear-gradient(180deg, rgba(255,250,242,.12), rgba(255,246,233,.20));
-}
-.cta-band__inner { position: relative; z-index: 2; }
 .cta-band h2 { margin-bottom: 1.5rem; }
 
 /* Liste horaires / infos */

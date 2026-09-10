@@ -229,18 +229,31 @@ Les alias `--ink`, `--stone` et `--gold` pointent vers ces valeurs : c'est sur
 eux que s'appuie le reste de la feuille. Changer `--rosso` et `--font-display`
 suffit donc à donner une autre identité à l'ensemble du site.
 
-**Voiles sur photographie.** Le hero, les bandeaux, les cartes d'espaces posent
-du texte par-dessus une image. Le texte y reste à l'encre : les photographies
-sont couvertes d'un voile de lumière chaude (ivoire → abricot), jamais d'un
-fond noir. Un seul bloc CSS renforce les gris moyens dans ces zones
-(recherchez « Sur photographie » dans la feuille) ; si vous ajoutez une section
-de ce type, ajoutez son sélecteur à cette liste et donnez-lui un voile dense
-là où le texte se pose.
+**On n'écrit jamais par-dessus une photographie.** Les images sont montrées
+telles quelles, sans voile ni dégradé ; le texte se pose sur le papier, à côté
+ou en dessous :
 
-Deux règles pratiques tirées de l'expérience :
+- le hero est en deux colonnes — texte à gauche, photographie pleine hauteur à
+  droite ;
+- les pages intérieures ouvrent sur un bloc de titre (`.page-head`), puis une
+  bande photographique pleine largeur (`.photo-band`) ;
+- les cartes des trois espaces portent leur légende sous l'image ;
+- la bande et le bandeau d'appel sont une photographie pleine largeur suivie
+  d'un bloc de texte sur le papier.
 
-- **une photographie sombre ne supporte pas un voile clair** — elle vire au
-  beige boueux. Réservez ces emplacements aux images lumineuses ; la façade de
-  nuit, par exemple, est en galerie et sert de visuel de partage, pas de fond.
-- la visionneuse est le seul espace resté sombre du site, parce qu'on y regarde
-  une photographie et que le noir sert à l'isoler.
+Cette règle vient d'une mesure, pas d'un principe. Sur ces photographies, le
+fond des zones de texte tombe à 0,20–0,47 de luminance : l'encre n'y passe pas.
+Et le texte blanc y descend à 1,6:1 de contraste dans le pire cas — une lampe
+ou un reflet derrière une lettre. Aucune des deux options ne tenait sans voile,
+et le voile abîmait les images.
+
+La visionneuse est le seul espace sombre du site : on y regarde une
+photographie, le noir sert à l'isoler.
+
+Conséquence pratique : si vous ajoutez une section, ne posez pas de texte sur
+l'image. Mettez la photographie dans une `.photo-band` et le texte dans un
+`.container` juste après.
+
+Autre point à garder en tête : une bande pleine largeur recadre sévèrement.
+Réservez-lui des photographies **en paysage** — un portrait y perd l'essentiel
+de son sujet.
