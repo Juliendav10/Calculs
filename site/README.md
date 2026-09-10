@@ -257,3 +257,18 @@ l'image. Mettez la photographie dans une `.photo-band` et le texte dans un
 Autre point à garder en tête : une bande pleine largeur recadre sévèrement.
 Réservez-lui des photographies **en paysage** — un portrait y perd l'essentiel
 de son sujet.
+
+## 7. Le site en PDF
+
+`assets/gioia-odeon-site.pdf` est un rendu du site à 1440 px de large : quatre
+pages, une par page du site, avec des signets de navigation et du texte
+sélectionnable. Il sert à faire relire ou valider la maquette par quelqu'un
+qui n'a pas le site sous la main.
+
+Une fois le site en ligne, il est téléchargeable depuis votre propre domaine :
+`https://gioiaodeon.fr/assets/gioia-odeon-site.pdf`.
+
+C'est un fichier figé : il ne se met pas à jour quand le site change. Pour le
+régénérer, imprimer chaque page en PDF depuis un navigateur à 1440 px de large,
+en veillant à faire défiler la page entière au préalable pour déclencher les
+animations d'apparition et le chargement des images.
