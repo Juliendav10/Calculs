@@ -1,0 +1,19 @@
+{
+  "name": "GIOIA — Ristorante Paris 6e",
+  "short_name": "GIOIA",
+  "description": "Restaurant italien gastronomique rue Dauphine, Paris 6e.",
+  "lang": "fr-FR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FBFAF7",
+  "theme_color": "#FBFAF7",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
