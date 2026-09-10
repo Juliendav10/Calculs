@@ -804,12 +804,12 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 @media (min-width: 900px) {
   .hero__grid {
     grid-template-columns: minmax(0, 0.52fr) minmax(0, 0.48fr);
-    min-height: min(calc(100svh - var(--header-h)), 740px);
+    min-height: min(calc(100svh - var(--header-h)), 700px);
   }
   /* L'image se détache des bords droit, haut et bas : elle respire, l'arrondi
      des coins est visible, et sa hauteur reste contenue. */
   .hero__media {
-    margin: clamp(1.25rem, 2.6vw, 2.25rem) var(--gutter) clamp(2.25rem, 4.5vw, 4rem) 0;
+    margin: clamp(1.75rem, 3.2vw, 3rem) var(--gutter) clamp(2.75rem, 5vw, 4.5rem) 0;
   }
 }
 
