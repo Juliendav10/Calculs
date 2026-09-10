@@ -803,9 +803,12 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 
 @media (min-width: 900px) {
   .hero__grid {
-    grid-template-columns: minmax(0, 0.46fr) minmax(0, 0.54fr);
-    min-height: calc(100svh - var(--header-h));
+    grid-template-columns: minmax(0, 0.52fr) minmax(0, 0.48fr);
+    min-height: min(calc(100svh - var(--header-h)), 780px);
   }
+  /* L'image se détache du bord droit et du bas : elle respire, et l'arrondi
+     des coins devient visible. */
+  .hero__media { margin: 0 var(--gutter) clamp(2rem, 4vw, 3.5rem) 0; }
 }
 
 .hero__text {
@@ -834,7 +837,11 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 }
 
 @media (max-width: 899px) {
-  .hero__media { order: -1; aspect-ratio: 4 / 3; }
+  .hero__media {
+    order: -1;
+    aspect-ratio: 4 / 3;
+    margin-inline: var(--gutter);
+  }
   .hero__media img { animation: none; }
 }
 
@@ -909,8 +916,13 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   padding-bottom: clamp(2rem, 4vw, 3.25rem);
 }
 
-.photo-band { overflow: hidden; }
-.photo-band .frame { aspect-ratio: 2 / 1; }
+.photo-band {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.photo-band .frame { aspect-ratio: 12 / 5; }
 @media (max-width: 760px) { .photo-band .frame { aspect-ratio: 4 / 3; } }
 
 .breadcrumb {
