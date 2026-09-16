@@ -126,13 +126,44 @@ body::after {
 }
 
 /* ------------------------------------------------------------------------ */
-/* Règle du site : on n'écrit jamais par-dessus une photographie. Les images  */
-/* sont montrées telles quelles, sans voile ni dégradé ; le texte qui les     */
-/* accompagne se pose sur le papier, à côté ou en dessous.                    */
+/* Règle du site : hors du hero de l'accueil, on n'écrit jamais par-dessus    */
+/* une photographie. Les images sont montrées telles quelles et le texte se   */
+/* pose sur le papier, à côté ou en dessous.                                  */
 /* Mesuré avant de trancher : sur ces images, l'encre tombe à 0,20–0,47 de    */
 /* luminance de fond, et le blanc à 1,6:1 de contraste dans le pire cas —     */
 /* une lampe ou un reflet derrière une lettre. Aucun des deux ne tenait.      */
+/* Le hero de l'accueil est l'exception assumée : texte clair sur image, donc */
+/* voile en haut et en bas (voir section 08).                                 */
 /* ------------------------------------------------------------------------ */
+
+/* Sur l'accueil, l'en-tête se pose sur le hero plein écran : il passe au clair
+   et se réduit au nom et au téléphone. La navigation revient dès qu'on défile
+   — elle reste dans le balisage, donc lisible par les moteurs. */
+body.home .site-header:not(.is-stuck) {
+  --stone:       var(--carrara);
+  --text:        var(--carrara);
+  --text-muted:  rgba(251, 250, 247, 0.84);
+  --text-faint:  rgba(251, 250, 247, 0.62);
+  --line:        rgba(251, 250, 247, 0.26);
+  --line-strong: rgba(251, 250, 247, 0.46);
+  --gold:        var(--rosso-chiaro);
+  color: var(--text);
+}
+body.home .site-header:not(.is-stuck) .nav,
+body.home .site-header:not(.is-stuck) .header-actions .btn { display: none; }
+
+.header-aside {
+  display: none;
+  font-size: var(--fs-label);
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.4s var(--ease);
+}
+.header-aside:hover { color: var(--stone); }
+body.home .site-header:not(.is-stuck) .header-aside { display: inline-block; }
+@media (max-width: 640px) { .header-aside { display: none !important; } }
 
 /* La visionneuse reste le seul espace sombre du site : on y regarde une
    photographie, le noir est là pour l'isoler. */
@@ -792,123 +823,148 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .frame--hoverable:hover img { transform: scale(1.06); }
 
 /* ================================ 08. HERO =============================== */
+/* Hero « cinéma » : l'image occupe tout l'écran et défile en fondu, le texte
+   se réduit à une accroche et un seul bouton. C'est le seul endroit du site
+   où l'on écrit par-dessus une photographie — il y faut donc un voile, comme
+   sur les hero vidéo du même genre. */
 
 .hero {
   position: relative;
-  padding-top: var(--header-h);
+  min-height: 100svh;
+  display: grid;
+  align-items: end;
+  padding: 0 var(--gutter) clamp(4.5rem, 10vw, 7rem);
   overflow: hidden;
+  isolation: isolate;
+
+  /* Texte clair sur photographie : jeu de variables inversé, cantonné ici. */
+  --stone:       var(--carrara);
+  --text:        var(--carrara);
+  --text-muted:  rgba(251, 250, 247, 0.82);
+  --text-faint:  rgba(251, 250, 247, 0.60);
+  --line:        rgba(251, 250, 247, 0.28);
+  color: var(--text);
 }
 
-.hero__grid { display: grid; }
+/* ---- Le défilé d'images ---- */
+.hero__stage { position: absolute; inset: 0; z-index: 0; }
 
-@media (min-width: 900px) {
-  .hero__grid {
-    grid-template-columns: minmax(0, 0.52fr) minmax(0, 0.48fr);
-    min-height: min(calc(100svh - var(--header-h)), 700px);
-  }
-  /* L'image se détache des bords droit, haut et bas : elle respire, l'arrondi
-     des coins est visible, et sa hauteur reste contenue. */
-  .hero__media {
-    margin: clamp(1.75rem, 3.2vw, 3rem) var(--gutter) clamp(2.75rem, 5vw, 4.5rem) 0;
-  }
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.8s var(--ease-in-out);
 }
+.hero__slide.is-active { opacity: 1; }
 
-.hero__text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(3rem, 8vw, 6rem) var(--gutter) clamp(3rem, 7vw, 5.5rem);
-}
-
-/* La colonne de texte s'aligne sur la gouttière de la page ; à droite, la
-   photographie file jusqu'au bord de l'écran. */
-@media (min-width: 900px) {
-  .hero__text { padding-right: clamp(2rem, 4vw, 4rem); }
-}
-
-.hero__media {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-photo);
-}
-.hero__media img {
+.hero__slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  animation: kenburns 24s var(--ease-in-out) infinite alternate;
+  transform: scale(1.01);
+  transition: transform 9s linear;
 }
+/* Lent travelling avant, volontairement court : les sources font 680 px de
+   large, chaque pour cent d'agrandissement se paie en netteté. */
+.hero__slide.is-active img { transform: scale(1.07); }
 
-@media (max-width: 899px) {
-  .hero__media {
-    order: -1;
-    aspect-ratio: 4 / 3;
-    margin-inline: var(--gutter);
-  }
-  .hero__media img { animation: none; }
-}
-
-@keyframes kenburns {
-  from { transform: scale(1) translate3d(0,0,0); }
-  to   { transform: scale(1.06) translate3d(0,-1%,0); }
-}
-
-.hero__title {
-  font-size: var(--fs-hero);
-  line-height: 0.86;
-  letter-spacing: 0.02em;
-  margin: 0;
-}
-.hero__title .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
-.hero__title .word > span {
-  display: inline-block;
-  transform: translateY(105%);
-  transition: transform 1.15s var(--ease);
-}
-.is-loaded .hero__title .word > span { transform: translateY(0); }
-
-.hero__meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.7rem 1.1rem;
-  margin-top: clamp(2rem, 4vw, 3rem);
-  font-size: var(--fs-label);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-.hero__meta .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
-
-.hero__foot { margin-top: clamp(2.5rem, 5vw, 4rem); }
-
-.scroll-cue {
-  display: none;
-  margin-top: clamp(2rem, 4vw, 3rem);
-  align-items: center;
-  gap: 0.9rem;
-  font-size: 0.5625rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-@media (min-width: 900px) { .scroll-cue { display: flex; } }
-.scroll-cue__line {
-  width: 52px; height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold));
-  overflow: hidden;
-  position: relative;
-}
-.scroll-cue__line::after {
+/* Voiles : en haut pour l'en-tête, en bas pour l'accroche et le bouton. */
+.hero__stage::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--gold);
-  animation: cueSlide 2.4s var(--ease-in-out) infinite;
+  background:
+    linear-gradient(180deg, rgba(11,9,8,.72) 0%, rgba(11,9,8,.26) 14%, transparent 30%),
+    linear-gradient(0deg,   rgba(11,9,8,.76) 0%, rgba(11,9,8,.36) 24%, transparent 50%);
 }
-@keyframes cueSlide {
-  0%   { transform: translateX(-100%); }
-  55%  { transform: translateX(100%); }
-  100% { transform: translateX(100%); }
+
+/* ---- L'emblème, montré pendant le changement de plan ---- */
+.hero__emblem {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 190px;
+  height: 190px;
+  transform: translate(-50%, -50%) scale(0.88);
+  opacity: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(11,9,8,.52) 0%, rgba(11,9,8,.28) 42%, transparent 70%);
+  transition: opacity 0.9s var(--ease), transform 1.6s var(--ease);
+}
+.hero__emblem svg { width: 78px; height: 78px; }
+.hero.is-changing .hero__emblem {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ---- Accroche et appel à l'action ---- */
+.hero__inner {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+
+.hero__claim {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(0.9rem, 1.45vw, 1.2rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1.75;
+  margin: 0 auto;
+  max-width: min(90vw, 860px);
+}
+
+.hero__cta {
+  display: inline-block;
+  margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  padding: 1.05rem 2.6rem;
+  border: 1px solid rgba(251, 250, 247, 0.72);
+  border-radius: 0;                    /* coins vifs */
+  color: var(--carrara);
+  font-size: var(--fs-label);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.5s var(--ease), color 0.5s var(--ease),
+              border-color 0.5s var(--ease);
+}
+.hero__cta:hover,
+.hero__cta:focus-visible {
+  background: var(--carrara);
+  border-color: var(--carrara);
+  color: var(--inchiostro);
+}
+
+/* ---- Repère de défilement ---- */
+.hero__cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.5rem, 3vw, 2.5rem);
+  z-index: 3;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(251, 250, 247, 0.38);
+  border-radius: 50%;
+  color: rgba(251, 250, 247, 0.85);
+  transition: border-color 0.4s var(--ease), background-color 0.4s var(--ease);
+  animation: cueBob 2.8s var(--ease-in-out) infinite;
+}
+.hero__cue:hover { border-color: var(--carrara); background: rgba(251,250,247,.14); }
+
+@keyframes cueBob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 7px); }
+}
+
+@media (max-width: 700px) {
+  .hero { min-height: 92svh; }
+  .hero__claim { letter-spacing: 0.16em; }
 }
 
 /* Ouverture des pages intérieures : le titre sur le papier, la photographie

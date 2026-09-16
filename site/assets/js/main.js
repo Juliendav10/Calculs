@@ -382,6 +382,44 @@
   }
 
   /* ---------------------------------------------------------------------- */
+  /* Hero de l'accueil : défilé d'images en fondu                           */
+  /* ---------------------------------------------------------------------- */
+
+  function initHeroSlideshow() {
+    var hero = $('.hero');
+    if (!hero) { return; }
+
+    var slides = $$('.hero__slide', hero);
+    if (slides.length < 2) { return; }
+
+    // Mouvement réduit : une seule image, fixe.
+    if (reduceMotion) {
+      slides.forEach(function (s, i) { s.classList.toggle('is-active', i === 0); });
+      return;
+    }
+
+    var DUREE = 6500;    // durée d'un plan
+    var FONDU = 1800;    // durée du fondu, alignée sur la transition CSS
+    var index = 0;
+
+    window.setInterval(function () {
+      // L'emblème paraît avant le changement et s'efface une fois le nouveau
+      // plan installé : la transition porte la marque.
+      hero.classList.add('is-changing');
+
+      window.setTimeout(function () {
+        slides[index].classList.remove('is-active');
+        index = (index + 1) % slides.length;
+        slides[index].classList.add('is-active');
+      }, 450);
+
+      window.setTimeout(function () {
+        hero.classList.remove('is-changing');
+      }, 450 + FONDU);
+    }, DUREE);
+  }
+
+  /* ---------------------------------------------------------------------- */
   /* Bandeau défilant : duplication du contenu pour une boucle continue     */
   /* ---------------------------------------------------------------------- */
 
@@ -547,6 +585,7 @@
     initCursor();
     initMagnetic();
     initCounters();
+    initHeroSlideshow();
     initMarquee();
     initAccordions();
     initScrollSpy();

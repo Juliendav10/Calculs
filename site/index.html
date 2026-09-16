@@ -97,7 +97,7 @@
 }
 </script>
 </head>
-<body>
+<body class="home">
 <a class="skip-link" href="#main">Aller au contenu principal</a>
 
 <div class="curtain" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
@@ -128,6 +128,7 @@
     </nav>
 
     <div class="header-actions">
+      <a class="header-aside" href="tel:+33184754175">+33 1 84 75 41 75</a>
       <a class="btn btn--gold" href="reservation.html" data-magnetic="0.2">Réserver une table</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu">
         <span></span><span></span><span></span>
@@ -156,47 +157,57 @@
 
   <!-- ============================== HERO ============================== -->
   <section class="hero" aria-label="Présentation">
-    <div class="hero__grid">
 
-      <div class="hero__text">
-        <p class="eyebrow eyebrow--marble" data-reveal="fade">Ristorante · Odéon · Paris 6e</p>
-
-        <h1 class="hero__title">
-          <span class="word"><span>Gioia</span></span>
-          <span class="visually-hidden">— restaurant italien, 35 rue Dauphine, Paris 6e</span>
-        </h1>
-
-        <div class="hero__foot">
-          <div class="btn-group" data-reveal="up" style="--reveal-delay:340ms">
-            <a class="btn btn--gold" href="reservation.html" data-magnetic="0.22">
-              Réserver
-              <span class="btn__arrow" aria-hidden="true">→</span>
-            </a>
-            <a class="btn" href="la-carte.html" data-magnetic="0.18">Découvrir la carte</a>
-          </div>
-        </div>
-
-        <div class="hero__meta" data-reveal="fade" style="--reveal-delay:460ms">
-          <span>35 rue Dauphine</span><span class="dot" aria-hidden="true"></span>
-          <span>Métro Odéon</span><span class="dot" aria-hidden="true"></span>
-          <span>Service continu 7j/7</span>
-        </div>
-
-        <div class="scroll-cue" aria-hidden="true">
-          <span class="scroll-cue__line"></span>
-          <span>Défiler</span>
-        </div>
+    <div class="hero__stage" aria-hidden="true">
+      <div class="hero__slide is-active">
+        <img src="assets/images/salle.webp" alt="" width="680" height="510" fetchpriority="high" decoding="async">
       </div>
-
-      <div class="hero__media">
-        <img src="assets/images/salle.webp" alt="La salle principale du restaurant GIOIA Odéon, tables dressées et suspensions en rotin" width="680" height="510" fetchpriority="high" decoding="async">
+      <div class="hero__slide">
+        <img src="assets/images/cave-voutee.webp" alt="" width="680" height="453" loading="lazy" decoding="async">
       </div>
-
+      <div class="hero__slide">
+        <img src="assets/images/bar.webp" alt="" width="680" height="453" loading="lazy" decoding="async">
+      </div>
+      <div class="hero__slide">
+        <img src="assets/images/facade-nuit.webp" alt="" width="680" height="453" loading="lazy" decoding="async">
+      </div>
+      <div class="hero__slide">
+        <img src="assets/images/aperitivo.webp" alt="" width="408" height="510" loading="lazy" decoding="async">
+      </div>
     </div>
+
+    <!-- Emblème des trois marbres : il paraît le temps du changement de plan,
+         de sorte que la transition porte la marque plutôt que de la subir. -->
+    <span class="hero__emblem" aria-hidden="true">
+      <svg width="62" height="62" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="30" stroke="rgba(251,250,247,.30)" stroke-width="1"/>
+        <circle cx="32" cy="32" r="22" stroke="rgba(251,250,247,.18)" stroke-width="1"/>
+        <path d="M32 2A30 30 0 0 1 57.98 47" stroke="#6E9B7E" stroke-width="2"/>
+        <path d="M57.98 47A30 30 0 0 1 6.02 47" stroke="#FBFAF7" stroke-width="2"/>
+        <path d="M6.02 47A30 30 0 0 1 32 2" stroke="#C8677B" stroke-width="2"/>
+      </svg>
+    </span>
+
+    <div class="hero__inner">
+      <h1 class="hero__claim" data-reveal="up">
+        <span class="visually-hidden">GIOIA Odéon, restaurant italien, 35 rue Dauphine, Paris 6e. </span>
+        La rencontre de la table italienne<br>et de l’art de vivre parisien
+      </h1>
+      <a class="hero__cta" href="reservation.html" data-reveal="up" style="--reveal-delay:260ms">
+        Réserver une table
+      </a>
+    </div>
+
+    <a class="hero__cue" href="#manifeste" aria-label="Faire défiler vers la suite">
+      <svg width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true">
+        <path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.3"/>
+      </svg>
+    </a>
+
   </section>
 
   <!-- ============================ MANIFESTE =========================== -->
-  <section class="section" aria-labelledby="manifeste-title">
+  <section class="section" id="manifeste" aria-labelledby="manifeste-title">
     <div class="container">
       <div class="manifesto">
         <div data-reveal="up">
