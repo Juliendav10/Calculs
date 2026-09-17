@@ -330,3 +330,13 @@ C'est un fichier figé : il ne se met pas à jour quand le site change. Pour le
 régénérer, imprimer chaque page en PDF depuis un navigateur à 1440 px de large,
 en veillant à faire défiler la page entière au préalable pour déclencher les
 animations d'apparition et le chargement des images.
+
+Trois pièges à connaître si vous refaites l'export :
+
+- **Le hero fait `100svh`.** À l'impression, la « fenêtre » est la page entière :
+  le hero s'étire alors sur les 10 000 px du document et mange tout le reste.
+  Fixez-lui une hauteur d'écran avant d'imprimer.
+- **La parallaxe** pose un décalage calculé au défilement. Sur une page rendue
+  d'un seul tenant, il fige les images de travers : neutralisez-la.
+- **Les révélations au scroll** laissent des blocs invisibles si la page n'a pas
+  été parcourue : forcez `opacity: 1` et `clip-path: none` sur `[data-reveal]`.
