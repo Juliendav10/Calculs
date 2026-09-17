@@ -1952,8 +1952,12 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   gap: 10px;
   width: max-content;
   will-change: transform;
-  animation: marqueeLeft var(--marquee-dur, 36s) linear infinite;
+  animation: marqueeLeft var(--marquee-dur, 27s) linear infinite;
 }
+/* Les deux rangées glissent à la même vitesse — 72 px par seconde, mesurés.
+   La seconde est plus haute, donc plus large : il lui faut plus de temps
+   pour parcourir la même distance relative. */
+.marquee__row--tall { --marquee-dur: 33s; }
 .marquee__row--reverse .marquee__track { animation-name: marqueeRight; }
 .marquee:hover .marquee__track { animation-play-state: paused; }
 

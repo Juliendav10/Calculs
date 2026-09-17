@@ -218,103 +218,81 @@ Déjà en place :
 Tout part des variables CSS en tête de `assets/css/style.css` :
 
 ```css
-/* Palette — blanc pur, or, noir. Le fond ne porte aucune teinte :
-   toute la chaleur vient de l'or. */
---blanc:        #FFFFFF;   /* fond principal */
---blanc-2:      #FAF9F7;   /* surface alternée, à peine perceptible */
---blanc-3:      #F2EFEA;   /* surface appuyée */
---sable:        #DDCEC2;   /* bandes séparatrices */
---encre:        #3E3E3E;   /* texte courant */
---encre-forte:  #1C1C1C;   /* titres */
---noir:         #000000;   /* bouton de réservation, en-tête */
---or:           #BF9D5D;   /* accent : filets, prix, liens, pied de page */
---or-fonce:     #A8853F;
---or-clair:     #E8C98F;   /* version lisible sur photographie sombre */
---terracotta:   #9A4E2E;   /* alertes du formulaire, seul écart à la palette */
+/* Palette */
+--blanc: #FFFFFF;  --blanc-2: #FAF9F7;  --blanc-3: #F2EFEA;
+--encre: #3E3E3E;  --encre-forte: #1C1C1C;  --noir: #000000;
+--or: #BF9D5D;     --or-fonce: #A8853F;     --or-clair: #E8C98F;
+--terracotta: #9A4E2E;
 
---font-display: "Cormorant Garamond", …   /* titres */
---font-sans:    "Jost", …                 /* texte, libellés, navigation */
---section-y, --gutter, --maxw, --ease, --dur, --radius-photo
+/* Échelle — relevée sur la référence à 1280 px de large :
+   titre de section 28 px, corps 13 px sur 17,5 px d'interligne. */
+--fs-h1: clamp(1.5rem, 2.6vw, 2.2rem);
+--fs-h2: clamp(1.45rem, 2.2vw, 2rem);
+--fs-h3: clamp(1.15rem, 1.5vw, 1.45rem);
+--fs-body: clamp(0.85rem, 1.02vw, 1rem);
+
+/* Espacements — 47 px de padding, soit 94 px entre deux blocs. */
+--gutter: clamp(1.25rem, 3.5vw, 2.75rem);
+--section-y: clamp(2.25rem, 3.7vw, 3.5rem);
+--maxw: 1160px;
+--radius-photo: 0px;
+--header-h: 104px;
 ```
 
 Les alias `--ink`, `--stone`, `--gold`, `--text`, `--text-strong` pointent vers
-ces valeurs : c'est sur eux que s'appuie le reste de la feuille. Changer `--or`
-et `--font-display` suffit donc à donner une autre identité à l'ensemble.
+ces valeurs. Changer `--or` et `--font-display` suffit à donner une autre
+identité à l'ensemble.
 
 Trois « îlots » renversent ces jetons pour écrire en clair sur fond sombre :
-l'en-tête posé sur le hero de l'accueil, la visionneuse, et le hero lui-même.
-Chacun redéfinit `--text`, `--text-strong`, `--text-muted`, `--line` et `--gold`
-localement. **Si vous ajoutez une couleur, passez par un jeton sémantique**
-(`--text-strong`) et non par la couleur brute (`--encre-forte`) : sans quoi le
-titre reste noir sur les fonds sombres et disparaît.
+l'en-tête posé sur le hero, la visionneuse, et le hero lui-même. **Si vous
+ajoutez une couleur, passez par un jeton sémantique** (`--text-strong`) et non
+par la couleur brute (`--encre-forte`) : sans quoi le titre reste noir sur les
+fonds sombres et disparaît.
 
-### Aplats et bandes
+### Les trois règles qui tiennent tout
 
-| Élément                | Fond            | Texte                     |
-|------------------------|-----------------|---------------------------|
-| Corps du site          | `--blanc`       | `--encre` / `--encre-forte` |
-| Sections alternées     | `--blanc-2/3`   | idem                      |
-| Bouton de réservation  | `--noir`        | blanc (or au survol)      |
-| Bouton principal plein | `--or`          | `--encre-forte` (6,8:1)   |
-| Pied de page           | `--or`          | `--encre-forte` (4,7 à 6,7:1) |
+**1. Rien n'est en capitales, rien n'est interlettré, rien n'est en italique.**
+Seul l'écusson de la marque porte des capitales espacées. C'est la sobriété de
+la référence — et la première chose qui revient quand on « embellit » une page.
 
-La référence écrit en blanc sur l'or (2,5:1, sous le seuil lisible). On garde
-l'aplat et on passe le libellé à l'encre.
+**2. Rien ne s'anime à l'entrée à l'écran.** C'est une mesure : sur 24 paires
+d'images consécutives de la vidéo de référence, le contenu qui arrive par le
+bas se déplace exactement comme celui déjà posé. Le seul mouvement lié au
+défilement est le ruban photographique — deux rangées en sens opposés à 72 px
+par seconde. Le reste est du survol.
 
-### La règle des photographies
+**3. Hors du hero de l'accueil, on n'écrit jamais par-dessus une
+photographie.** Les images sont montrées telles quelles, sans voile ni dégradé ;
+le texte se pose sur le papier, à côté ou en dessous.
 
-**Hors du hero de l'accueil, on n'écrit jamais par-dessus une photographie.**
-Les images sont montrées telles quelles, sans voile ni dégradé ; le texte se
-pose sur le papier, à côté ou en dessous :
-
-- les pages intérieures ouvrent sur un bloc de titre (`.page-head`), puis une
-  bande photographique pleine largeur (`.photo-band`) ;
-- les cartes des trois espaces portent leur légende sous l'image ;
-- la bande et le bandeau d'appel sont une photographie pleine largeur suivie
-  d'un bloc de texte sur le papier ;
-- la mosaïque (`.mosaic`) ne porte aucun texte.
-
-Cette règle vient d'une mesure, pas d'un principe. Sur ces photographies, le
+Cette troisième règle vient elle aussi d'une mesure. Sur ces photographies, le
 fond des zones de texte tombe à 0,20–0,47 de luminance : l'encre n'y passe pas.
 Et le texte blanc y descend à 1,6:1 de contraste dans le pire cas — une lampe
 ou un reflet derrière une lettre. Aucune des deux options ne tenait sans voile,
 et le voile abîmait les images.
 
-**Le hero de l'accueil est l'exception assumée**, comme sur les hero vidéo du
-même genre : l'image occupe tout l'écran et porte deux voiles, en haut pour
-l'en-tête, en bas pour l'accroche. Le voile bas monte aux trois quarts de la
-hauteur — l'accroche se pose vers 70 % et les plans clairs la mangeaient.
-Mesuré sur les cinq plans : 9,3 à 17,7:1 pour l'accroche, 7,1 à 10,4:1 pour le
-bouton.
+**Le hero de l'accueil est l'exception assumée** : l'image occupe tout l'écran
+et porte deux voiles, en haut pour l'en-tête, en bas pour l'accroche. Le voile
+bas monte aux trois quarts de la hauteur. Mesuré sur les cinq plans : 9,3 à
+17,7:1 pour l'accroche, 7,1 à 10,4:1 pour le bouton.
 
-La visionneuse est le second espace sombre du site : on y regarde une
-photographie, le noir sert à l'isoler.
+### Aplats
 
-Conséquence pratique : si vous ajoutez une section, ne posez pas de texte sur
-l'image. Mettez la photographie dans une `.photo-band` et le texte dans un
-`.container` juste après.
+| Élément                | Fond      | Texte                       |
+|------------------------|-----------|-----------------------------|
+| Corps du site          | `--blanc` | `--encre` / `--encre-forte` |
+| Bouton de réservation  | `--noir`  | blanc (or au survol)        |
+| Bouton principal plein | `--or`    | `--encre-forte` (6,8:1)     |
+| Pied de page           | `--or`    | `--encre-forte` (4,7 à 6,7:1) |
 
-Autre point à garder en tête : une bande pleine largeur recadre sévèrement.
-Réservez-lui des photographies **en paysage** — un portrait y perd l'essentiel
-de son sujet.
+La référence écrit en blanc sur l'or — 2,5:1, sous le seuil lisible. On garde
+l'aplat et on passe le libellé à l'encre.
 
-### Les animations
+### Si vous ajoutez une section
 
-Cinq mécaniques, pas une de plus. Chacune se reconstruit en une interaction
-Webflow (voir `WEBFLOW.md`).
-
-| Mécanique            | Où                                 | Déclencheur        |
-|----------------------|------------------------------------|--------------------|
-| Fondu montant        | `[data-reveal="up"]` — partout     | entrée à l'écran   |
-| Volet qui s'ouvre    | `[data-reveal="mask"]` — photos    | entrée à l'écran   |
-| Décalage en cascade  | `[data-reveal-group="120"]`        | entrée à l'écran   |
-| Filet d'or qui se tire | `.heading-rule` sous les titres  | entrée à l'écran   |
-| Parallaxe            | `[data-parallax]` — bandes pleines | défilement continu |
-
-S'y ajoutent le fondu enchaîné du hero (5 plans, 6,5 s chacun), le zoom lent au
-survol des photographies, et le remplissage des boutons par le bas.
-
-Tout est neutralisé sous `prefers-reduced-motion: reduce`.
+Ne posez pas de texte sur l'image : la photographie dans une `.photo-band` ou
+un `.duo`, le texte dans un `.container` à côté. Et réservez aux bandes pleine
+largeur des photographies **en paysage** — un portrait y perd son sujet.
 
 ## 7. Le site en PDF
 
