@@ -593,9 +593,19 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 1.5rem;
+  /* Mesuré sur la référence : 56 px à gauche, 65 px à droite, contre 105 px
+     pour le contenu. La barre tient toute la largeur de la fenêtre. */
+  max-width: none;
+  padding-inline: clamp(1.1rem, 4.7vw, 4rem);
 }
-.site-header__inner > .nav { justify-self: start; }
-.site-header__inner > .brand {
+/* Colonnes explicites : sous 1000 px la navigation passe en « display:none »
+   et disparaît de la grille — sans ces numéros, la marque glisserait dans la
+   première colonne et le bouton au milieu. */
+.site-header__inner > .nav            { grid-column: 1; justify-self: start; }
+.site-header__inner > .brand          { grid-column: 2; justify-self: center; }
+.site-header__inner > .header-actions { grid-column: 3; justify-self: end; }
+
+.brand {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
