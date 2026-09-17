@@ -113,18 +113,27 @@
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__list">
         <li><a class="nav__link" href="index.html">Accueil</a></li>
-        <li><a class="nav__link" href="la-carte.html" aria-current="page">La Carte</a></li>
-        <li><a class="nav__link" href="le-lieu.html">Le Lieu</a></li>
+        <li><a class="nav__link" href="la-carte.html" aria-current="page">La carte</a></li>
+        <li><a class="nav__link" href="le-lieu.html">Le lieu</a></li>
       </ul>
     </nav>
 
     <a class="brand" href="index.html" aria-label="GIOIA, retour à l'accueil">
-      <span class="brand__name">GIOIA</span>
-      <span class="brand__tag">Ristorante · Paris 6e</span>
+      <svg class="brand__seal" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M43 21 A11 11 0 0 0 21 21 A11 11 0 0 0 21 43 A11 11 0 0 0 43 43 A11 11 0 0 0 43 21 Z"
+              stroke="currentColor" stroke-width="1.1"/>
+        <text x="32" y="39" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif"
+              font-size="23" fill="currentColor">G</text>
+      </svg>
+      <span class="brand__name">Gioia</span>
+      <span class="brand__tag">Paris</span>
     </a>
 
     <div class="header-actions">
-      <a class="header-aside" href="tel:+33184754175">+33 1 84 75 41 75</a>
+      <p class="lang" aria-label="Langue">
+        <a href="index.html" aria-current="true" lang="fr">FR</a>
+        <a href="index.html" lang="en" title="English version — à venir">EN</a>
+      </p>
       <a class="btn btn--gold" href="reservation.html">Réserver</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu">
         <span></span><span></span><span></span>
@@ -153,10 +162,10 @@
 
   <section class="page-head">
     <div class="container">
-      <p class="eyebrow eyebrow--marble" data-reveal="up">Menu · Automne / Hiver</p>
-      <h1 id="page-title" data-reveal="up">La Carte</h1>
+      <p class="eyebrow eyebrow--marble">Menu · Automne / Hiver</p>
+      <h1 id="page-title">La Carte</h1>
       <nav aria-label="Fil d'Ariane">
-        <ol class="breadcrumb" data-reveal="up" style="--reveal-delay:220ms">
+        <ol class="breadcrumb">
           <li><a href="index.html">Accueil</a></li>
           <li aria-current="page">La Carte</li>
         </ol>
@@ -164,8 +173,8 @@
     </div>
   </section>
 
-  <div class="photo-band" data-reveal="mask">
-    <div class="frame" data-parallax data-caption="bar.webp">
+  <div class="photo-band">
+    <div class="frame" data-caption="bar.webp">
       <img src="assets/images/bar.webp" alt="Le comptoir de marbre de GIOIA Odéon et sa sélection de spiritueux" width="680" height="453" fetchpriority="high" decoding="async">
     </div>
   </div>
@@ -186,12 +195,12 @@
 
   <section class="section section--tight">
     <div class="container container--narrow">
-      <p class="lead text-center" style="margin-inline:auto" data-reveal="up">
+      <p class="lead text-center" style="margin-inline:auto">
         Notre carte évolue au rythme des arrivages. Les produits d’exception —
         truffe d’Alba, poissons de petite pêche, agrumes de Sicile — sont annoncés
         en salle chaque jour. Prix nets, service compris.
       </p>
-      <p class="text-center" style="margin-top:1.5rem;font-size:0.8125rem;color:var(--text-faint)" data-reveal="up">
+      <p class="text-center" style="margin-top:1.5rem;font-size:0.8125rem;color:var(--text-faint)">
         <span class="tag">V</span> végétarien &nbsp;·&nbsp;
         <span class="tag">VG</span> végétalien &nbsp;·&nbsp;
         <span class="tag">SG</span> sans gluten
@@ -206,13 +215,13 @@
 
       <!-- ANTIPASTI -->
       <div class="menu-section" id="antipasti">
-        <div class="menu-section__head" data-reveal="up">
+        <div class="menu-section__head">
           <h2>Antipasti</h2>
           <span class="rule" aria-hidden="true"></span>
           <span class="menu-section__sub">Pour commencer</span>
         </div>
-        <div class="menu-list menu-list--two" data-reveal-group="70">
-          <article class="menu-item" data-reveal="up">
+        <div class="menu-list menu-list--two">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Vitello Tonnato</h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -221,7 +230,7 @@
             <p class="menu-item__desc">Veau de lait rosé cuit à basse température, crème de thon rouge, câpres de Pantelleria, huile de citron.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Burrata delle Murge <span class="tags"><span class="tag">V</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -230,7 +239,7 @@
             <p class="menu-item__desc">Burrata d’Andria arrivée du mardi, tomates San Marzano confites, basilic, huile de Peranzana.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Carpaccio di Fassona <span class="tags"><span class="tag">SG</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -239,7 +248,7 @@
             <p class="menu-item__desc">Bœuf de race Fassona taillé au couteau, copeaux de Parmigiano 36 mois, roquette sauvage, citron d’Amalfi.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Polpo alla Brace</h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -248,7 +257,7 @@
             <p class="menu-item__desc">Poulpe grillé au charbon, crème de pommes de terre à la vanille, ’nduja de Spilinga, persil plat.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Fiori di Zucca</h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -257,7 +266,7 @@
             <p class="menu-item__desc">Fleurs de courgette en tempura légère, ricotta di bufala, anchois de Cetara.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Selezione di Salumi</h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -270,13 +279,13 @@
 
       <!-- PRIMI -->
       <div class="menu-section" id="primi">
-        <div class="menu-section__head" data-reveal="up">
+        <div class="menu-section__head">
           <h2>Primi</h2>
           <span class="rule" aria-hidden="true"></span>
           <span class="menu-section__sub">Pâtes &amp; risotti</span>
         </div>
-        <div class="menu-list menu-list--two" data-reveal-group="70">
-          <article class="menu-item" data-reveal="up">
+        <div class="menu-list menu-list--two">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Fusilli al Ragù di Mare</h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -285,7 +294,7 @@
             <p class="menu-item__desc">Fusilli de Gragnano extrudés au bronze, ragù de poissons de roche mijoté, datterini confits, herbes du jardin.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Tagliolini al Tartufo</h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -294,7 +303,7 @@
             <p class="menu-item__desc">Tagliolini aux jaunes d’œufs, beurre noisette de Normandie, truffe noire d’Alba râpée devant vous. Dès novembre.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Risotto ai Funghi <span class="tags"><span class="tag">V</span><span class="tag">SG</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -303,7 +312,7 @@
             <p class="menu-item__desc">Riz Carnaroli Acquerello vieilli un an, cèpes poêlés, Castelmagno d’alpage, poudre de porcini.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Ravioli di Ricotta e Limone <span class="tags"><span class="tag">V</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -312,7 +321,7 @@
             <p class="menu-item__desc">Ravioli pliés à la main, ricotta di pecora, zeste de citron d’Amalfi, beurre de sauge, pistache de Bronte.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Spaghettoni alle Vongole</h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -321,7 +330,7 @@
             <p class="menu-item__desc">Palourdes de Bretagne ouvertes à la minute, ail nouveau, colatura di alici de Cetara, huile verte.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Lasagnetta di Manzo</h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -334,13 +343,13 @@
 
       <!-- SECONDI -->
       <div class="menu-section" id="secondi">
-        <div class="menu-section__head" data-reveal="up">
+        <div class="menu-section__head">
           <h2>Secondi</h2>
           <span class="rule" aria-hidden="true"></span>
           <span class="menu-section__sub">Poissons &amp; viandes</span>
         </div>
-        <div class="menu-list menu-list--two" data-reveal-group="70">
-          <article class="menu-item" data-reveal="up">
+        <div class="menu-list menu-list--two">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Branzino in Crosta di Sale <span class="tags"><span class="tag">SG</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -349,7 +358,7 @@
             <p class="menu-item__desc">Bar de ligne entier en croûte de sel de Cervia, levé en salle, artichauts poivrade, huile Taggiasca.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Costoletta alla Milanese</h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -358,7 +367,7 @@
             <p class="menu-item__desc">Côte de veau panée à la mie fraîche, beurre clarifié, roquette, tomates datterino, citron rôti.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Filetto al Barolo</h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -367,7 +376,7 @@
             <p class="menu-item__desc">Filet de bœuf maturé, réduction de Barolo, purée de céleri-rave à l’huile de noisette, moelle rôtie.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Pollo alla Cacciatora <span class="tags"><span class="tag">SG</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -380,13 +389,13 @@
 
       <!-- CONTORNI -->
       <div class="menu-section" id="contorni">
-        <div class="menu-section__head" data-reveal="up">
+        <div class="menu-section__head">
           <h2>Contorni</h2>
           <span class="rule" aria-hidden="true"></span>
           <span class="menu-section__sub">À partager</span>
         </div>
-        <div class="menu-list menu-list--two" data-reveal-group="70">
-          <article class="menu-item" data-reveal="up">
+        <div class="menu-list menu-list--two">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Friarielli all’Aglio <span class="tags"><span class="tag">VG</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -395,7 +404,7 @@
             <p class="menu-item__desc">Brocolis-rave de Campanie, ail, piment de Calabre, huile d’olive nouvelle.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Patate al Rosmarino <span class="tags"><span class="tag">VG</span><span class="tag">SG</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -404,7 +413,7 @@
             <p class="menu-item__desc">Pommes de terre rattes rôties au romarin et au sel de Trapani.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Insalata di Stagione <span class="tags"><span class="tag">VG</span><span class="tag">SG</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -413,7 +422,7 @@
             <p class="menu-item__desc">Jeunes pousses, fenouil croquant, agrumes de Sicile, vinaigrette au moût de raisin.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Focaccia al Forno <span class="tags"><span class="tag">V</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -426,13 +435,13 @@
 
       <!-- DOLCI -->
       <div class="menu-section" id="dolci">
-        <div class="menu-section__head" data-reveal="up">
+        <div class="menu-section__head">
           <h2>Dolci</h2>
           <span class="rule" aria-hidden="true"></span>
           <span class="menu-section__sub">Desserts</span>
         </div>
-        <div class="menu-list menu-list--two" data-reveal-group="70">
-          <article class="menu-item" data-reveal="up">
+        <div class="menu-list menu-list--two">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Tiramisù della Casa <span class="tags"><span class="tag">V</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -441,7 +450,7 @@
             <p class="menu-item__desc">Mascarpone de Lombardie monté à la minute, savoiardi maison, café napolitain, cacao Domori.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Cannolo Siciliano <span class="tags"><span class="tag">V</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -450,7 +459,7 @@
             <p class="menu-item__desc">Cialda croustillante garnie à la commande, ricotta di pecora, orange confite, pistache de Bronte.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Panna Cotta al Bergamotto <span class="tags"><span class="tag">V</span><span class="tag">SG</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -459,7 +468,7 @@
             <p class="menu-item__desc">Crème infusée à la vanille de Madagascar, bergamote de Calabre, sablé au thym citron.</p>
           </article>
 
-          <article class="menu-item" data-reveal="up">
+          <article class="menu-item">
             <div class="menu-item__head">
               <h3 class="menu-item__name">Sfera al Cioccolato <span class="tags"><span class="tag">V</span></span></h3>
               <span class="menu-item__leader" aria-hidden="true"></span>
@@ -476,7 +485,7 @@
   <!-- MENU DÉGUSTATION -->
   <section class="section bg-ink-2" id="degustazione">
     <div class="container container--narrow">
-      <div class="tasting" data-reveal="mask">
+      <div class="tasting">
         <p class="eyebrow eyebrow--center">Menu dégustation</p>
         <h2><span class="display-italic">Il Viaggio</span></h2>
         <p class="tasting__price">125 €</p>
@@ -501,14 +510,14 @@
         </div>
       </div>
 
-      <div class="cards" style="margin-top:clamp(2rem,4vw,3rem);grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))" data-reveal-group="110">
-        <div class="tasting" style="padding:clamp(1.5rem,3vw,2.25rem)" data-reveal="up">
+      <div class="cards" style="margin-top:clamp(2rem,4vw,3rem);grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))">
+        <div class="tasting" style="padding:clamp(1.5rem,3vw,2.25rem)">
           <p class="eyebrow eyebrow--center">Déjeuner</p>
           <h3 style="font-size:1.5rem">Pranzo</h3>
           <p class="tasting__price" style="font-size:clamp(2rem,4vw,2.75rem)">38 €</p>
           <p class="tasting__note">Entrée + plat ou plat + dessert.<br>Trois services : 46 €. Servi au déjeuner, en semaine.</p>
         </div>
-        <div class="tasting" style="padding:clamp(1.5rem,3vw,2.25rem)" data-reveal="up">
+        <div class="tasting" style="padding:clamp(1.5rem,3vw,2.25rem)">
           <p class="eyebrow eyebrow--center">Fin d’après-midi</p>
           <h3 style="font-size:1.5rem">Aperitivo al Bar</h3>
           <p class="tasting__price" style="font-size:clamp(2rem,4vw,2.75rem)">24 €</p>
@@ -522,19 +531,19 @@
   <section class="section" id="vini">
     <div class="container">
       <div class="section-head section-head--split">
-        <div data-reveal="up">
+        <div>
           <p class="eyebrow">La cave</p>
           <h2>Les vins<br><span class="display-italic">d’une péninsule entière</span></h2>
         </div>
-        <p class="lead" data-reveal="up" style="--reveal-delay:120ms">
+        <p class="lead">
           Deux cent quarante références, presque toutes italiennes, dont une centaine
           en biodynamie. Notre chef sommelier compose volontiers un accord au verre,
           plat par plat.
         </p>
       </div>
 
-      <div class="menu-list menu-list--two" data-reveal-group="70">
-        <article class="menu-item" data-reveal="up">
+      <div class="menu-list menu-list--two">
+        <article class="menu-item">
           <div class="menu-item__head">
             <h3 class="menu-item__name">Franciacorta Brut — Ca’ del Bosco</h3>
             <span class="menu-item__leader" aria-hidden="true"></span>
@@ -543,7 +552,7 @@
           <p class="menu-item__desc">Lombardie · bulles fines, brioche et agrume blanc.</p>
         </article>
 
-        <article class="menu-item" data-reveal="up">
+        <article class="menu-item">
           <div class="menu-item__head">
             <h3 class="menu-item__name">Gavi di Gavi — La Scolca</h3>
             <span class="menu-item__leader" aria-hidden="true"></span>
@@ -552,7 +561,7 @@
           <p class="menu-item__desc">Piémont · cortese tendu, amande fraîche, finale saline.</p>
         </article>
 
-        <article class="menu-item" data-reveal="up">
+        <article class="menu-item">
           <div class="menu-item__head">
             <h3 class="menu-item__name">Fiano di Avellino — Mastroberardino</h3>
             <span class="menu-item__leader" aria-hidden="true"></span>
@@ -561,7 +570,7 @@
           <p class="menu-item__desc">Campanie · poire mûre, fumé volcanique, très belle longueur.</p>
         </article>
 
-        <article class="menu-item" data-reveal="up">
+        <article class="menu-item">
           <div class="menu-item__head">
             <h3 class="menu-item__name">Etna Rosso — Passopisciaro</h3>
             <span class="menu-item__leader" aria-hidden="true"></span>
@@ -570,7 +579,7 @@
           <p class="menu-item__desc">Sicile · nerello mascalese d’altitude, cerise noire et cendre.</p>
         </article>
 
-        <article class="menu-item" data-reveal="up">
+        <article class="menu-item">
           <div class="menu-item__head">
             <h3 class="menu-item__name">Chianti Classico Gran Selezione — Fontodi</h3>
             <span class="menu-item__leader" aria-hidden="true"></span>
@@ -579,7 +588,7 @@
           <p class="menu-item__desc">Toscane · sangiovese de Panzano, iris, tabac blond, tanin soyeux.</p>
         </article>
 
-        <article class="menu-item" data-reveal="up">
+        <article class="menu-item">
           <div class="menu-item__head">
             <h3 class="menu-item__name">Barolo — G. D. Vajra</h3>
             <span class="menu-item__leader" aria-hidden="true"></span>
@@ -589,22 +598,22 @@
         </article>
       </div>
 
-      <p class="text-center" style="margin-top:clamp(2.5rem,5vw,4rem);font-size:0.8125rem;color:var(--text-faint)" data-reveal="up">
+      <p class="text-center" style="margin-top:clamp(2.5rem,5vw,4rem);font-size:0.8125rem;color:var(--text-faint)">
         Carte complète des 240 références présentée en salle. Droit de bouchon : 35 € par bouteille.
       </p>
     </div>
   </section>
 
   <section class="cta-band">
-    <div class="photo-band" data-reveal="mask">
-      <div class="frame" data-parallax data-caption="cave-voutee.webp">
+    <div class="photo-band">
+      <div class="frame" data-caption="cave-voutee.webp">
         <img src="assets/images/cave-voutee.webp" alt="La cave voûtée du restaurant GIOIA" width="680" height="453" loading="lazy" decoding="async">
       </div>
     </div>
-    <div class="container cta-band__inner" data-reveal-group="110">
-      <p class="eyebrow eyebrow--center" data-reveal="up">Réservation</p>
-      <h2 class="heading-rule" data-reveal="up">Prêt à passer<br><span class="display-italic">à table ?</span></h2>
-      <div class="btn-group" style="justify-content:center;margin-top:2.5rem" data-reveal="up">
+    <div class="container cta-band__inner">
+      <p class="eyebrow eyebrow--center">Réservation</p>
+      <h2 class="heading-rule">Prêt à passer<br><span class="display-italic">à table ?</span></h2>
+      <div class="btn-group" style="justify-content:center;margin-top:2.5rem">
         <a class="btn btn--gold" href="reservation.html">Réserver en ligne</a>
         <a class="btn btn--ghost" href="le-lieu.html">Découvrir le lieu</a>
       </div>
@@ -615,57 +624,63 @@
 
 <footer class="site-footer">
   <div class="container">
+    <a class="footer-seal" href="index.html" aria-label="GIOIA, retour à l'accueil">
+      <svg class="brand__seal" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M43 21 A11 11 0 0 0 21 21 A11 11 0 0 0 21 43 A11 11 0 0 0 43 43 A11 11 0 0 0 43 21 Z"
+              stroke="currentColor" stroke-width="1.1"/>
+        <text x="32" y="39" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif"
+              font-size="23" fill="currentColor">G</text>
+      </svg>
+      <span class="brand__name">Gioia</span>
+      <span class="brand__tag">Paris</span>
+    </a>
+
     <div class="footer-top">
-      <div class="footer-brand">
-        <p class="footer-brand__name">GIOIA</p>
-        <div class="rule-tricolore" aria-hidden="true"></div>
-        <p>Restaurant italien gastronomique, rue Dauphine, dans le 6<sup>e</sup> arrondissement de Paris. Cuisine d’auteur, cave voûtée, bar à cocktails.</p>
+      <div class="footer-col">
+        <p><a class="link-line" href="mailto:gioia.odeon@gmail.com">gioia.odeon@gmail.com</a></p>
+        <p><a class="link-line" href="tel:+33184754175">+33 1 84 75 41 75</a></p>
+        <p>35 rue Dauphine, 75006 Paris</p>
         <ul class="footer-social">
           <li><a href="https://www.instagram.com/gioia.odeon/" aria-label="Instagram" rel="noopener noreferrer" target="_blank">
-            <svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="1.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="10" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="15.2" cy="4.8" r="1" fill="currentColor"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="1.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="10" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="15.2" cy="4.8" r="1" fill="currentColor"/></svg>
           </a></li>
           <li><a href="https://www.facebook.com/p/Gioia-Paris-Od%C3%A9on-61570011088949/" aria-label="Facebook" rel="noopener noreferrer" target="_blank">
-            <svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 6.5h2.2V3.6h-2.6c-2.3 0-3.6 1.4-3.6 3.7v1.5H6.2v3h2.3V19h3.1v-7.2h2.3l.4-3h-2.7V7.6c0-.8.3-1.1.9-1.1z" fill="currentColor"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 6.5h2.2V3.6h-2.6c-2.3 0-3.6 1.4-3.6 3.7v1.5H6.2v3h2.3V19h3.1v-7.2h2.3l.4-3h-2.7V7.6c0-.8.3-1.1.9-1.1z" fill="currentColor"/></svg>
           </a></li>
           <li><a href="mailto:gioia.odeon@gmail.com" aria-label="Nous écrire">
-            <svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="4" width="17" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M2 5l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="4" width="17" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M2 5l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
           </a></li>
         </ul>
       </div>
 
-      <div class="info-block">
-        <h3>Adresse</h3>
-        <p>35 rue Dauphine<br>75006 Paris</p>
-        <p><a class="link-line" href="https://maps.google.com/?q=35+rue+Dauphine+75006+Paris" rel="noopener noreferrer" target="_blank">Itinéraire</a></p>
-        <p>Métro Odéon · Pont-Neuf</p>
+      <!-- Invitation à la lettre d'information. Faute de service d'envoi, le
+           bouton ouvre le courrielleur du visiteur : rien n'est simulé. À
+           rebrancher sur Brevo, Mailchimp ou l'outil de votre choix. -->
+      <div class="footer-col footer-col--center">
+        <p class="footer-news__label">Abonnez-vous à nos actualités</p>
+        <form class="footer-news" action="mailto:gioia.odeon@gmail.com" method="post" enctype="text/plain">
+          <input type="email" name="email" placeholder="Votre email" aria-label="Votre adresse électronique" required>
+          <button type="submit" aria-label="S'abonner">
+            <svg width="22" height="8" viewBox="0 0 24 8" aria-hidden="true"><path d="M0 4h22M18 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+          </button>
+        </form>
+        <label class="footer-news__consent">
+          <input type="checkbox" required>
+          <span>En cochant cette case, vous acceptez que vos informations soient utilisées pour recevoir notre lettre. Pour en savoir plus sur l'utilisation de vos données, consultez notre <a href="le-lieu.html#acces">politique de protection des données</a>.</span>
+        </label>
       </div>
 
-      <div class="info-block">
-        <h3>Horaires</h3>
-        <dl style="margin:0">
-          <div class="hours-row"><dt>Lundi – Dimanche</dt><dd>12h – 22h30</dd></div>
-          <div class="hours-row"><dt>Service</dt><dd>continu, 7 jours sur 7</dd></div>
-        </dl>
-      </div>
-
-      <div class="info-block">
-        <h3>Contact</h3>
+      <div class="footer-col footer-col--end">
         <ul>
-          <li><a class="link-line" href="tel:+33184754175">+33 1 84 75 41 75</a></li>
-          <li><a class="link-line" href="mailto:gioia.odeon@gmail.com">gioia.odeon@gmail.com</a></li>
-          <li><a class="link-line" href="reservation.html">Réserver une table</a></li>
-          <li><a class="link-line" href="le-lieu.html#privatisation">Privatisation</a></li>
+          <li><a class="link-line" href="mailto:gioia.odeon@gmail.com?subject=Contact%20presse">Contact presse</a></li>
+          <li><a class="link-line" href="le-lieu.html#acces">Mentions légales</a></li>
+          <li><a class="link-line" href="le-lieu.html#acces">Gestion des cookies</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>© <span data-year>2026</span> GIOIA Ristorante — Tous droits réservés.</p>
-      <ul>
-        <li><a href="le-lieu.html#acces">Accès</a></li>
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="reservation.html">Réservation</a></li>
-      </ul>
+      <p>© <span data-year>2026</span> GIOIA Ristorante</p>
     </div>
   </div>
 </footer>

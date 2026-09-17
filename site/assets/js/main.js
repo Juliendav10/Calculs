@@ -1,7 +1,8 @@
 /* =============================================================================
    GIOIA — Script principal
-   Préchargeur, transitions de page, révélations au scroll, parallaxe,
-   navigation, curseur sur-mesure, galerie, accordéons.
+   Préchargeur, transitions de page, en-tête, menu, défilé du hero,
+   ruban photographique, accordéons, galerie.
+   Aucune révélation au scroll : la référence n'en a pas.
    Aucune dépendance externe.
    ========================================================================== */
 
@@ -147,87 +148,6 @@
         root.classList.remove('is-navigating');
       }
     });
-  }
-
-  /* ---------------------------------------------------------------------- */
-  /* Révélations au scroll                                                  */
-  /* ---------------------------------------------------------------------- */
-
-  function initReveals() {
-    var targets = $$('[data-reveal], .line-mask');
-    if (!targets.length) { return; }
-
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-      targets.forEach(function (el) { el.classList.add('is-visible'); });
-      return;
-    }
-
-    // Décalage automatique pour les groupes
-    $$('[data-reveal-group]').forEach(function (group) {
-      var step = parseInt(group.getAttribute('data-reveal-group'), 10) || 110;
-      $$('[data-reveal], .line-mask', group).forEach(function (child, i) {
-        if (!child.style.getPropertyValue('--reveal-delay')) {
-          child.style.setProperty('--reveal-delay', (i * step) + 'ms');
-        }
-      });
-    });
-
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-
-    targets.forEach(function (el) { observer.observe(el); });
-  }
-
-  /* ---------------------------------------------------------------------- */
-  /* Parallaxe — les bandes photographiques dérivent pendant qu'on les passe */
-  /* ---------------------------------------------------------------------- */
-
-  function initParallax() {
-    var items = $$('[data-parallax]');
-    if (!items.length || reduceMotion || !('IntersectionObserver' in window)) { return; }
-
-    var live = [];
-    var ticking = false;
-
-    function request() {
-      if (ticking) { return; }
-      ticking = true;
-      requestAnimationFrame(paint);
-    }
-
-    function paint() {
-      ticking = false;
-      var vh = window.innerHeight;
-      live.forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        // Progression du cadre dans la fenêtre : -1 dessous, 0 au centre, 1 dessus.
-        var p = ((r.top + r.height / 2) - vh / 2) / ((vh + r.height) / 2);
-        p = Math.max(-1, Math.min(1, p));
-        // L'image est agrandie de 16 % : la course reste sous le débord.
-        var amp = Math.min(r.height * 0.07, 46);
-        el.style.setProperty('--parallax', (p * amp).toFixed(1) + 'px');
-      });
-    }
-
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        var i = live.indexOf(entry.target);
-        if (entry.isIntersecting && i === -1) { live.push(entry.target); }
-        else if (!entry.isIntersecting && i !== -1) { live.splice(i, 1); }
-      });
-      if (live.length) { request(); }
-    }, { rootMargin: '12% 0px' });
-
-    items.forEach(function (el) { observer.observe(el); });
-    window.addEventListener('scroll', request, { passive: true });
-    window.addEventListener('resize', request, { passive: true });
-    paint();
   }
 
   /* ---------------------------------------------------------------------- */
@@ -480,8 +400,6 @@
     initImageFallback();
     initPreloader();
     initPageTransitions();
-    initReveals();
-    initParallax();
     initHeader();
     initMobileMenu();
     initHeroSlideshow();

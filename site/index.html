@@ -116,18 +116,27 @@
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__list">
         <li><a class="nav__link" href="index.html" aria-current="page">Accueil</a></li>
-        <li><a class="nav__link" href="la-carte.html">La Carte</a></li>
-        <li><a class="nav__link" href="le-lieu.html">Le Lieu</a></li>
+        <li><a class="nav__link" href="la-carte.html">La carte</a></li>
+        <li><a class="nav__link" href="le-lieu.html">Le lieu</a></li>
       </ul>
     </nav>
 
     <a class="brand" href="index.html" aria-label="GIOIA, retour à l'accueil">
-      <span class="brand__name">GIOIA</span>
-      <span class="brand__tag">Ristorante · Paris 6e</span>
+      <svg class="brand__seal" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M43 21 A11 11 0 0 0 21 21 A11 11 0 0 0 21 43 A11 11 0 0 0 43 43 A11 11 0 0 0 43 21 Z"
+              stroke="currentColor" stroke-width="1.1"/>
+        <text x="32" y="39" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif"
+              font-size="23" fill="currentColor">G</text>
+      </svg>
+      <span class="brand__name">Gioia</span>
+      <span class="brand__tag">Paris</span>
     </a>
 
     <div class="header-actions">
-      <a class="header-aside" href="tel:+33184754175">+33 1 84 75 41 75</a>
+      <p class="lang" aria-label="Langue">
+        <a href="index.html" aria-current="true" lang="fr">FR</a>
+        <a href="index.html" lang="en" title="English version — à venir">EN</a>
+      </p>
       <a class="btn btn--gold" href="reservation.html">Réserver</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu">
         <span></span><span></span><span></span>
@@ -186,11 +195,11 @@
     </span>
 
     <div class="hero__inner">
-      <h1 class="hero__claim" data-reveal="up">
+      <h1 class="hero__claim">
         <span class="visually-hidden">GIOIA Odéon, restaurant italien, 35 rue Dauphine, Paris 6e. </span>
         La rencontre de la table italienne<br>et de l’art de vivre parisien
       </h1>
-      <a class="hero__cta" href="reservation.html" data-reveal="up" style="--reveal-delay:260ms">
+      <a class="hero__cta" href="reservation.html">
         Réserver une table
       </a>
     </div>
@@ -204,176 +213,46 @@
   </section>
 
   <!-- ============================= CHAPEAU ============================ -->
-  <!-- Paragraphe d'accueil centré : adresse, service et espaces en cinq lignes.
-       Toutes les informations sont celles du restaurant. -->
-  <section class="section section--intro" aria-label="En quelques mots">
+  <section class="section section--intro" aria-labelledby="intro-title">
     <div class="container">
-      <div class="intro" data-reveal-group="120">
-        <p data-reveal="up">
-          À deux pas du Pont-Neuf et du carrefour de l’Odéon, au <strong>35 rue Dauphine</strong>,
-          dans le 6<sup>e</sup> arrondissement de Paris, se trouve
+      <div class="intro">
+        <h1 class="intro__title heading-rule" id="intro-title">
+          <span class="visually-hidden">GIOIA Odéon — </span>La table italienne, du midi au soir
+        </h1>
+        <p>
+          À deux pas du Pont-Neuf et du carrefour de l’Odéon, au 35 rue Dauphine, dans le 6<sup>e</sup> arrondissement de Paris,<br>
+          se trouve<br>
+          GIOIA Ristorante.<br>
+          Table italienne d’auteur servie sans interruption, de midi à 22h30, sept jours sur sept.<br>
+          Salle sous verrières au rez-de-chaussée, cave voûtée en pierre au sous-sol, comptoir de marbre pour l’aperitivo.<br>
+          Déjeuner rapide, dîner qui s’étire ou verre au bar : la maison reçoit à toute heure de la journée.
         </p>
-        <p data-reveal="up" style="font-family:var(--font-display);font-size:clamp(1.5rem,2.6vw,2.25rem);line-height:1.2;color:var(--text-strong);margin-top:0.9rem">
-          GIOIA Ristorante.
-        </p>
-        <p data-reveal="up">
-          Table italienne d’auteur servie sans interruption, de midi à 22h30, sept jours sur sept.
-          Salle sous verrières au rez-de-chaussée, cave voûtée en pierre au sous-sol,
-          comptoir de marbre pour l’aperitivo.
-        </p>
-        <p data-reveal="up">
-          Déjeuner rapide, dîner qui s’étire ou verre au bar : la maison reçoit à toute heure
-          de la journée.
-        </p>
-        <div class="actions actions--center" data-reveal="up">
+        <div class="actions actions--center">
           <a class="btn btn--filled" href="reservation.html">Réserver</a>
-          <a class="btn" href="la-carte.html">Voir la carte</a>
+          <a class="btn" href="la-carte.html">Voir le menu</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================ MANIFESTE =========================== -->
-  <section class="section" id="manifeste" aria-labelledby="manifeste-title">
+  <section class="section" aria-labelledby="b1-title">
     <div class="container">
-      <div class="manifesto">
-        <div data-reveal="up">
-          <p class="eyebrow">01 — La maison</p>
-          <span class="rule-v" style="margin-inline:0"></span>
+      <div class="split">
+        <div class="split__media">
+          <div class="duo">
+          <a class="duo__a" href="le-lieu.html#la-salle"><img src="assets/images/salle.webp" alt="La salle principale de GIOIA, tables rondes et grandes verrières" width="680" height="510" loading="lazy" decoding="async"></a>
+          <a class="duo__b" href="le-lieu.html#la-salle"><img src="assets/images/facade.webp" alt="La façade de GIOIA Odéon et son store bleu et blanc" width="680" height="453" loading="lazy" decoding="async"></a>
+        </div>
         </div>
 
-        <div data-reveal-group="120">
-          <h2 id="manifeste-title" class="manifesto__quote" data-reveal="up">
-            <span class="quote-mark" aria-hidden="true">«</span>
-            La gioia, c’est ce moment précis où une assiette juste, un vin bien choisi
-            et une pierre vieille de quatre siècles cessent d’être trois choses distinctes.
-          </h2>
-          <p class="lead" data-reveal="up" style="margin-top:2.5rem">
-            Sous les voûtes d’un ancien cellier du XVII<sup>e</sup> siècle, à deux pas du Pont-Neuf,
-            GIOIA cultive une idée simple de la haute cuisine italienne : peu d’ingrédients,
-            tous irréprochables, travaillés avec une précision d’orfèvre. Nos pâtes sont
-            extrudées au bronze à Gragnano, nos huiles pressées en Pouilles, nos poissons
-            débarqués chaque matin.
-          </p>
-          <p class="manifesto__sign" data-reveal="up">La maison Gioia</p>
-        </div>
-      </div>
-
-      <!-- Chiffres indicatifs : à confirmer par le restaurant avant mise en ligne. -->
-      <div class="stats" data-reveal-group="90">
-        <div class="stat" data-reveal="up">
-          <div class="stat__value">72</div>
-          <p class="stat__label">Couverts sur deux niveaux</p>
-        </div>
-        <div class="stat" data-reveal="up">
-          <div class="stat__value">240</div>
-          <p class="stat__label">Références au caveau</p>
-        </div>
-        <div class="stat" data-reveal="up">
-          <div class="stat__value">18</div>
-          <p class="stat__label">Producteurs italiens partenaires</p>
-        </div>
-        <div class="stat" data-reveal="up">
-          <div class="stat__value">XVII<sup>e</sup></div>
-          <p class="stat__label">Siècle de la cave voûtée</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== BANDE ============================= -->
-  <section class="band" aria-label="La maison en une phrase">
-    <div class="photo-band" data-reveal="mask">
-      <div class="frame" data-parallax data-caption="facade.webp">
-        <img src="assets/images/facade.webp" alt="La façade de GIOIA Odéon, 35 rue Dauphine, et son store bleu et blanc" width="680" height="453" loading="lazy" decoding="async">
-      </div>
-    </div>
-    <div class="container band__inner" data-reveal="up">
-      <p class="band__line">Si mangia bene<br>dove si torna volentieri.</p>
-      <p class="band__source">On mange bien là où l’on revient</p>
-    </div>
-  </section>
-
-
-  <!-- ============================= ESPACES ============================ -->
-  <section class="section" aria-labelledby="espaces-title">
-    <div class="container">
-      <div class="section-head section-head--split">
-        <div data-reveal="up">
-          <p class="eyebrow">02 — Les lieux</p>
-          <h2 class="heading-rule" id="espaces-title">Trois atmosphères,<br><span class="display-italic">une même adresse</span></h2>
-        </div>
-        <p class="lead" data-reveal="up" style="--reveal-delay:140ms">
-          Du comptoir de marbre au cellier de pierre, chaque espace a sa lumière,
-          son rythme et sa façon de recevoir.
-        </p>
-      </div>
-
-      <div class="cards cards--staggered" data-reveal-group="140">
-        <a class="card" href="le-lieu.html#la-salle" data-reveal="mask">
-          <div class="frame frame--hoverable" data-caption="salle.webp">
-            <img src="assets/images/salle.webp" alt="Salle principale de GIOIA avec tables rondes, marbre noir et suspensions en rotin" width="680" height="510" loading="lazy" decoding="async">
-          </div>
-          <div class="card__body">
-            <span class="card__index">Rez-de-chaussée</span>
-            <h3 class="card__title">La Salle</h3>
-            <p class="card__text">Rez-de-chaussée baigné de lumière, marbre veiné et grandes verrières sur la rue Dauphine.</p>
-          </div>
-        </a>
-
-        <a class="card" href="le-lieu.html#la-cave" data-reveal="mask">
-          <div class="frame frame--hoverable" data-caption="cave-voutee.webp">
-            <img src="assets/images/cave-voutee.webp" alt="La cave voûtée en pierre de taille de GIOIA, tables dressées sous les arches" width="680" height="453" loading="lazy" decoding="async">
-          </div>
-          <div class="card__body">
-            <span class="card__index">Sous-sol</span>
-            <h3 class="card__title">La Cave voûtée</h3>
-            <p class="card__text">Pierre du XVII<sup>e</sup> siècle, lumière basse et velours grenat. Notre salle la plus intime.</p>
-          </div>
-        </a>
-
-        <a class="card" href="le-lieu.html#il-bar" data-reveal="mask">
-          <div class="frame frame--hoverable" data-caption="bar.webp">
-            <img src="assets/images/bar.webp" alt="Le bar de GIOIA, comptoir de marbre et tabourets en cuir cognac sous les voûtes" width="680" height="453" loading="lazy" decoding="async">
-          </div>
-          <div class="card__body">
-            <span class="card__index">Au comptoir</span>
-            <h3 class="card__title">Il Bar</h3>
-            <p class="card__text">Quelques places au comptoir pour l’aperitivo, amaro et cicchetti à l’appui.</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================= CUISINE ============================ -->
-  <section class="section bg-ink-2" aria-labelledby="cuisine-title">
-    <div class="container">
-      <div class="split split--reverse">
-        <div class="split__media" data-reveal="mask">
-          <div class="frame frame--ratio-3-4 frame--hoverable" data-caption="fusilli.webp">
-            <img src="assets/images/fusilli.webp" alt="Fusilli de Gragnano au ragù de poissons de roche, servis avec un verre de vin blanc" width="382" height="510" loading="lazy" decoding="async">
-          </div>
-        </div>
-
-        <div class="split__body" data-reveal-group="110">
-          <p class="eyebrow" data-reveal="up">03 — La cuisine</p>
-          <h2 class="heading-rule" id="cuisine-title" data-reveal="up">Le produit,<br><span class="display-italic">puis le silence</span></h2>
-          <p data-reveal="up">
-            Chaque semaine, la carte se règle sur ce que la marée et les maraîchers nous
-            accordent. Le reste vient d’Italie : la burrata d’Andria le mardi, la ricotta
-            di pecora de Sicile le jeudi, la truffe d’Alba dès novembre.
-          </p>
-          <p data-reveal="up">
-            Nos pâtes sèchent lentement, nos bouillons réduisent douze heures, nos desserts
-            refusent le sucre inutile. Ce n’est pas une posture : c’est la seule manière
-            que nous connaissions de faire goûter l’Italie telle qu’elle est.
-          </p>
-          <div class="actions" data-reveal="up">
+        <div class="split__body">
+          <h2 class="heading-rule" id="b1-title">La salle</h2>
+          <p>Au rez-de-chaussée, sous de grandes verrières ouvertes sur la rue Dauphine, GIOIA sert une cuisine italienne d’auteur du déjeuner au dîner, sans interruption.</p>
+          <p>Marbre veiné, suspensions de rotin et tables rondes : la salle reçoit aussi bien un déjeuner rapide qu’un dîner qui s’étire.</p>
+          <div class="actions">
             <a class="btn" href="reservation.html">Réserver</a>
-            <a class="link-arrow" href="la-carte.html">
-              Voir la carte complète
-              <svg width="24" height="8" viewBox="0 0 24 8" aria-hidden="true"><path d="M0 4h22M18 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+            <a class="link-arrow" href="le-lieu.html#la-salle">Découvrir
+              <svg width="7" height="12" viewBox="0 0 7 12" aria-hidden="true"><path d="M1 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
             </a>
           </div>
         </div>
@@ -381,231 +260,195 @@
     </div>
   </section>
 
-  <!-- ========================= SIGNATURES ============================= -->
-  <section class="section bg-ink-3" aria-labelledby="signatures-title">
+  <section class="section" aria-labelledby="b2-title">
     <div class="container">
-      <div class="signature">
-        <div class="signature__media" data-reveal="mask">
-          <div class="frame frame--ratio-3-4 frame--hoverable" data-caption="aperitivo.webp">
-            <img src="assets/images/aperitivo.webp" alt="Deux cocktails et une assiette de pâtes sur une table de GIOIA Odéon" width="408" height="510" loading="lazy" decoding="async">
-          </div>
+      <div class="split split--reverse">
+        <div class="split__media">
+          <div class="duo duo--right">
+          <a class="duo__a" href="le-lieu.html#la-cave"><img src="assets/images/cave-voutee.webp" alt="La cave voûtée en pierre de taille, tables dressées sous les arches" width="680" height="453" loading="lazy" decoding="async"></a>
+          <a class="duo__b" href="le-lieu.html#la-cave"><img src="assets/images/fusilli.webp" alt="Fusilli de Gragnano au ragù de poissons de roche" width="382" height="510" loading="lazy" decoding="async"></a>
+        </div>
         </div>
 
-        <div data-reveal-group="80">
-          <p class="eyebrow" data-reveal="up">04 — Signatures</p>
-          <h2 class="heading-rule" id="signatures-title" data-reveal="up" style="margin-bottom:clamp(2rem,4vw,3rem)">
-            Quelques assiettes<br><span class="display-italic">qui nous ressemblent</span>
-          </h2>
-
-          <div class="signature__list">
-            <article class="menu-item" data-reveal="up">
-              <div class="menu-item__head">
-                <h3 class="menu-item__name">Fusilli al Ragù di Mare</h3>
-                <span class="menu-item__leader" aria-hidden="true"></span>
-                <span class="menu-item__price">32 €</span>
-              </div>
-              <p class="menu-item__desc">Fusilli de Gragnano, ragù de poissons de roche, datterini confits, herbes du jardin.</p>
-            </article>
-
-            <article class="menu-item" data-reveal="up">
-              <div class="menu-item__head">
-                <h3 class="menu-item__name">Tagliolini al Tartufo</h3>
-                <span class="menu-item__leader" aria-hidden="true"></span>
-                <span class="menu-item__price">46 €</span>
-              </div>
-              <p class="menu-item__desc">Tagliolini aux jaunes d’œufs, beurre noisette, truffe noire d’Alba râpée en salle.</p>
-            </article>
-
-            <article class="menu-item" data-reveal="up">
-              <div class="menu-item__head">
-                <h3 class="menu-item__name">Branzino in Crosta di Sale</h3>
-                <span class="menu-item__leader" aria-hidden="true"></span>
-                <span class="menu-item__price">42 €</span>
-              </div>
-              <p class="menu-item__desc">Bar de ligne en croûte de sel de Cervia, artichauts poivrade, huile Taggiasca.</p>
-            </article>
-
-            <article class="menu-item" data-reveal="up">
-              <div class="menu-item__head">
-                <h3 class="menu-item__name">Sfera al Cioccolato</h3>
-                <span class="menu-item__leader" aria-hidden="true"></span>
-                <span class="menu-item__price">17 €</span>
-              </div>
-              <p class="menu-item__desc">Chocolat Amedei 70 %, cœur noisette du Piémont, glace au sel de Cervia.</p>
-            </article>
-          </div>
-
-          <div style="margin-top:clamp(2rem,4vw,3rem)" data-reveal="up">
-            <a class="btn" href="la-carte.html">La carte &amp; les vins</a>
+        <div class="split__body">
+          <h2 class="heading-rule" id="b2-title">La cave voûtée</h2>
+          <p>Au sous-sol, sous les arches de pierre de taille d’un ancien cellier, la cave voûtée est notre salle la plus intime : lumière basse, murs nus, une vingtaine de couverts.</p>
+          <p>Elle se privatise pour un dîner de famille, un déjeuner d’affaires ou une soirée entre amis.</p>
+          <div class="actions">
+            <a class="btn" href="reservation.html">Réserver</a>
+            <a class="link-arrow" href="le-lieu.html#la-cave">Découvrir
+              <svg width="7" height="12" viewBox="0 0 7 12" aria-hidden="true"><path d="M1 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+            </a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================ APPEL =============================== -->
-  <section class="cta-band" aria-labelledby="cta-title">
-    <div class="photo-band" data-reveal="mask">
-      <div class="frame" data-parallax data-caption="cave-voutee.webp">
-        <img src="assets/images/cave-voutee.webp" alt="Les tables dressées sous les voûtes de pierre de GIOIA Odéon" width="680" height="453" loading="lazy" decoding="async">
-      </div>
-    </div>
-    <div class="container cta-band__inner" data-reveal-group="110">
-      <p class="eyebrow eyebrow--center" data-reveal="up">Réservation</p>
-      <h2 class="heading-rule" id="cta-title" data-reveal="up">Votre table<br><span class="display-italic">vous attend</span></h2>
-      <p class="lead" style="margin-inline:auto" data-reveal="up">
-        Déjeuner sous les verrières, dîner sous les voûtes ou aperitivo au comptoir :
-        réservez en moins d’une minute.
-      </p>
-      <div class="btn-group" style="justify-content:center;margin-top:2.5rem" data-reveal="up">
-        <a class="btn btn--gold" href="reservation.html">Réserver en ligne</a>
-        <a class="btn btn--ghost" href="tel:+33184754175">+33 1 84 75 41 75</a>
+  <section class="section" aria-labelledby="b3-title">
+    <div class="container">
+      <div class="split">
+        <div class="split__media">
+          <div class="duo">
+          <a class="duo__a" href="le-lieu.html#il-bar"><img src="assets/images/bar.webp" alt="Le comptoir de marbre du bar de GIOIA sous les voûtes" width="680" height="453" loading="lazy" decoding="async"></a>
+          <a class="duo__b" href="le-lieu.html#il-bar"><img src="assets/images/aperitivo.webp" alt="Deux cocktails et une assiette de pâtes sur une table de GIOIA" width="408" height="510" loading="lazy" decoding="async"></a>
+        </div>
+        </div>
+
+        <div class="split__body">
+          <h2 class="heading-rule" id="b3-title">Il Bar</h2>
+          <p>Quelques places au comptoir de marbre, pour l’aperitivo à l’italienne : amaro, spritz maison et cicchetti à partager, servis jusque tard.</p>
+          <p>On y vient avant de passer à table, ou seulement pour un verre.</p>
+          <div class="actions">
+            <a class="btn" href="reservation.html">Réserver</a>
+            <a class="link-arrow" href="le-lieu.html#il-bar">Découvrir
+              <svg width="7" height="12" viewBox="0 0 7 12" aria-hidden="true"><path d="M1 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ========================= INFORMATIONS =========================== -->
-  <!-- Trois colonnes centrées, sur le modèle de la référence. Les horaires,
-       l'adresse et le téléphone sont ceux du restaurant ; rien n'est inventé
-       ici, les demandes de groupe et de candidature passent par l'adresse
-       courriel publique de la maison. -->
   <section class="section" aria-labelledby="infos-title">
     <div class="container">
       <h2 class="visually-hidden" id="infos-title">Informations pratiques</h2>
-      <div class="infos" data-reveal-group="130">
+      <div class="infos">
 
-        <div class="infos__col" data-reveal="up">
+        <div class="infos__col">
           <h3 class="infos__title heading-rule">Informations</h3>
           <p>Réservation conseillée</p>
-          <p>
-            Lundi au dimanche 12h – 22h30<br>
-            Service continu, 7 jours sur 7
-          </p>
-          <p>
-            <strong>35 rue Dauphine</strong><br>
-            75006 Paris · Métro Odéon
-          </p>
-          <p>
-            <a class="link-line" href="reservation.html">Réservation en ligne</a><br>
-            ou par téléphone au<br>
-            <a class="link-line" href="tel:+33184754175">+33 1 84 75 41 75</a>
-          </p>
+          <p>Lundi au dimanche 12h – 22h30<br>Service continu, 7 jours sur 7</p>
+          <p><strong>35 rue Dauphine</strong><br>75006 Paris · Métro Odéon</p>
+          <p><a class="link-line" href="reservation.html">Réservation en ligne</a><br>
+             ou par téléphone au<br>
+             <a class="link-line" href="tel:+33184754175">+33 1 84 75 41 75</a></p>
         </div>
 
-        <div class="infos__col" data-reveal="up">
+        <div class="infos__col">
           <h3 class="infos__title heading-rule">Groupes<br>&amp; privatisation</h3>
-          <p>
-            Pour une grande tablée ou un dîner à plusieurs tables, écrivez-nous :
-            nous convenons du menu et du service avec vous en amont.
-          </p>
-          <p>
-            La cave voûtée se privatise pour vos déjeuners d’affaires, vos dîners
-            de famille et vos soirées.
-          </p>
-          <p>
-            <a class="link-line" href="le-lieu.html#privatisation">Privatiser la cave voûtée</a>
-          </p>
+          <p>Pour une grande tablée ou un dîner à plusieurs tables, écrivez-nous : nous convenons du menu et du service avec vous en amont.</p>
+          <p>La cave voûtée se privatise pour vos déjeuners d’affaires, vos dîners de famille et vos soirées.</p>
+          <p><a class="link-line" href="le-lieu.html#privatisation">Privatiser la cave voûtée</a></p>
         </div>
 
-        <div class="infos__col" data-reveal="up">
-          <h3 class="infos__title heading-rule">Nous rejoindre</h3>
-          <p>
-            GIOIA recrute en salle, en cuisine et au bar, en CDI comme en extra.
-          </p>
-          <p>
-            Envoyez votre candidature et nous revenons vers vous.
-          </p>
-          <p>
-            <a class="link-line" href="mailto:gioia.odeon@gmail.com?subject=Candidature%20GIOIA%20Od%C3%A9on">Je postule</a>
-          </p>
+        <div class="infos__col">
+          <h3 class="infos__title heading-rule">Recrutement</h3>
+          <p>GIOIA est en quête de nouveaux talents pour enrichir ses équipes.</p>
+          <p>Découvrez nos offres en salle, en cuisine et au bar, et rejoignez notre équipe.</p>
+          <p><a class="link-line" href="mailto:gioia.odeon@gmail.com?subject=Candidature%20GIOIA%20Od%C3%A9on">Je postule</a></p>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- =========================== MOSAÏQUE ============================= -->
-  <!-- Bande photographique pleine largeur, tuiles inégales séparées d'un
-       filet blanc. Aucun texte par-dessus : la règle de la maison tient. -->
-  <section class="mosaic" aria-label="La maison en images" data-reveal-group="90">
-    <a class="mosaic__tile" href="le-lieu.html" data-reveal="mask">
-      <img src="assets/images/facade.webp" alt="La façade de GIOIA Odéon, rue Dauphine" width="680" height="453" loading="lazy" decoding="async">
-    </a>
-    <a class="mosaic__tile" href="le-lieu.html#la-salle" data-reveal="mask">
-      <img src="assets/images/salle.webp" alt="La salle du rez-de-chaussée et ses verrières" width="680" height="510" loading="lazy" decoding="async">
-    </a>
-    <a class="mosaic__tile" href="la-carte.html" data-reveal="mask">
-      <img src="assets/images/fusilli.webp" alt="Fusilli de Gragnano au ragù de poissons de roche" width="382" height="510" loading="lazy" decoding="async">
-    </a>
-    <a class="mosaic__tile" href="le-lieu.html#il-bar" data-reveal="mask">
-      <img src="assets/images/bar.webp" alt="Le comptoir de marbre du bar de GIOIA" width="680" height="453" loading="lazy" decoding="async">
-    </a>
-    <a class="mosaic__tile" href="le-lieu.html#la-cave" data-reveal="mask">
-      <img src="assets/images/cave-voutee.webp" alt="La cave voûtée du XVIIe siècle, tables dressées sous les arches" width="680" height="453" loading="lazy" decoding="async">
-    </a>
-    <a class="mosaic__tile" href="la-carte.html#vins" data-reveal="mask">
-      <img src="assets/images/aperitivo.webp" alt="Deux cocktails de l’aperitivo servis au bar" width="408" height="510" loading="lazy" decoding="async">
-    </a>
-    <a class="mosaic__tile" href="le-lieu.html#acces" data-reveal="mask">
-      <img src="assets/images/facade-nuit.webp" alt="La devanture de GIOIA Odéon éclairée à la nuit tombée" width="680" height="453" loading="lazy" decoding="async">
-    </a>
+  <!-- ========================== MOSAÏQUE ============================= -->
+  <!-- Deux rubans pleine largeur qui glissent en sens opposés, à 72 px par
+       seconde — la vitesse est celle relevée image par image sur la
+       référence. Chaque ruban est écrit deux fois : la boucle est sans
+       raccord. Aucun texte par-dessus. -->
+  <section class="marquee" aria-label="La maison en images">
+    <div class="marquee__row">
+      <div class="marquee__track">
+      <span class="marquee__tile marquee__tile--w2"><img src="assets/images/facade.webp" alt="La façade de GIOIA Odéon, rue Dauphine" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/salle.webp" alt="La salle du rez-de-chaussée et ses verrières" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w3"><img src="assets/images/fusilli.webp" alt="Fusilli de Gragnano au ragù de poissons" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/bar.webp" alt="Le comptoir de marbre du bar" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w2"><img src="assets/images/cave-voutee.webp" alt="La cave voûtée en pierre de taille" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w3"><img src="assets/images/aperitivo.webp" alt="Deux cocktails de l’aperitivo" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/facade-nuit.webp" alt="La devanture éclairée à la nuit tombée" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w2"><img src="assets/images/facade.webp" alt="La façade de GIOIA Odéon, rue Dauphine" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/salle.webp" alt="La salle du rez-de-chaussée et ses verrières" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w3"><img src="assets/images/fusilli.webp" alt="Fusilli de Gragnano au ragù de poissons" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/bar.webp" alt="Le comptoir de marbre du bar" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w2"><img src="assets/images/cave-voutee.webp" alt="La cave voûtée en pierre de taille" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w3"><img src="assets/images/aperitivo.webp" alt="Deux cocktails de l’aperitivo" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/facade-nuit.webp" alt="La devanture éclairée à la nuit tombée" loading="lazy" decoding="async"></span>
+      </div>
+    </div>
+    <div class="marquee__row marquee__row--tall marquee__row--reverse">
+      <div class="marquee__track">
+      <span class="marquee__tile marquee__tile--w2"><img src="assets/images/cave-voutee.webp" alt="La cave voûtée en pierre de taille" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/bar.webp" alt="Le comptoir de marbre du bar" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/facade-nuit.webp" alt="La devanture éclairée à la nuit tombée" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w2"><img src="assets/images/facade.webp" alt="La façade de GIOIA Odéon, rue Dauphine" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w3"><img src="assets/images/aperitivo.webp" alt="Deux cocktails de l’aperitivo" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/salle.webp" alt="La salle du rez-de-chaussée et ses verrières" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w3"><img src="assets/images/fusilli.webp" alt="Fusilli de Gragnano au ragù de poissons" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w2"><img src="assets/images/cave-voutee.webp" alt="La cave voûtée en pierre de taille" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/bar.webp" alt="Le comptoir de marbre du bar" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/facade-nuit.webp" alt="La devanture éclairée à la nuit tombée" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w2"><img src="assets/images/facade.webp" alt="La façade de GIOIA Odéon, rue Dauphine" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w3"><img src="assets/images/aperitivo.webp" alt="Deux cocktails de l’aperitivo" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w1"><img src="assets/images/salle.webp" alt="La salle du rez-de-chaussée et ses verrières" loading="lazy" decoding="async"></span>
+      <span class="marquee__tile marquee__tile--w3"><img src="assets/images/fusilli.webp" alt="Fusilli de Gragnano au ragù de poissons" loading="lazy" decoding="async"></span>
+      </div>
+    </div>
   </section>
 
 </main>
 
 <footer class="site-footer">
   <div class="container">
+    <a class="footer-seal" href="index.html" aria-label="GIOIA, retour à l'accueil">
+      <svg class="brand__seal" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M43 21 A11 11 0 0 0 21 21 A11 11 0 0 0 21 43 A11 11 0 0 0 43 43 A11 11 0 0 0 43 21 Z"
+              stroke="currentColor" stroke-width="1.1"/>
+        <text x="32" y="39" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif"
+              font-size="23" fill="currentColor">G</text>
+      </svg>
+      <span class="brand__name">Gioia</span>
+      <span class="brand__tag">Paris</span>
+    </a>
+
     <div class="footer-top">
-      <div class="footer-brand">
-        <p class="footer-brand__name">GIOIA</p>
-        <div class="rule-tricolore" aria-hidden="true"></div>
-        <p>Restaurant italien gastronomique, rue Dauphine, dans le 6<sup>e</sup> arrondissement de Paris. Cuisine d’auteur, cave voûtée, bar à cocktails.</p>
+      <div class="footer-col">
+        <p><a class="link-line" href="mailto:gioia.odeon@gmail.com">gioia.odeon@gmail.com</a></p>
+        <p><a class="link-line" href="tel:+33184754175">+33 1 84 75 41 75</a></p>
+        <p>35 rue Dauphine, 75006 Paris</p>
         <ul class="footer-social">
           <li><a href="https://www.instagram.com/gioia.odeon/" aria-label="Instagram" rel="noopener noreferrer" target="_blank">
-            <svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="1.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="10" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="15.2" cy="4.8" r="1" fill="currentColor"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="1.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="10" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="15.2" cy="4.8" r="1" fill="currentColor"/></svg>
           </a></li>
           <li><a href="https://www.facebook.com/p/Gioia-Paris-Od%C3%A9on-61570011088949/" aria-label="Facebook" rel="noopener noreferrer" target="_blank">
-            <svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 6.5h2.2V3.6h-2.6c-2.3 0-3.6 1.4-3.6 3.7v1.5H6.2v3h2.3V19h3.1v-7.2h2.3l.4-3h-2.7V7.6c0-.8.3-1.1.9-1.1z" fill="currentColor"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 6.5h2.2V3.6h-2.6c-2.3 0-3.6 1.4-3.6 3.7v1.5H6.2v3h2.3V19h3.1v-7.2h2.3l.4-3h-2.7V7.6c0-.8.3-1.1.9-1.1z" fill="currentColor"/></svg>
           </a></li>
           <li><a href="mailto:gioia.odeon@gmail.com" aria-label="Nous écrire">
-            <svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="4" width="17" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M2 5l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="4" width="17" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M2 5l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
           </a></li>
         </ul>
       </div>
 
-      <div class="info-block">
-        <h3>Adresse</h3>
-        <p>35 rue Dauphine<br>75006 Paris</p>
-        <p><a class="link-line" href="https://maps.google.com/?q=35+rue+Dauphine+75006+Paris" rel="noopener noreferrer" target="_blank">Itinéraire</a></p>
-        <p>Métro Odéon · Pont-Neuf</p>
+      <!-- Invitation à la lettre d'information. Faute de service d'envoi, le
+           bouton ouvre le courrielleur du visiteur : rien n'est simulé. À
+           rebrancher sur Brevo, Mailchimp ou l'outil de votre choix. -->
+      <div class="footer-col footer-col--center">
+        <p class="footer-news__label">Abonnez-vous à nos actualités</p>
+        <form class="footer-news" action="mailto:gioia.odeon@gmail.com" method="post" enctype="text/plain">
+          <input type="email" name="email" placeholder="Votre email" aria-label="Votre adresse électronique" required>
+          <button type="submit" aria-label="S'abonner">
+            <svg width="22" height="8" viewBox="0 0 24 8" aria-hidden="true"><path d="M0 4h22M18 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+          </button>
+        </form>
+        <label class="footer-news__consent">
+          <input type="checkbox" required>
+          <span>En cochant cette case, vous acceptez que vos informations soient utilisées pour recevoir notre lettre. Pour en savoir plus sur l'utilisation de vos données, consultez notre <a href="le-lieu.html#acces">politique de protection des données</a>.</span>
+        </label>
       </div>
 
-      <div class="info-block">
-        <h3>Horaires</h3>
-        <dl style="margin:0">
-          <div class="hours-row"><dt>Lundi – Dimanche</dt><dd>12h – 22h30</dd></div>
-          <div class="hours-row"><dt>Service</dt><dd>continu, 7 jours sur 7</dd></div>
-        </dl>
-      </div>
-
-      <div class="info-block">
-        <h3>Contact</h3>
+      <div class="footer-col footer-col--end">
         <ul>
-          <li><a class="link-line" href="tel:+33184754175">+33 1 84 75 41 75</a></li>
-          <li><a class="link-line" href="mailto:gioia.odeon@gmail.com">gioia.odeon@gmail.com</a></li>
-          <li><a class="link-line" href="reservation.html">Réserver une table</a></li>
-          <li><a class="link-line" href="le-lieu.html#privatisation">Privatisation</a></li>
+          <li><a class="link-line" href="mailto:gioia.odeon@gmail.com?subject=Contact%20presse">Contact presse</a></li>
+          <li><a class="link-line" href="le-lieu.html#acces">Mentions légales</a></li>
+          <li><a class="link-line" href="le-lieu.html#acces">Gestion des cookies</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>© <span data-year>2026</span> GIOIA Ristorante — Tous droits réservés.</p>
-      <ul>
-        <li><a href="le-lieu.html#acces">Accès</a></li>
-        <li><a href="la-carte.html">Carte</a></li>
-        <li><a href="reservation.html">Réservation</a></li>
-      </ul>
+      <p>© <span data-year>2026</span> GIOIA Ristorante</p>
     </div>
   </div>
 </footer>

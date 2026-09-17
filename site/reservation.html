@@ -96,18 +96,28 @@
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__list">
         <li><a class="nav__link" href="index.html">Accueil</a></li>
-        <li><a class="nav__link" href="la-carte.html">La Carte</a></li>
-        <li><a class="nav__link" href="le-lieu.html">Le Lieu</a></li>
+        <li><a class="nav__link" href="la-carte.html">La carte</a></li>
+        <li><a class="nav__link" href="le-lieu.html">Le lieu</a></li>
       </ul>
     </nav>
 
     <a class="brand" href="index.html" aria-label="GIOIA, retour à l'accueil">
-      <span class="brand__name">GIOIA</span>
-      <span class="brand__tag">Ristorante · Paris 6e</span>
+      <svg class="brand__seal" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M43 21 A11 11 0 0 0 21 21 A11 11 0 0 0 21 43 A11 11 0 0 0 43 43 A11 11 0 0 0 43 21 Z"
+              stroke="currentColor" stroke-width="1.1"/>
+        <text x="32" y="39" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif"
+              font-size="23" fill="currentColor">G</text>
+      </svg>
+      <span class="brand__name">Gioia</span>
+      <span class="brand__tag">Paris</span>
     </a>
 
     <div class="header-actions">
-      <a class="btn btn--ghost" href="tel:+33184754175">+33 1 84 75 41 75</a>
+      <p class="lang" aria-label="Langue">
+        <a href="index.html" aria-current="true" lang="fr">FR</a>
+        <a href="index.html" lang="en" title="English version — à venir">EN</a>
+      </p>
+      <a class="btn btn--gold" href="reservation.html">Réserver</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu">
         <span></span><span></span><span></span>
       </button>
@@ -135,10 +145,10 @@
 
   <section class="page-head">
     <div class="container">
-      <p class="eyebrow eyebrow--marble" data-reveal="up">En moins d’une minute</p>
-      <h1 id="page-title" data-reveal="up">Réserver</h1>
+      <p class="eyebrow eyebrow--marble">En moins d’une minute</p>
+      <h1 id="page-title">Réserver</h1>
       <nav aria-label="Fil d'Ariane">
-        <ol class="breadcrumb" data-reveal="up" style="--reveal-delay:220ms">
+        <ol class="breadcrumb">
           <li><a href="index.html">Accueil</a></li>
           <li aria-current="page">Réservation</li>
         </ol>
@@ -146,8 +156,8 @@
     </div>
   </section>
 
-  <div class="photo-band" data-reveal="mask">
-    <div class="frame" data-parallax data-caption="salle.webp">
+  <div class="photo-band">
+    <div class="frame" data-caption="salle.webp">
       <img src="assets/images/salle.webp" alt="Salle du restaurant GIOIA prête pour le service" width="680" height="510" fetchpriority="high" decoding="async">
     </div>
   </div>
@@ -157,7 +167,7 @@
       <div class="booking">
 
         <!-- =================== FORMULAIRE =================== -->
-        <div class="booking__panel" data-reveal="up">
+        <div class="booking__panel">
 
           <ol class="stepper" aria-label="Étapes de la réservation">
             <li class="stepper__item is-active">
@@ -316,7 +326,7 @@
         </div>
 
         <!-- =================== RÉCAPITULATIF =================== -->
-        <aside class="summary" aria-label="Récapitulatif de votre réservation" data-reveal="up" style="--reveal-delay:140ms">
+        <aside class="summary" aria-label="Récapitulatif de votre réservation">
           <h2 class="summary__title">Votre table</h2>
           <dl id="summary-host" class="summary__list"></dl>
 
@@ -327,7 +337,7 @@
 
           <hr class="hairline" style="margin:1.75rem 0">
 
-          <h3 style="font-family:var(--font-sans);font-size:var(--fs-label);letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin:0 0 1rem">
+          <h3 style="font-family:var(--font-sans);font-size:var(--fs-small);color:var(--gold);margin:0 0 .75rem">
             Une question ?
           </h3>
           <p class="summary__note" style="margin-top:0">
@@ -344,11 +354,11 @@
   <!-- RÉSERVATIONS MÉMORISÉES -->
   <section class="section section--tight bg-ink-2" aria-labelledby="saved-title">
     <div class="container container--narrow">
-      <p class="eyebrow" data-reveal="up">Sur cet appareil</p>
-      <h2 id="saved-title" style="font-size:clamp(1.5rem,2.4vw,2rem);margin-bottom:1.5rem" data-reveal="up">
+      <p class="eyebrow">Sur cet appareil</p>
+      <h2 id="saved-title" style="font-size:clamp(1.5rem,2.4vw,2rem);margin-bottom:1.5rem">
         Vos dernières demandes
       </h2>
-      <div id="saved-host" data-reveal="up"></div>
+      <div id="saved-host"></div>
     </div>
   </section>
 
@@ -356,14 +366,14 @@
   <section class="section" aria-labelledby="faq-title">
     <div class="container container--narrow">
       <div class="section-head section-head--center">
-        <div data-reveal="up">
+        <div>
           <p class="eyebrow eyebrow--center">Questions fréquentes</p>
           <h2 class="heading-rule" id="faq-title">Avant de venir</h2>
         </div>
       </div>
 
-      <div class="accordion" data-reveal-group="80">
-        <div class="accordion__item" data-reveal="up">
+      <div class="accordion">
+        <div class="accordion__item">
           <h3 style="margin:0">
             <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq-1">
               Jusqu’à combien de personnes puis-je réserver en ligne ?
@@ -377,7 +387,7 @@
           </div></div>
         </div>
 
-        <div class="accordion__item" data-reveal="up">
+        <div class="accordion__item">
           <h3 style="margin:0">
             <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq-2">
               Quelle est votre politique d’annulation ?
@@ -390,7 +400,7 @@
           </div></div>
         </div>
 
-        <div class="accordion__item" data-reveal="up">
+        <div class="accordion__item">
           <h3 style="margin:0">
             <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq-3">
               Proposez-vous des menus végétariens ou sans gluten ?
@@ -404,7 +414,7 @@
           </div></div>
         </div>
 
-        <div class="accordion__item" data-reveal="up">
+        <div class="accordion__item">
           <h3 style="margin:0">
             <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq-4">
               Peut-on choisir sa salle ?
@@ -418,7 +428,7 @@
           </div></div>
         </div>
 
-        <div class="accordion__item" data-reveal="up">
+        <div class="accordion__item">
           <h3 style="margin:0">
             <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="faq-5">
               Quels sont les horaires du restaurant ?
@@ -439,57 +449,63 @@
 
 <footer class="site-footer">
   <div class="container">
+    <a class="footer-seal" href="index.html" aria-label="GIOIA, retour à l'accueil">
+      <svg class="brand__seal" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M43 21 A11 11 0 0 0 21 21 A11 11 0 0 0 21 43 A11 11 0 0 0 43 43 A11 11 0 0 0 43 21 Z"
+              stroke="currentColor" stroke-width="1.1"/>
+        <text x="32" y="39" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif"
+              font-size="23" fill="currentColor">G</text>
+      </svg>
+      <span class="brand__name">Gioia</span>
+      <span class="brand__tag">Paris</span>
+    </a>
+
     <div class="footer-top">
-      <div class="footer-brand">
-        <p class="footer-brand__name">GIOIA</p>
-        <div class="rule-tricolore" aria-hidden="true"></div>
-        <p>Restaurant italien gastronomique, rue Dauphine, dans le 6<sup>e</sup> arrondissement de Paris. Cuisine d’auteur, cave voûtée, bar à cocktails.</p>
+      <div class="footer-col">
+        <p><a class="link-line" href="mailto:gioia.odeon@gmail.com">gioia.odeon@gmail.com</a></p>
+        <p><a class="link-line" href="tel:+33184754175">+33 1 84 75 41 75</a></p>
+        <p>35 rue Dauphine, 75006 Paris</p>
         <ul class="footer-social">
           <li><a href="https://www.instagram.com/gioia.odeon/" aria-label="Instagram" rel="noopener noreferrer" target="_blank">
-            <svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="1.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="10" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="15.2" cy="4.8" r="1" fill="currentColor"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="1.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="10" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="15.2" cy="4.8" r="1" fill="currentColor"/></svg>
           </a></li>
           <li><a href="https://www.facebook.com/p/Gioia-Paris-Od%C3%A9on-61570011088949/" aria-label="Facebook" rel="noopener noreferrer" target="_blank">
-            <svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 6.5h2.2V3.6h-2.6c-2.3 0-3.6 1.4-3.6 3.7v1.5H6.2v3h2.3V19h3.1v-7.2h2.3l.4-3h-2.7V7.6c0-.8.3-1.1.9-1.1z" fill="currentColor"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 6.5h2.2V3.6h-2.6c-2.3 0-3.6 1.4-3.6 3.7v1.5H6.2v3h2.3V19h3.1v-7.2h2.3l.4-3h-2.7V7.6c0-.8.3-1.1.9-1.1z" fill="currentColor"/></svg>
           </a></li>
           <li><a href="mailto:gioia.odeon@gmail.com" aria-label="Nous écrire">
-            <svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="4" width="17" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M2 5l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+            <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="4" width="17" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M2 5l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
           </a></li>
         </ul>
       </div>
 
-      <div class="info-block">
-        <h3>Adresse</h3>
-        <p>35 rue Dauphine<br>75006 Paris</p>
-        <p><a class="link-line" href="https://maps.google.com/?q=35+rue+Dauphine+75006+Paris" rel="noopener noreferrer" target="_blank">Itinéraire</a></p>
-        <p>Métro Odéon · Pont-Neuf</p>
+      <!-- Invitation à la lettre d'information. Faute de service d'envoi, le
+           bouton ouvre le courrielleur du visiteur : rien n'est simulé. À
+           rebrancher sur Brevo, Mailchimp ou l'outil de votre choix. -->
+      <div class="footer-col footer-col--center">
+        <p class="footer-news__label">Abonnez-vous à nos actualités</p>
+        <form class="footer-news" action="mailto:gioia.odeon@gmail.com" method="post" enctype="text/plain">
+          <input type="email" name="email" placeholder="Votre email" aria-label="Votre adresse électronique" required>
+          <button type="submit" aria-label="S'abonner">
+            <svg width="22" height="8" viewBox="0 0 24 8" aria-hidden="true"><path d="M0 4h22M18 1l4 3-4 3" fill="none" stroke="currentColor" stroke-width="1"/></svg>
+          </button>
+        </form>
+        <label class="footer-news__consent">
+          <input type="checkbox" required>
+          <span>En cochant cette case, vous acceptez que vos informations soient utilisées pour recevoir notre lettre. Pour en savoir plus sur l'utilisation de vos données, consultez notre <a href="le-lieu.html#acces">politique de protection des données</a>.</span>
+        </label>
       </div>
 
-      <div class="info-block">
-        <h3>Horaires</h3>
-        <dl style="margin:0">
-          <div class="hours-row"><dt>Lundi – Dimanche</dt><dd>12h – 22h30</dd></div>
-          <div class="hours-row"><dt>Service</dt><dd>continu, 7 jours sur 7</dd></div>
-        </dl>
-      </div>
-
-      <div class="info-block">
-        <h3>Contact</h3>
+      <div class="footer-col footer-col--end">
         <ul>
-          <li><a class="link-line" href="tel:+33184754175">+33 1 84 75 41 75</a></li>
-          <li><a class="link-line" href="mailto:gioia.odeon@gmail.com">gioia.odeon@gmail.com</a></li>
-          <li><a class="link-line" href="la-carte.html">La carte</a></li>
-          <li><a class="link-line" href="le-lieu.html#privatisation">Privatisation</a></li>
+          <li><a class="link-line" href="mailto:gioia.odeon@gmail.com?subject=Contact%20presse">Contact presse</a></li>
+          <li><a class="link-line" href="le-lieu.html#acces">Mentions légales</a></li>
+          <li><a class="link-line" href="le-lieu.html#acces">Gestion des cookies</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>© <span data-year>2026</span> GIOIA Ristorante — Tous droits réservés.</p>
-      <ul>
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="la-carte.html">Carte</a></li>
-        <li><a href="le-lieu.html#acces">Accès</a></li>
-      </ul>
+      <p>© <span data-year>2026</span> GIOIA Ristorante</p>
     </div>
   </div>
 </footer>
