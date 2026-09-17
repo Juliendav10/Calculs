@@ -10,6 +10,8 @@ site/
 ├── la-carte.html         La carte & les vins
 ├── le-lieu.html          Le lieu, la galerie, la privatisation, l'accès
 ├── reservation.html      Réservation en 3 étapes + FAQ
+├── README.md             Ce document
+├── WEBFLOW.md            Cahier de reconstruction Webflow
 ├── assets/
 │   ├── css/style.css     Design system complet (tokens, composants, animations)
 │   ├── js/main.js        Préchargeur, transitions, révélations, galerie, nav
@@ -22,6 +24,13 @@ site/
 ├── sitemap.xml
 └── site.webmanifest
 ```
+
+## Vous reconstruisez le site dans Webflow ?
+
+Tout ce qu'il faut est dans **[`WEBFLOW.md`](WEBFLOW.md)** : couleurs, polices,
+échelle typographique, espacements, structure section par section et la liste
+des interactions à refaire. Le présent README documente la maquette en code ;
+`WEBFLOW.md` la traduit en réglages Webflow.
 
 ## Lancer le site en local
 
@@ -209,37 +218,61 @@ Déjà en place :
 Tout part des variables CSS en tête de `assets/css/style.css` :
 
 ```css
---carrara:     #FBFAF7;  /* fond principal, blanc chaud */
---carrara-2:   #F3F0E9;  /* surface alternée */
---inchiostro:  #17130F;  /* texte */
---rosso:       #8E2A33;  /* rosso di Maremma — accent principal */
---verde:       #35503F;  /* verde di Prato — titres en italique */
---terracotta:  #9A4E2E;  /* terre de Sienne — alertes, fermetures */
---notte:       #14100C;  /* rideaux, visionneuse, voiles sur photo */
---font-display: "Cormorant Garamond", …
---font-sans: "Jost", …
---section-y, --gutter, --maxw, --ease, --dur
+/* Palette — blanc pur, or, noir. Le fond ne porte aucune teinte :
+   toute la chaleur vient de l'or. */
+--blanc:        #FFFFFF;   /* fond principal */
+--blanc-2:      #FAF9F7;   /* surface alternée, à peine perceptible */
+--blanc-3:      #F2EFEA;   /* surface appuyée */
+--sable:        #DDCEC2;   /* bandes séparatrices */
+--encre:        #3E3E3E;   /* texte courant */
+--encre-forte:  #1C1C1C;   /* titres */
+--noir:         #000000;   /* bouton de réservation, en-tête */
+--or:           #BF9D5D;   /* accent : filets, prix, liens, pied de page */
+--or-fonce:     #A8853F;
+--or-clair:     #E8C98F;   /* version lisible sur photographie sombre */
+--terracotta:   #9A4E2E;   /* alertes du formulaire, seul écart à la palette */
+
+--font-display: "Cormorant Garamond", …   /* titres */
+--font-sans:    "Jost", …                 /* texte, libellés, navigation */
+--section-y, --gutter, --maxw, --ease, --dur, --radius-photo
 ```
 
-La palette reprend les trois marbres des façades toscanes : bianco di Carrara,
-verde di Prato, rosso di Maremma. Le filet `.rule-tricolore` (pied de page) et
-`.rule-v` (accueil) les empilent dans cet ordre.
+Les alias `--ink`, `--stone`, `--gold`, `--text`, `--text-strong` pointent vers
+ces valeurs : c'est sur eux que s'appuie le reste de la feuille. Changer `--or`
+et `--font-display` suffit donc à donner une autre identité à l'ensemble.
 
-Les alias `--ink`, `--stone` et `--gold` pointent vers ces valeurs : c'est sur
-eux que s'appuie le reste de la feuille. Changer `--rosso` et `--font-display`
-suffit donc à donner une autre identité à l'ensemble du site.
+Trois « îlots » renversent ces jetons pour écrire en clair sur fond sombre :
+l'en-tête posé sur le hero de l'accueil, la visionneuse, et le hero lui-même.
+Chacun redéfinit `--text`, `--text-strong`, `--text-muted`, `--line` et `--gold`
+localement. **Si vous ajoutez une couleur, passez par un jeton sémantique**
+(`--text-strong`) et non par la couleur brute (`--encre-forte`) : sans quoi le
+titre reste noir sur les fonds sombres et disparaît.
 
-**On n'écrit jamais par-dessus une photographie.** Les images sont montrées
-telles quelles, sans voile ni dégradé ; le texte se pose sur le papier, à côté
-ou en dessous :
+### Aplats et bandes
 
-- le hero est en deux colonnes — texte à gauche, photographie pleine hauteur à
-  droite ;
+| Élément                | Fond            | Texte                     |
+|------------------------|-----------------|---------------------------|
+| Corps du site          | `--blanc`       | `--encre` / `--encre-forte` |
+| Sections alternées     | `--blanc-2/3`   | idem                      |
+| Bouton de réservation  | `--noir`        | blanc (or au survol)      |
+| Bouton principal plein | `--or`          | `--encre-forte` (6,8:1)   |
+| Pied de page           | `--or`          | `--encre-forte` (4,7 à 6,7:1) |
+
+La référence écrit en blanc sur l'or (2,5:1, sous le seuil lisible). On garde
+l'aplat et on passe le libellé à l'encre.
+
+### La règle des photographies
+
+**Hors du hero de l'accueil, on n'écrit jamais par-dessus une photographie.**
+Les images sont montrées telles quelles, sans voile ni dégradé ; le texte se
+pose sur le papier, à côté ou en dessous :
+
 - les pages intérieures ouvrent sur un bloc de titre (`.page-head`), puis une
   bande photographique pleine largeur (`.photo-band`) ;
 - les cartes des trois espaces portent leur légende sous l'image ;
 - la bande et le bandeau d'appel sont une photographie pleine largeur suivie
-  d'un bloc de texte sur le papier.
+  d'un bloc de texte sur le papier ;
+- la mosaïque (`.mosaic`) ne porte aucun texte.
 
 Cette règle vient d'une mesure, pas d'un principe. Sur ces photographies, le
 fond des zones de texte tombe à 0,20–0,47 de luminance : l'encre n'y passe pas.
@@ -247,7 +280,14 @@ Et le texte blanc y descend à 1,6:1 de contraste dans le pire cas — une lampe
 ou un reflet derrière une lettre. Aucune des deux options ne tenait sans voile,
 et le voile abîmait les images.
 
-La visionneuse est le seul espace sombre du site : on y regarde une
+**Le hero de l'accueil est l'exception assumée**, comme sur les hero vidéo du
+même genre : l'image occupe tout l'écran et porte deux voiles, en haut pour
+l'en-tête, en bas pour l'accroche. Le voile bas monte aux trois quarts de la
+hauteur — l'accroche se pose vers 70 % et les plans clairs la mangeaient.
+Mesuré sur les cinq plans : 9,3 à 17,7:1 pour l'accroche, 7,1 à 10,4:1 pour le
+bouton.
+
+La visionneuse est le second espace sombre du site : on y regarde une
 photographie, le noir sert à l'isoler.
 
 Conséquence pratique : si vous ajoutez une section, ne posez pas de texte sur
@@ -257,6 +297,24 @@ l'image. Mettez la photographie dans une `.photo-band` et le texte dans un
 Autre point à garder en tête : une bande pleine largeur recadre sévèrement.
 Réservez-lui des photographies **en paysage** — un portrait y perd l'essentiel
 de son sujet.
+
+### Les animations
+
+Cinq mécaniques, pas une de plus. Chacune se reconstruit en une interaction
+Webflow (voir `WEBFLOW.md`).
+
+| Mécanique            | Où                                 | Déclencheur        |
+|----------------------|------------------------------------|--------------------|
+| Fondu montant        | `[data-reveal="up"]` — partout     | entrée à l'écran   |
+| Volet qui s'ouvre    | `[data-reveal="mask"]` — photos    | entrée à l'écran   |
+| Décalage en cascade  | `[data-reveal-group="120"]`        | entrée à l'écran   |
+| Filet d'or qui se tire | `.heading-rule` sous les titres  | entrée à l'écran   |
+| Parallaxe            | `[data-parallax]` — bandes pleines | défilement continu |
+
+S'y ajoutent le fondu enchaîné du hero (5 plans, 6,5 s chacun), le zoom lent au
+survol des photographies, et le remplissage des boutons par le bas.
+
+Tout est neutralisé sous `prefers-reduced-motion: reduce`.
 
 ## 7. Le site en PDF
 

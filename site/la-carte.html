@@ -110,20 +110,22 @@
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="brand" href="index.html" aria-label="GIOIA, retour à l'accueil">
-      <span class="brand__name">GIOIA</span>
-      <span class="brand__tag">Ristorante · Paris 6e</span>
-    </a>
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__list">
         <li><a class="nav__link" href="index.html">Accueil</a></li>
         <li><a class="nav__link" href="la-carte.html" aria-current="page">La Carte</a></li>
         <li><a class="nav__link" href="le-lieu.html">Le Lieu</a></li>
-        <li><a class="nav__link" href="reservation.html">Réserver</a></li>
       </ul>
     </nav>
+
+    <a class="brand" href="index.html" aria-label="GIOIA, retour à l'accueil">
+      <span class="brand__name">GIOIA</span>
+      <span class="brand__tag">Ristorante · Paris 6e</span>
+    </a>
+
     <div class="header-actions">
-      <a class="btn btn--gold" href="reservation.html">Réserver une table</a>
+      <a class="header-aside" href="tel:+33184754175">+33 1 84 75 41 75</a>
+      <a class="btn btn--gold" href="reservation.html">Réserver</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu">
         <span></span><span></span><span></span>
       </button>
@@ -163,7 +165,7 @@
   </section>
 
   <div class="photo-band" data-reveal="mask">
-    <div class="frame" data-caption="bar.webp">
+    <div class="frame" data-parallax data-caption="bar.webp">
       <img src="assets/images/bar.webp" alt="Le comptoir de marbre de GIOIA Odéon et sa sélection de spiritueux" width="680" height="453" fetchpriority="high" decoding="async">
     </div>
   </div>
@@ -595,13 +597,13 @@
 
   <section class="cta-band">
     <div class="photo-band" data-reveal="mask">
-      <div class="frame" data-caption="cave-voutee.webp">
+      <div class="frame" data-parallax data-caption="cave-voutee.webp">
         <img src="assets/images/cave-voutee.webp" alt="La cave voûtée du restaurant GIOIA" width="680" height="453" loading="lazy" decoding="async">
       </div>
     </div>
     <div class="container cta-band__inner" data-reveal-group="110">
       <p class="eyebrow eyebrow--center" data-reveal="up">Réservation</p>
-      <h2 data-reveal="up">Prêt à passer<br><span class="display-italic">à table ?</span></h2>
+      <h2 class="heading-rule" data-reveal="up">Prêt à passer<br><span class="display-italic">à table ?</span></h2>
       <div class="btn-group" style="justify-content:center;margin-top:2.5rem" data-reveal="up">
         <a class="btn btn--gold" href="reservation.html">Réserver en ligne</a>
         <a class="btn btn--ghost" href="le-lieu.html">Découvrir le lieu</a>

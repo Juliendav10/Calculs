@@ -185,6 +185,52 @@
   }
 
   /* ---------------------------------------------------------------------- */
+  /* Parallaxe — les bandes photographiques dérivent pendant qu'on les passe */
+  /* ---------------------------------------------------------------------- */
+
+  function initParallax() {
+    var items = $$('[data-parallax]');
+    if (!items.length || reduceMotion || !('IntersectionObserver' in window)) { return; }
+
+    var live = [];
+    var ticking = false;
+
+    function request() {
+      if (ticking) { return; }
+      ticking = true;
+      requestAnimationFrame(paint);
+    }
+
+    function paint() {
+      ticking = false;
+      var vh = window.innerHeight;
+      live.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        // Progression du cadre dans la fenêtre : -1 dessous, 0 au centre, 1 dessus.
+        var p = ((r.top + r.height / 2) - vh / 2) / ((vh + r.height) / 2);
+        p = Math.max(-1, Math.min(1, p));
+        // L'image est agrandie de 16 % : la course reste sous le débord.
+        var amp = Math.min(r.height * 0.07, 46);
+        el.style.setProperty('--parallax', (p * amp).toFixed(1) + 'px');
+      });
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var i = live.indexOf(entry.target);
+        if (entry.isIntersecting && i === -1) { live.push(entry.target); }
+        else if (!entry.isIntersecting && i !== -1) { live.splice(i, 1); }
+      });
+      if (live.length) { request(); }
+    }, { rootMargin: '12% 0px' });
+
+    items.forEach(function (el) { observer.observe(el); });
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request, { passive: true });
+    paint();
+  }
+
+  /* ---------------------------------------------------------------------- */
   /* En-tête : compactage + masquage au défilement                          */
   /* ---------------------------------------------------------------------- */
 
@@ -435,6 +481,7 @@
     initPreloader();
     initPageTransitions();
     initReveals();
+    initParallax();
     initHeader();
     initMobileMenu();
     initHeroSlideshow();

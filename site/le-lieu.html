@@ -76,20 +76,22 @@
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="brand" href="index.html" aria-label="GIOIA, retour à l'accueil">
-      <span class="brand__name">GIOIA</span>
-      <span class="brand__tag">Ristorante · Paris 6e</span>
-    </a>
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__list">
         <li><a class="nav__link" href="index.html">Accueil</a></li>
         <li><a class="nav__link" href="la-carte.html">La Carte</a></li>
         <li><a class="nav__link" href="le-lieu.html" aria-current="page">Le Lieu</a></li>
-        <li><a class="nav__link" href="reservation.html">Réserver</a></li>
       </ul>
     </nav>
+
+    <a class="brand" href="index.html" aria-label="GIOIA, retour à l'accueil">
+      <span class="brand__name">GIOIA</span>
+      <span class="brand__tag">Ristorante · Paris 6e</span>
+    </a>
+
     <div class="header-actions">
-      <a class="btn btn--gold" href="reservation.html">Réserver une table</a>
+      <a class="header-aside" href="tel:+33184754175">+33 1 84 75 41 75</a>
+      <a class="btn btn--gold" href="reservation.html">Réserver</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu">
         <span></span><span></span><span></span>
       </button>
@@ -129,7 +131,7 @@
   </section>
 
   <div class="photo-band" data-reveal="mask">
-    <div class="frame" data-caption="cave-voutee.webp">
+    <div class="frame" data-parallax data-caption="cave-voutee.webp">
       <img src="assets/images/cave-voutee.webp" alt="La cave voûtée en pierre de taille du restaurant GIOIA" width="680" height="453" fetchpriority="high" decoding="async">
     </div>
   </div>
@@ -140,7 +142,7 @@
       <div class="section-head section-head--split">
         <div data-reveal="up">
           <p class="eyebrow">01 — L’histoire</p>
-          <h2 id="histoire-title">Quatre siècles<br><span class="display-italic">sous nos pieds</span></h2>
+          <h2 class="heading-rule" id="histoire-title">Quatre siècles<br><span class="display-italic">sous nos pieds</span></h2>
         </div>
         <p class="lead" data-reveal="up" style="--reveal-delay:140ms">
           La rue Dauphine fut percée en 1607 pour relier le Pont-Neuf tout neuf au faubourg
@@ -202,7 +204,7 @@
         </div>
         <div class="split__body" data-reveal-group="110">
           <p class="eyebrow" data-reveal="up">02 — Rez-de-chaussée</p>
-          <h2 id="salle-title" data-reveal="up">La Salle</h2>
+          <h2 class="heading-rule" id="salle-title" data-reveal="up">La Salle</h2>
           <p data-reveal="up">
             Trente-quatre couverts sous de grandes verrières ouvertes sur la rue Dauphine.
             Marbre noir veiné, onyx rétroéclairé, suspensions en rotin tressé à la main
@@ -229,7 +231,7 @@
         </div>
         <div class="split__body" data-reveal-group="110">
           <p class="eyebrow" data-reveal="up">03 — Sous-sol</p>
-          <h2 id="cave-title" data-reveal="up">La Cave voûtée</h2>
+          <h2 class="heading-rule" id="cave-title" data-reveal="up">La Cave voûtée</h2>
           <p data-reveal="up">
             L’escalier descend de six marches et le bruit de la ville disparaît. Sous les arches
             de calcaire, vingt-huit couverts, un rideau de velours grenat et un éclairage réglé
@@ -256,7 +258,7 @@
         </div>
         <div class="split__body" data-reveal-group="110">
           <p class="eyebrow" data-reveal="up">04 — Le comptoir</p>
-          <h2 id="bar-title" data-reveal="up">Il Bar</h2>
+          <h2 class="heading-rule" id="bar-title" data-reveal="up">Il Bar</h2>
           <p data-reveal="up">
             Dix tabourets de cuir cognac face à un comptoir de marbre, sous la voûte.
             En fin d’après-midi, l’<em>aperitivo</em> se prend ici : negroni sbagliato, spritz au
@@ -278,7 +280,7 @@
       <div class="section-head section-head--center">
         <div data-reveal="up">
           <p class="eyebrow eyebrow--center">05 — Galerie</p>
-          <h2 id="galerie-title">La maison<br><span class="display-italic">en images</span></h2>
+          <h2 class="heading-rule" id="galerie-title">La maison<br><span class="display-italic">en images</span></h2>
           <p class="lead" style="margin-top:1.5rem">Cliquez sur une photographie pour l’agrandir.</p>
         </div>
       </div>
@@ -329,7 +331,7 @@
       <div class="section-head section-head--split">
         <div data-reveal="up">
           <p class="eyebrow">06 — Événements</p>
-          <h2 id="priv-title">Privatiser<br><span class="display-italic">GIOIA</span></h2>
+          <h2 class="heading-rule" id="priv-title">Privatiser<br><span class="display-italic">GIOIA</span></h2>
         </div>
         <p class="lead" data-reveal="up" style="--reveal-delay:120ms">
           Anniversaire, dîner d’entreprise, présentation presse ou repas de famille :
@@ -367,7 +369,7 @@
       <div class="section-head section-head--split">
         <div data-reveal="up">
           <p class="eyebrow">07 — Informations</p>
-          <h2 id="acces-title">Nous trouver</h2>
+          <h2 class="heading-rule" id="acces-title">Nous trouver</h2>
         </div>
       </div>
 
@@ -418,13 +420,13 @@
 
   <section class="cta-band">
     <div class="photo-band" data-reveal="mask">
-      <div class="frame" data-caption="facade.webp">
+      <div class="frame" data-parallax data-caption="facade.webp">
         <img src="assets/images/facade.webp" alt="La façade du restaurant GIOIA rue Dauphine" width="680" height="453" loading="lazy" decoding="async">
       </div>
     </div>
     <div class="container cta-band__inner" data-reveal-group="110">
       <p class="eyebrow eyebrow--center" data-reveal="up">Réservation</p>
-      <h2 data-reveal="up">Passez<br><span class="display-italic">la porte bleue</span></h2>
+      <h2 class="heading-rule" data-reveal="up">Passez<br><span class="display-italic">la porte bleue</span></h2>
       <div class="btn-group" style="justify-content:center;margin-top:2.5rem" data-reveal="up">
         <a class="btn btn--gold" href="reservation.html">Réserver une table</a>
         <a class="btn btn--ghost" href="la-carte.html">Voir la carte</a>

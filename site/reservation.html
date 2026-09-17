@@ -93,18 +93,19 @@
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="brand" href="index.html" aria-label="GIOIA, retour à l'accueil">
-      <span class="brand__name">GIOIA</span>
-      <span class="brand__tag">Ristorante · Paris 6e</span>
-    </a>
     <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__list">
         <li><a class="nav__link" href="index.html">Accueil</a></li>
         <li><a class="nav__link" href="la-carte.html">La Carte</a></li>
         <li><a class="nav__link" href="le-lieu.html">Le Lieu</a></li>
-        <li><a class="nav__link" href="reservation.html" aria-current="page">Réserver</a></li>
       </ul>
     </nav>
+
+    <a class="brand" href="index.html" aria-label="GIOIA, retour à l'accueil">
+      <span class="brand__name">GIOIA</span>
+      <span class="brand__tag">Ristorante · Paris 6e</span>
+    </a>
+
     <div class="header-actions">
       <a class="btn btn--ghost" href="tel:+33184754175">+33 1 84 75 41 75</a>
       <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Ouvrir le menu">
@@ -146,7 +147,7 @@
   </section>
 
   <div class="photo-band" data-reveal="mask">
-    <div class="frame" data-caption="salle.webp">
+    <div class="frame" data-parallax data-caption="salle.webp">
       <img src="assets/images/salle.webp" alt="Salle du restaurant GIOIA prête pour le service" width="680" height="510" fetchpriority="high" decoding="async">
     </div>
   </div>
@@ -357,7 +358,7 @@
       <div class="section-head section-head--center">
         <div data-reveal="up">
           <p class="eyebrow eyebrow--center">Questions fréquentes</p>
-          <h2 id="faq-title">Avant de venir</h2>
+          <h2 class="heading-rule" id="faq-title">Avant de venir</h2>
         </div>
       </div>
 
