@@ -144,19 +144,37 @@ Il reste trois choses.
 
 ### 6.1 Le ruban photographique — la seule animation liée au défilement
 
-Deux rangées pleine largeur qui glissent **en sens opposés**, à **72 px par
-seconde** (mesuré : 14,5 px toutes les 0,2 s).
+Tout ce qui suit est relevé image par image, à 1280 px de large.
 
-- Rangée 1 : hauteur 207 px à 1280 px, glisse vers la gauche.
-- Rangée 2 : hauteur 256 px, glisse vers la droite.
-- Filet blanc de 10 px entre les tuiles et entre les rangées.
-- Largeurs de tuiles inégales — rapports 347/207, 262/207, 172/207.
-- Les tuiles sont **coupées aux deux bords** : c'est un ruban, pas une grille.
+| Mesure                        | Valeur                          |
+|-------------------------------|---------------------------------|
+| Tuile                         | **350 × 252 px**, rapport 1,389 |
+| Toutes les tuiles             | **identiques** — pas de largeurs inégales |
+| Pas d'une tuile à l'autre     | 357 px (constant : 357, 357, 356,5, 358, 356) |
+| Filet blanc entre tuiles      | **7 px**                        |
+| Filet blanc entre les rangées | **7 px**                        |
+| Hauteur des deux rangées      | **252 px** — les deux pareil    |
+| Vitesse                       | **67 px/s** (mesuré : -66,6 et +67,1 sur 44 paires d'images) |
+| Sens                          | rangée 1 vers la gauche, rangée 2 vers la droite |
+| Blanc au-dessus et au-dessous | **131 px**                      |
+| Bords                         | les tuiles sont **coupées aux deux bords** : c'est un ruban, pas une grille |
 
 Dans Webflow : deux `div` en `display: flex`, chacune contenant **deux fois la
 même suite de tuiles**, animées de `0` à `-50 %` en translation X, `linear`,
-en boucle infinie. La durée se calcule : `largeur d'une suite ÷ 72`. Pour nos
-rangées, 27 s et 33 s. Mettre en pause au survol.
+en boucle infinie.
+
+La durée se calcule : `largeur d'une suite ÷ 67`. Pour sept tuiles,
+7 × 350 + 7 × 7 = 2499 px, donc **37,3 s** — la même pour les deux rangées
+puisqu'elles ont la même hauteur.
+
+Attention à deux pièges :
+
+- **La translation doit valoir exactement une suite**, soit `-50 %` moins la
+  moitié du filet (`calc(-50% - 3.5px)`), sinon la boucle saute d'un demi-filet
+  à chaque tour.
+- **Ne mettez pas de pause au survol.** On descend une page avec le curseur au
+  milieu de l'écran : le ruban arrive dessous et s'arrête net, juste au moment
+  où on le découvre. La référence continue de défiler sous le pointeur.
 
 ### 6.2 Le hero (conservé de Kinugawa)
 
