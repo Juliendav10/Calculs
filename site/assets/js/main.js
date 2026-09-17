@@ -10,7 +10,6 @@
 
   var root = document.documentElement;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* ---------------------------------------------------------------------- */
   /* Utilitaires                                                            */
@@ -186,40 +185,6 @@
   }
 
   /* ---------------------------------------------------------------------- */
-  /* Parallaxe (rAF, transform uniquement)                                  */
-  /* ---------------------------------------------------------------------- */
-
-  function initParallax() {
-    var items = $$('[data-parallax]');
-    if (!items.length || reduceMotion) { return; }
-
-    var ticking = false;
-
-    function update() {
-      var vh = window.innerHeight;
-      items.forEach(function (el) {
-        var rect = el.getBoundingClientRect();
-        if (rect.bottom < -200 || rect.top > vh + 200) { return; }
-        var speed = parseFloat(el.getAttribute('data-parallax')) || 0.12;
-        var progress = (rect.top + rect.height / 2 - vh / 2) / vh;
-        el.style.transform = 'translate3d(0,' + (progress * speed * 100).toFixed(2) + 'px,0)';
-      });
-      ticking = false;
-    }
-
-    function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(update);
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    update();
-  }
-
-  /* ---------------------------------------------------------------------- */
   /* En-tête : compactage + masquage au défilement                          */
   /* ---------------------------------------------------------------------- */
 
@@ -285,103 +250,6 @@
   }
 
   /* ---------------------------------------------------------------------- */
-  /* Curseur sur-mesure + boutons magnétiques                               */
-  /* ---------------------------------------------------------------------- */
-
-  function initCursor() {
-    if (!finePointer || reduceMotion) { return; }
-
-    var cursor = document.createElement('div');
-    cursor.className = 'cursor';
-    cursor.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(cursor);
-
-    var x = window.innerWidth / 2;
-    var y = window.innerHeight / 2;
-    var targetX = x;
-    var targetY = y;
-
-    document.addEventListener('mousemove', function (e) {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      cursor.classList.add('is-active');
-    }, { passive: true });
-
-    document.addEventListener('mouseleave', function () { cursor.classList.remove('is-active'); });
-
-    (function loop() {
-      x += (targetX - x) * 0.18;
-      y += (targetY - y) * 0.18;
-      cursor.style.transform = 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0)';
-      window.requestAnimationFrame(loop);
-    })();
-
-    var hoverables = 'a, button, .gallery__item, .card, input, select, textarea, label';
-    document.addEventListener('mouseover', function (e) {
-      if (e.target.closest(hoverables)) { cursor.classList.add('is-hover'); }
-    });
-    document.addEventListener('mouseout', function (e) {
-      if (e.target.closest(hoverables)) { cursor.classList.remove('is-hover'); }
-    });
-  }
-
-  function initMagnetic() {
-    if (!finePointer || reduceMotion) { return; }
-
-    $$('[data-magnetic]').forEach(function (el) {
-      var strength = parseFloat(el.getAttribute('data-magnetic')) || 0.28;
-
-      el.addEventListener('mousemove', function (e) {
-        var rect = el.getBoundingClientRect();
-        var dx = e.clientX - (rect.left + rect.width / 2);
-        var dy = e.clientY - (rect.top + rect.height / 2);
-        el.style.transform = 'translate3d(' + (dx * strength) + 'px,' + (dy * strength) + 'px,0)';
-      });
-
-      el.addEventListener('mouseleave', function () {
-        el.style.transform = 'translate3d(0,0,0)';
-      });
-    });
-  }
-
-  /* ---------------------------------------------------------------------- */
-  /* Compteurs animés                                                       */
-  /* ---------------------------------------------------------------------- */
-
-  function initCounters() {
-    var counters = $$('[data-count]');
-    if (!counters.length) { return; }
-
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-      counters.forEach(function (el) { el.textContent = el.getAttribute('data-count'); });
-      return;
-    }
-
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) { return; }
-        var el = entry.target;
-        observer.unobserve(el);
-        var target = parseFloat(el.getAttribute('data-count'));
-        var suffix = el.getAttribute('data-count-suffix') || '';
-        var duration = 1500;
-        var start = null;
-
-        function tick(ts) {
-          if (start === null) { start = ts; }
-          var p = Math.min(1, (ts - start) / duration);
-          var eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(target * eased) + suffix;
-          if (p < 1) { window.requestAnimationFrame(tick); }
-        }
-        window.requestAnimationFrame(tick);
-      });
-    }, { threshold: 0.4 });
-
-    counters.forEach(function (el) { observer.observe(el); });
-  }
-
-  /* ---------------------------------------------------------------------- */
   /* Hero de l'accueil : défilé d'images en fondu                           */
   /* ---------------------------------------------------------------------- */
 
@@ -417,18 +285,6 @@
         hero.classList.remove('is-changing');
       }, 450 + FONDU);
     }, DUREE);
-  }
-
-  /* ---------------------------------------------------------------------- */
-  /* Bandeau défilant : duplication du contenu pour une boucle continue     */
-  /* ---------------------------------------------------------------------- */
-
-  function initMarquee() {
-    $$('.marquee__track').forEach(function (track) {
-      if (track.dataset.cloned === '1') { return; }
-      track.innerHTML += track.innerHTML;
-      track.dataset.cloned = '1';
-    });
   }
 
   /* ---------------------------------------------------------------------- */
@@ -579,14 +435,9 @@
     initPreloader();
     initPageTransitions();
     initReveals();
-    initParallax();
     initHeader();
     initMobileMenu();
-    initCursor();
-    initMagnetic();
-    initCounters();
     initHeroSlideshow();
-    initMarquee();
     initAccordions();
     initScrollSpy();
     initLightbox();
