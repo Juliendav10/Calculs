@@ -1965,22 +1965,26 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   margin-bottom: clamp(3.25rem, 10.2vw, 9rem);
 }
 .marquee__row { overflow: hidden; }
+/* Une seule suite d'images-clés pour les deux rangées, et la seconde la joue
+   à l'envers. Même durée, même courbe, même origine : l'inverse est garanti
+   par construction, il ne peut pas dériver. Deux jeux écrits à la main
+   restaient justes mais ne garantissaient rien. */
 .marquee__track {
   display: flex;
   gap: 7px;
   width: max-content;
   will-change: transform;
-  animation: marqueeLeft var(--marquee-dur, 37.3s) linear infinite;
+  animation: marqueeRuban var(--marquee-dur, 37.3s) linear infinite;
 }
-.marquee__row--reverse .marquee__track { animation-name: marqueeRight; }
+.marquee__row--reverse .marquee__track { animation-direction: reverse; }
 /* Pas de pause au survol : on descend la page avec le curseur au milieu de
    l'écran, le ruban arrivait donc dessous et s'arrêtait net — on croyait
    qu'il ne démarrait pas. La référence continue de défiler sous le pointeur. */
 
-@keyframes marqueeLeft  { from { transform: translate3d(0,0,0); }
+/* La translation vaut exactement une suite : la moitié du ruban dupliqué,
+   moins la moitié du filet. Au pixel près, sans quoi la boucle saute. */
+@keyframes marqueeRuban { from { transform: translate3d(0,0,0); }
                           to   { transform: translate3d(calc(-50% - 3.5px),0,0); } }
-@keyframes marqueeRight { from { transform: translate3d(calc(-50% - 3.5px),0,0); }
-                          to   { transform: translate3d(0,0,0); } }
 
 .marquee__tile {
   position: relative;

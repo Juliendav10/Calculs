@@ -167,7 +167,15 @@ La durée se calcule : `largeur d'une suite ÷ 67`. Pour sept tuiles,
 7 × 350 + 7 × 7 = 2499 px, donc **37,3 s** — la même pour les deux rangées
 puisqu'elles ont la même hauteur.
 
-Attention à deux pièges :
+**Une seule animation pour les deux rangées.** N'écrivez pas deux jeux
+d'images-clés symétriques : donnez la même animation aux deux rubans et jouez
+la seconde **à l'envers** (`animation-direction: reverse` ; dans Webflow, la
+même interaction avec la courbe inversée). Même durée, même courbe, même
+origine : l'inverse est garanti par construction et ne peut pas dériver. Vérifié
+au bouclage — les deux rangées basculent à la même milliseconde, d'exactement
+une suite, en miroir au centième de pixel.
+
+Attention à trois pièges :
 
 - **La translation doit valoir exactement une suite**, soit `-50 %` moins la
   moitié du filet (`calc(-50% - 3.5px)`), sinon la boucle saute d'un demi-filet
@@ -175,6 +183,11 @@ Attention à deux pièges :
 - **Ne mettez pas de pause au survol.** On descend une page avec le curseur au
   milieu de l'écran : le ruban arrive dessous et s'arrête net, juste au moment
   où on le découvre. La référence continue de défiler sous le pointeur.
+- **Si vous recalez les rubans à leur origine quand la section approche** —
+  pour qu'on les voie partir plutôt que de les prendre en pleine course —
+  faites-le **avant** qu'ils n'entrent dans le champ, et ne faites rien quand
+  ils y sont déjà. Recalé sous les yeux du visiteur, le ruban saute de trois
+  cents pixels.
 
 ### 6.2 Le hero (conservé de Kinugawa)
 

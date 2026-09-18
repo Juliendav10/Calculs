@@ -151,6 +151,44 @@
   }
 
   /* ---------------------------------------------------------------------- */
+  /* Ruban photographique : les deux rangées partent ensemble                */
+  /* ---------------------------------------------------------------------- */
+
+  function initMarquee() {
+    var marquee = $('.marquee');
+    if (!marquee || reduceMotion || !('IntersectionObserver' in window)) { return; }
+
+    var tracks = $$('.marquee__track', marquee);
+    if (!tracks.length) { return; }
+
+    // Sans ce calage, les rubans tournent depuis le chargement de la page : on
+    // les découvre en pleine course, à une position qui dépend du temps qu'on a
+    // mis à descendre. On les remet à leur origine, à la même milliseconde.
+    //
+    // La marge basse est là pour que ce soit fait AVANT qu'on les voie : remis
+    // à zéro sous les yeux du visiteur, le ruban sautait de trois cents pixels.
+    var observer = new IntersectionObserver(function (entries) {
+      if (!entries.some(function (e) { return e.isIntersecting; })) { return; }
+      observer.disconnect();
+
+      // Si le ruban est déjà à l'écran — arrivée par une ancre, rechargement
+      // en cours de page — on ne touche à rien : la feuille de style les tient
+      // déjà synchrones, et un recalage se verrait.
+      if (marquee.getBoundingClientRect().top < window.innerHeight) { return; }
+
+      var origine = null;
+      tracks.forEach(function (track) {
+        track.getAnimations().forEach(function (anim) {
+          if (origine === null) { origine = anim.timeline.currentTime; }
+          try { anim.startTime = origine; } catch (e) { /* moteur sans l'API */ }
+        });
+      });
+    }, { rootMargin: '0px 0px 400px 0px', threshold: 0 });
+
+    observer.observe(marquee);
+  }
+
+  /* ---------------------------------------------------------------------- */
   /* En-tête : compactage + masquage au défilement                          */
   /* ---------------------------------------------------------------------- */
 
@@ -400,6 +438,7 @@
     initImageFallback();
     initPreloader();
     initPageTransitions();
+    initMarquee();
     initHeader();
     initMobileMenu();
     initHeroSlideshow();
