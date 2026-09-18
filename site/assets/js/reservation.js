@@ -66,7 +66,11 @@
   /* ======================== Sélecteurs du document ======================= */
 
   var steps = Array.prototype.slice.call(form.querySelectorAll('.step'));
-  var stepperItems = Array.prototype.slice.call(document.querySelectorAll('.stepper__item'));
+  /* Cantonné au panneau de réservation : la commande a elle aussi ses
+     « .stepper__item ». Sur une page qui porterait les deux — l'aperçu d'une
+     seule pièce, par exemple — chacun piloterait les étapes de l'autre. */
+  var panneau = form.closest('.booking__panel') || form.parentNode;
+  var stepperItems = Array.prototype.slice.call(panneau.querySelectorAll('.stepper__item'));
   var partyRow = document.getElementById('party-row');
   var dateInput = document.getElementById('booking-date');
   var slotsHost = document.getElementById('slots-host');

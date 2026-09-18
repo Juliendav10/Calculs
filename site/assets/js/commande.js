@@ -830,16 +830,23 @@
   /* ------------------------------------------------------------------------ */
 
   function initEtapes() {
-    var etapes = $$('.step');
+    /* On reste dans le panneau de commande. La réservation a elle aussi ses
+       « .step » et ses « .stepper__item » : sur une page qui porterait les
+       deux — l'aperçu d'une seule pièce, par exemple — chacun piloterait les
+       étapes de l'autre. */
+    var panneau = $('.commande');
+    if (!panneau) { return; }
+
+    var etapes = $$('.step', panneau);
     if (!etapes.length) { return; }
 
     function aller(n) {
       etapes.forEach(function (e, i) { e.classList.toggle('is-active', i === n); });
-      $$('.stepper__item').forEach(function (e, i) {
+      $$('.stepper__item', panneau).forEach(function (e, i) {
         e.classList.toggle('is-active', i === n);
         e.classList.toggle('is-done', i < n);
       });
-      var haut = $('.commande');
+      var haut = panneau;
       if (haut) {
         var y = haut.getBoundingClientRect().top + window.scrollY -
                 (parseFloat(getComputedStyle(document.documentElement)
@@ -848,7 +855,7 @@
       }
     }
 
-    $$('[data-vers]').forEach(function (b) {
+    $$('[data-vers]', panneau).forEach(function (b) {
       b.addEventListener('click', function () { aller(Number(b.getAttribute('data-vers'))); });
     });
 
@@ -924,8 +931,13 @@
         rendre();
         aller(2);
       }).catch(function (err) {
-        alerte.textContent = err.message ||
-          'L’envoi a échoué. Réessayez, ou appelez-nous au ' + CONFIG.telephoneAffiche + '.';
+        /* Un refus de l'API porte son propre message, en français. Une panne
+           de réseau porte celui du navigateur — « Failed to fetch » — qui ne
+           dit rien à personne : on le remplace. */
+        alerte.textContent = (err && err.metier)
+          ? err.message
+          : 'L’envoi n’a pas abouti. Réessayez, ou appelez-nous au ' +
+            CONFIG.telephoneAffiche + ' : nous prenons la commande au téléphone.';
         alerte.hidden = false;
       }).then(function () {
         bouton.disabled = false;
@@ -936,7 +948,9 @@
 
   function envoyer(corps) {
     if (!window.fetch) {
-      return Promise.reject(new Error('Navigateur trop ancien : appelez-nous au ' + CONFIG.telephoneAffiche + '.'));
+      var vieux = new Error('Navigateur trop ancien : appelez-nous au ' + CONFIG.telephoneAffiche + '.');
+      vieux.metier = true;
+      return Promise.reject(vieux);
     }
     return window.fetch(CONFIG.endpoint, {
       method: 'POST',
@@ -944,7 +958,11 @@
       body: JSON.stringify(corps)
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (data) {
-        if (!r.ok) { throw new Error(data.error || 'Commande refusée.'); }
+        if (!r.ok) {
+          var e = new Error(data.error || 'Commande refusée.');
+          e.metier = true;          // message écrit pour le visiteur
+          throw e;
+        }
         return data;
       });
     });
