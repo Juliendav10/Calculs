@@ -1,8 +1,8 @@
 /**
- * GIOIA — Serveur de développement + API de réservation
- * -----------------------------------------------------
- * Zéro dépendance. Sert les fichiers statiques du site et expose une petite
- * API de réservation qui écrit dans `server/reservations.json`.
+ * GIOIA — Serveur de développement + API de réservation et de commande
+ * --------------------------------------------------------------------
+ * Zéro dépendance. Sert les fichiers statiques du site et expose deux petites
+ * API qui écrivent dans `server/reservations.json` et `server/commandes.json`.
  *
  *   node server/reservations.mjs            → http://localhost:4173
  *   node server/reservations.mjs --port 8080
@@ -26,6 +26,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const STORE = join(__dirname, 'reservations.json');
+const STORE_COMMANDES = join(__dirname, 'commandes.json');
 
 const portFlag = process.argv.indexOf('--port');
 const PORT = Number(portFlag > -1 ? process.argv[portFlag + 1] : process.env.PORT || 4173);
@@ -144,6 +145,84 @@ function validate(body, existing) {
   return errors;
 }
 
+
+/* ---------------------------- Commandes à emporter ------------------------ */
+/* Retrait au restaurant uniquement : pas de livraison, donc ni zone ni frais.
+   Le règlement se fait sur place — il n'y a pas d'encaissement ici. Pour en
+   ajouter un, il faut un prestataire (Stripe, SumUp, Adyen…) et garder la clé
+   secrète côté serveur : elle n'a rien à faire dans le navigateur. */
+
+const RETRAIT = ['12:00', '22:15'];   /* aligné sur assets/js/commande.js */
+const DELAI_MINUTES = 30;             /* préparation — à confirmer en cuisine */
+const MAX_ARTICLES = 40;
+
+async function readCommandes() {
+  try { return JSON.parse(await readFile(STORE_COMMANDES, 'utf8')); }
+  catch { return []; }
+}
+
+async function writeCommandes(list) {
+  await mkdir(dirname(STORE_COMMANDES), { recursive: true });
+  await writeFile(STORE_COMMANDES, JSON.stringify(list, null, 2), 'utf8');
+}
+
+function refCommande() {
+  return 'C' + Math.random().toString(36).slice(2, 7).toUpperCase();
+}
+
+function validerCommande(body) {
+  const errors = [];
+
+  if (!Array.isArray(body.lignes) || body.lignes.length === 0) {
+    errors.push('Votre panier est vide.');
+    return errors;
+  }
+
+  let articles = 0;
+  let total = 0;
+  for (const l of body.lignes) {
+    const q = Number(l.quantite);
+    const prix = Number(l.prix);
+    if (!Number.isInteger(q) || q < 1 || q > 20) { errors.push('Quantité invalide.'); break; }
+    if (!Number.isFinite(prix) || prix <= 0) { errors.push('Prix invalide.'); break; }
+    articles += q;
+    total += prix * q;
+  }
+  if (errors.length) { return errors; }
+
+  if (articles > MAX_ARTICLES) {
+    errors.push(`Au-delà de ${MAX_ARTICLES} articles, appelez-nous : nous organisons cela avec vous.`);
+  }
+
+  /* Le total est recalculé ici : celui envoyé par le navigateur ne fait foi
+     de rien. S'ils divergent, c'est que la carte a changé entre-temps. */
+  if (Math.abs(total - Number(body.total)) > 0.01) {
+    errors.push('La carte a changé depuis l’ouverture de la page. Rechargez-la.');
+  }
+
+  for (const champ of ['prenom', 'nom', 'email', 'telephone']) {
+    if (!String(body[champ] || '').trim()) { errors.push('Merci de renseigner vos coordonnées.'); break; }
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(body.email || '')) { errors.push('E-mail invalide.'); }
+  if (String(body.telephone || '').replace(/\D/g, '').length < 9) { errors.push('Téléphone invalide.'); }
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(body.date || '') || !/^\d{2}:\d{2}$/.test(body.heure || '')) {
+    errors.push('Créneau de retrait invalide.');
+    return errors;
+  }
+
+  const quand = new Date(`${body.date}T${body.heure}:00`);
+  if (quand.getTime() - Date.now() < (DELAI_MINUTES - 1) * 60000) {
+    errors.push(`Il nous faut ${DELAI_MINUTES} minutes de préparation : choisissez un créneau plus tard.`);
+  }
+  const m = minutes(body.heure);
+  if (m < minutes(RETRAIT[0]) || m > minutes(RETRAIT[1])) {
+    errors.push('Le restaurant ne fait pas de retrait à cet horaire.');
+  }
+
+  return errors;
+}
+
 async function handleApi(req, res, url) {
   if (url.pathname === '/api/reservations' && req.method === 'GET') {
     const list = await readStore();
@@ -195,6 +274,59 @@ async function handleApi(req, res, url) {
     return json(res, 201, record);
   }
 
+  if (url.pathname === '/api/commandes' && req.method === 'GET') {
+    const list = await readCommandes();
+    const date = url.searchParams.get('date');
+    return json(res, 200, date ? list.filter((c) => c.date === date) : list);
+  }
+
+  if (url.pathname === '/api/commandes' && req.method === 'POST') {
+    let raw = '';
+    for await (const chunk of req) {
+      raw += chunk;
+      if (raw.length > 64 * 1024) { return json(res, 413, { error: 'Requête trop volumineuse.' }); }
+    }
+
+    let body;
+    try { body = JSON.parse(raw || '{}'); }
+    catch { return json(res, 400, { error: 'JSON invalide.' }); }
+
+    const errors = validerCommande(body);
+    if (errors.length) { return json(res, 422, { error: errors[0], errors }); }
+
+    const list = await readCommandes();
+    const record = {
+      reference: refCommande(),
+      status: 'recue',
+      mode: 'emporter',
+      date: body.date,
+      heure: body.heure,
+      lignes: body.lignes.map((l) => ({
+        id: String(l.id).slice(0, 80),
+        nom: String(l.nom).slice(0, 120),
+        prix: Number(l.prix),
+        quantite: Number(l.quantite)
+      })),
+      total: Number(body.total),
+      reglement: 'sur place au retrait',
+      prenom: String(body.prenom).slice(0, 80),
+      nom: String(body.nom).slice(0, 80),
+      email: String(body.email).slice(0, 160),
+      telephone: String(body.telephone).slice(0, 40),
+      remarques: String(body.remarques || '').slice(0, 800),
+      createdAt: new Date().toISOString()
+    };
+
+    list.push(record);
+    await writeCommandes(list);
+
+    // C'est ici que partirait l'e-mail de confirmation, et le ticket en cuisine.
+    const articles = record.lignes.reduce((s, l) => s + l.quantite, 0);
+    console.log(`→ Commande ${record.reference} · retrait ${record.date} ${record.heure} · ${articles} articles · ${record.total} €`);
+
+    return json(res, 201, record);
+  }
+
   return json(res, 404, { error: 'Route inconnue.' });
 }
 
@@ -237,4 +369,5 @@ createServer(async (req, res) => {
 }).listen(PORT, () => {
   console.log(`GIOIA — site servi sur http://localhost:${PORT}`);
   console.log(`API réservations : POST http://localhost:${PORT}/api/reservations`);
+  console.log(`API commandes    : POST http://localhost:${PORT}/api/commandes`);
 });

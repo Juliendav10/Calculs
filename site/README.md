@@ -10,15 +10,17 @@ site/
 ├── la-carte.html         La carte & les vins
 ├── le-lieu.html          Le lieu, la galerie, la privatisation, l'accès
 ├── reservation.html      Réservation en 3 étapes + FAQ
+├── commander.html        Commande en ligne, à récupérer au restaurant
 ├── README.md             Ce document
 ├── WEBFLOW.md            Cahier de reconstruction Webflow
 ├── assets/
 │   ├── css/style.css     Design system complet (tokens, composants, animations)
 │   ├── js/main.js        Préchargeur, transitions, révélations, galerie, nav
 │   ├── js/reservation.js Moteur de réservation
+│   ├── js/commande.js    Moteur de commande (panier, créneaux, envoi)
 │   └── images/           ← déposez vos photos ici (voir images/README.md)
 ├── server/
-│   └── reservations.mjs  Serveur de dev + API de réservation (Node, 0 dépendance)
+│   └── reservations.mjs  Serveur de dev + API réservation et commande (Node, 0 dépendance)
 ├── favicon.svg
 ├── robots.txt
 ├── sitemap.xml
@@ -93,11 +95,17 @@ Les coordonnées du restaurant sont **réelles**, reprises des annuaires publics
 
 ### Contenus de proposition, à remplacer par les vôtres
 
-Ces éléments ont été écrits pour donner corps à la maquette. Ils ne décrivent
-pas le restaurant réel et doivent être remplacés :
+**La carte, elle, est réelle** : les 131 articles de `la-carte.html` et les 66
+articles commandables de `commander.html` sont relevés sur la carte du
+restaurant — entrées, viandes, pâtes, gratins, risottos, pizzas, desserts,
+softs, boissons chaudes, apéritifs, cocktails, digestifs, bières et vins, avec
+leurs prix. La source unique est le tableau `CARTE` de `assets/js/commande.js`
+pour la commande, et le balisage de `la-carte.html` pour la carte complète ;
+les deux doivent rester d'accord.
 
-- **La carte** (`la-carte.html`) — tous les plats, descriptions et prix, le menu
-  dégustation, les formules et la sélection de vins.
+Ce qui suit, en revanche, a été écrit pour donner corps à la maquette. Ces
+éléments ne décrivent pas le restaurant réel et doivent être remplacés :
+
 - **Les chiffres de l'accueil** — 72 couverts, 240 références, 18 producteurs.
   Un commentaire HTML le signale au-dessus du bloc.
 - **La frise du Lieu** — les éléments d'histoire portent sur la rue Dauphine et
@@ -114,7 +122,43 @@ Pour repérer ce qui reste à modifier :
 grep -rn "à confirmer\|proposition à remplacer" --include=*.html .
 ```
 
-## 3. Le système de réservation
+## 3. La commande en ligne
+
+`commander.html` permet de composer un panier et de venir le récupérer au
+restaurant. **Il n'y a pas de livraison** et **pas de paiement en ligne** : on
+règle sur place, au retrait.
+
+Comment ça marche :
+
+- Le panier vit dans le navigateur du visiteur (`localStorage`) jusqu'à
+  l'envoi. Il survit à un rechargement, il ne quitte pas sa machine.
+- Les créneaux de retrait suivent le service continu, de 12h à 22h30, par pas
+  de quinze minutes, avec **trente minutes de préparation** — cette valeur est
+  une attente courante, **à confirmer avec la cuisine** (`CONFIG.delaiMinutes`
+  dans `assets/js/commande.js`, et `DELAI_MINUTES` côté serveur).
+- La commande part en POST sur `/api/commandes`. Le serveur **recalcule le
+  total** : celui envoyé par le navigateur ne fait foi de rien.
+- Les plats du jour (« voir ardoise ») n'ont pas de prix fixe : ils ne sont pas
+  commandables en ligne. Les boissons alcoolisées non plus — la vente d'alcool
+  à emporter demande une licence distincte.
+
+### Pour la mettre en production
+
+Le stockage fichier du serveur de développement ne convient pas. Trois voies :
+
+1. **Un outil de click & collect** (Zenchef, Innovorder, Deliverect…) : vous
+   remplacez la page par leur widget et vous ne maintenez rien.
+2. **Votre caisse**, si elle expose une API de commande.
+3. **Votre propre service** : gardez l'API telle quelle, remplacez l'écriture
+   fichier par une base, ajoutez l'e-mail de confirmation et l'impression du
+   ticket en cuisine.
+
+Pour encaisser en ligne, il faut un prestataire (Stripe, SumUp, Adyen) **et un
+serveur qui garde la clé secrète** : elle n'a rien à faire dans le navigateur.
+Tant que ce n'est pas branché, le règlement au retrait est la seule option — et
+c'est ce que dit la page.
+
+## 4. Le système de réservation
 
 `assets/js/reservation.js` gère un parcours en trois étapes : **date & heure →
 coordonnées → confirmation**.
@@ -179,7 +223,7 @@ Remplacez le bloc `<div class="booking__panel">` par l'iframe fournie par votre
 prestataire. Le reste de la page (récapitulatif, FAQ, structured data) reste
 utile pour le référencement.
 
-## 4. Référencement
+## 5. Référencement
 
 Déjà en place :
 
@@ -205,7 +249,7 @@ Déjà en place :
    <https://search.google.com/test/rich-results>.
 5. Compresser les photos (200–350 Ko) et fournir `og-image.jpg` en 1200 × 630.
 
-## 5. Accessibilité & confort
+## 6. Accessibilité & confort
 
 - Lien d'évitement, focus visible, navigation clavier complète (menu, galerie,
   accordéons, formulaire).
@@ -213,7 +257,7 @@ Déjà en place :
 - `prefers-reduced-motion` : toutes les animations sont neutralisées.
 - Contrastes conformes AA sur le fond sombre, zones tactiles ≥ 44 px.
 
-## 6. Personnaliser le design
+## 7. Personnaliser le design
 
 Tout part des variables CSS en tête de `assets/css/style.css` :
 
@@ -294,7 +338,7 @@ Ne posez pas de texte sur l'image : la photographie dans une `.photo-band` ou
 un `.duo`, le texte dans un `.container` à côté. Et réservez aux bandes pleine
 largeur des photographies **en paysage** — un portrait y perd son sujet.
 
-## 7. Le site en PDF
+## 8. Le site en PDF
 
 `assets/gioia-odeon-site.pdf` est un rendu du site à 1440 px de large : quatre
 pages, une par page du site, avec des signets de navigation et du texte

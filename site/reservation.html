@@ -61,7 +61,7 @@
     {
       "@type": "Question",
       "name": "Proposez-vous des menus végétariens ou sans gluten ?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Oui. Notre carte comporte des plats végétariens, végétaliens et sans gluten, et le menu dégustation Il Viaggio se décline dans ces versions si vous nous prévenez au moment de la réservation." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Oui. La carte comporte des entrées, des pâtes, des risottos et des pizzas végétariens. Signalez-nous une allergie ou un régime au moment de la réservation : la cuisine s\u2019adapte." }
     },
     {
       "@type": "Question",
@@ -98,6 +98,7 @@
         <li><a class="nav__link" href="index.html">Accueil</a></li>
         <li><a class="nav__link" href="la-carte.html">La carte</a></li>
         <li><a class="nav__link" href="le-lieu.html">Le lieu</a></li>
+        <li><a class="nav__link" href="commander.html">Commander</a></li>
       </ul>
     </nav>
 
@@ -113,6 +114,14 @@
     </a>
 
     <div class="header-actions">
+      <a class="panier-pastille" href="commander.html#commande" data-panier-lien hidden
+         aria-label="Voir votre commande">
+        <svg width="15" height="15" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M3 6h14l-1.4 9.2a2 2 0 0 1-2 1.8H6.4a2 2 0 0 1-2-1.8L3 6Z" fill="none" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M7 6V4.6a3 3 0 0 1 6 0V6" fill="none" stroke="currentColor" stroke-width="1.3"/>
+        </svg>
+        <span data-panier-nombre>0</span>
+      </a>
       <p class="lang" aria-label="Langue">
         <a href="index.html" aria-current="true" lang="fr">FR</a>
         <a href="index.html" lang="en" title="English version — à venir">EN</a>
@@ -129,8 +138,9 @@
   <div class="container">
     <ul class="mobile-menu__list">
       <li><a class="mobile-menu__link" href="index.html">Accueil</a></li>
-      <li><a class="mobile-menu__link" href="la-carte.html">La Carte</a></li>
-      <li><a class="mobile-menu__link" href="le-lieu.html">Le Lieu</a></li>
+      <li><a class="mobile-menu__link" href="la-carte.html">La carte</a></li>
+      <li><a class="mobile-menu__link" href="le-lieu.html">Le lieu</a></li>
+      <li><a class="mobile-menu__link" href="commander.html">Commander</a></li>
       <li><a class="mobile-menu__link" href="reservation.html" aria-current="page">Réserver</a></li>
     </ul>
     <div class="mobile-menu__meta">
@@ -408,9 +418,11 @@
             </button>
           </h3>
           <div class="accordion__panel" id="faq-3"><div>
-            <p>Oui. La carte comporte des plats végétariens, végétaliens et sans gluten, et le menu
-            dégustation <em>Il Viaggio</em> se décline dans ces versions si vous nous prévenez au moment
-            de la réservation.</p>
+            <p>
+            Oui. La carte comporte des entrées, des pâtes, des risottos et des pizzas
+            végétariens. Signalez-nous une allergie ou un régime au moment de la réservation :
+            la cuisine s’adapte.
+          </p>
           </div></div>
         </div>
 

@@ -2037,6 +2037,131 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   .marquee__track { animation: none; }
 }
 
+/* ====================== 12 ter. COMMANDE EN LIGNE ========================
+   Retrait au restaurant uniquement. Les composants reprennent le langage du
+   reste du site : casse normale, coins vifs, filets d'or. */
+
+/* ---- Pastille du panier, dans l'en-tête. Elle n'apparaît qu'une fois le
+        panier entamé, pour ne pas alourdir la barre le reste du temps. ---- */
+.panier-pastille {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--line-strong);
+  color: var(--encre-forte);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: border-color 0.35s var(--ease), color 0.35s var(--ease);
+}
+.panier-pastille[hidden] { display: none; }
+.panier-pastille:hover { border-color: var(--or); color: var(--or-fonce); }
+body.home .site-header:not(.is-stuck) .panier-pastille {
+  border-color: rgba(251, 250, 247, 0.5);
+  color: var(--carrara);
+}
+@media (max-width: 700px) { .panier-pastille { display: none; } }
+
+/* ---- Compteur posé sous chaque plat ---- */
+.stepper-plat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.stepper-plat__btn {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--encre-forte);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+.stepper-plat__btn:hover:not(:disabled) { border-color: var(--or); color: var(--or-fonce); }
+.stepper-plat__btn:disabled { opacity: 0.3; cursor: default; }
+.stepper-plat__n {
+  min-width: 1.6rem;
+  text-align: center;
+  font-size: var(--fs-body);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+.stepper-plat.est-rempli .stepper-plat__n { color: var(--encre-forte); }
+.stepper-plat__ajout {
+  margin-left: 0.25rem;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--encre-forte);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: background-color 0.35s var(--ease), border-color 0.35s var(--ease), color 0.35s var(--ease);
+}
+.stepper-plat__ajout:hover { background: var(--or); border-color: var(--or); color: var(--encre-forte); }
+.stepper-plat.est-rempli .stepper-plat__ajout { display: none; }
+.stepper-plat--compact { margin: 0; }
+.stepper-plat--compact .stepper-plat__btn { width: 24px; height: 24px; font-size: 0.85rem; }
+
+/* ---- Plats qui ne partent pas ---- */
+.commande-item.est-sur-place .menu-item__name,
+.commande-item.est-sur-place .menu-item__price,
+.commande-item.est-sur-place .menu-item__desc { opacity: 0.5; }
+.commande-item__note {
+  margin: 0.6rem 0 0;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--or);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ---- Lignes du panier ---- */
+.panier-lignes { display: grid; gap: 0.9rem; }
+.panier-ligne {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem 0.75rem;
+  align-items: center;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+.panier-ligne:last-child { border-bottom: 0; padding-bottom: 0; }
+.panier-ligne__texte { display: grid; gap: 0.15rem; }
+.panier-ligne__nom {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+}
+.panier-ligne__unite { font-size: 0.75rem; color: var(--text-faint); }
+.panier-ligne__total {
+  grid-column: 2;
+  font-size: var(--fs-body);
+  font-variant-numeric: tabular-nums;
+  color: var(--or-fonce);
+  text-align: right;
+}
+.panier-ligne .stepper-plat { grid-column: 1; justify-self: start; }
+
+.summary__row--fort dt, .summary__row--fort dd {
+  color: var(--text-strong);
+  font-size: 1rem;
+}
+
+/* ---- La carte, resserrée dans la colonne de commande ---- */
+.commande .menu-section + .menu-section { margin-top: clamp(2rem, 4vw, 3rem); }
+.commande .menu-section__head { margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem); }
+.commande .menu-list { gap: clamp(1.25rem, 2.2vw, 1.75rem); }
+@media (min-width: 1100px) {
+  .commande .menu-list--two { grid-template-columns: minmax(0, 1fr); }
+}
+
 /* =========================== 13. PIED DE PAGE ============================ */
 /* Aplat d'or, écusson centré, trois colonnes : coordonnées, lettre
    d'information, liens. Mesuré : texte à l'encre forte, 4,7 à 6,7:1. */
