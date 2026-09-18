@@ -1964,7 +1964,10 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   margin-top: clamp(2rem, 6.5vw, 5.75rem);
   margin-bottom: clamp(3.25rem, 10.2vw, 9rem);
 }
-.marquee__row { overflow: hidden; }
+/* « contain: paint » dit au compositeur qu'il peut découper le ruban à la
+   rangée : sans quoi il garde en mémoire les 4 994 px de large du ruban
+   entier alors qu'on n'en montre que la largeur de la fenêtre. */
+.marquee__row { overflow: hidden; contain: paint; }
 /* Une seule suite d'images-clés pour les deux rangées, et la seconde la joue
    à l'envers. Même durée, même courbe, même origine : l'inverse est garanti
    par construction, il ne peut pas dériver. Deux jeux écrits à la main
@@ -1973,10 +1976,37 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
   display: flex;
   gap: 7px;
   width: max-content;
-  will-change: transform;
-  animation: marqueeRuban var(--marquee-dur, 37.3s) linear infinite;
+  animation: marqueeRuban var(--marquee-dur, 21s) linear infinite;
 }
+/* Repli sans JavaScript : la durée est fixée par palier, au plus près des
+   67 px/s de la référence. Avec JavaScript elle est calculée exactement, à
+   partir de la période mesurée (voir « caler » dans main.js). */
+@media (min-width: 1500px) { .marquee__track { --marquee-dur: 25s; } }
+@media (min-width: 2000px) { .marquee__track { --marquee-dur: 43s; } }
+/* Pas de « will-change » ici. Il forçait une couche de composition de la
+   largeur entière du ruban — 4 994 px, soit une vingtaine de méga-octets par
+   rangée à deux fois la densité, quarante pour les deux. Sous contrainte, le
+   navigateur en lâchait une : la rangée du haut se vidait et ce qui restait
+   d'elle affichait une image figée. Une translation animée est de toute façon
+   prise en charge par le compositeur sans qu'on ait à l'annoncer. */
 .marquee__row--reverse .marquee__track { animation-direction: reverse; }
+/* Le ruban ne tourne que lorsqu'on peut le voir. Une translation animée fait
+   promouvoir l'élément entier en couche de composition : la laisser tourner
+   d'un bout à l'autre de la page, c'est garder une vingtaine de méga-octets
+   par rangée en permanence, pour rien. */
+.marquee.est-cache .marquee__track { animation-play-state: paused; }
+
+/* Et le ruban ne porte que le nombre de tuiles nécessaire pour couvrir la
+   fenêtre. Une suite doit être au moins aussi large qu'elle, pas davantage :
+   chaque tuile en trop se paie en mémoire de composition. Le retrait est
+   symétrique sur les deux suites, sans quoi la boucle se décale. */
+@media (max-width: 2000px) {
+  .marquee__tile:nth-child(6),  .marquee__tile:nth-child(7),
+  .marquee__tile:nth-child(13), .marquee__tile:nth-child(14) { display: none; }
+}
+@media (max-width: 1500px) {
+  .marquee__tile:nth-child(5), .marquee__tile:nth-child(12) { display: none; }
+}
 /* Pas de pause au survol : on descend la page avec le curseur au milieu de
    l'écran, le ruban arrivait donc dessous et s'arrêtait net — on croyait
    qu'il ne démarrait pas. La référence continue de défiler sous le pointeur. */
@@ -1998,9 +2028,10 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 .marquee__tile img {
   width: 100%; height: 100%;
   object-fit: cover;
-  transition: transform 1.4s var(--ease);
 }
-.marquee__tile:hover img { transform: scale(1.06); }
+/* Pas de zoom au survol : la référence n'en a pas, et repeindre une tuile au
+   milieu d'une couche qui défile coûte une image à chaque fois. Or on descend
+   la page avec le curseur posé dessus. */
 
 @media (prefers-reduced-motion: reduce) {
   .marquee__track { animation: none; }

@@ -175,7 +175,17 @@ origine : l'inverse est garanti par construction et ne peut pas dériver. Vérif
 au bouclage — les deux rangées basculent à la même milliseconde, d'exactement
 une suite, en miroir au centième de pixel.
 
-Attention à trois pièges :
+**Ne mettez pas `will-change: transform` sur le ruban, et ne lui donnez pas
+plus de tuiles qu'il n'en faut.** Une translation animée fait promouvoir
+l'élément entier en couche de composition — toute sa largeur, pas seulement la
+part visible. Avec deux suites de sept tuiles, cela faisait une couche de
+4 994 × 253 px, soit vingt méga-octets par rangée à deux fois la densité,
+quarante pour les deux. Sous contrainte mémoire, le navigateur en lâche une :
+la rangée devient blanche et ce qui en reste affiche une image figée. Une suite
+doit couvrir la fenêtre, pas davantage — quatre tuiles suffisent jusqu'à
+1 500 px, cinq jusqu'à 2 000.
+
+Attention à quatre pièges :
 
 - **La translation doit valoir exactement une suite**, soit `-50 %` moins la
   moitié du filet (`calc(-50% - 3.5px)`), sinon la boucle saute d'un demi-filet
@@ -183,6 +193,11 @@ Attention à trois pièges :
 - **Ne mettez pas de pause au survol.** On descend une page avec le curseur au
   milieu de l'écran : le ruban arrive dessous et s'arrête net, juste au moment
   où on le découvre. La référence continue de défiler sous le pointeur.
+- **La durée ne peut pas être fixe si le nombre de tuiles change avec la
+  largeur.** La période dépend du nombre de tuiles affichées et de leur taille,
+  qui suivent tous deux la fenêtre : une durée constante fait ralentir le ruban
+  sur les petits écrans (mesuré : 39 px/s au lieu de 67 à 1 280 px). Calculez-la
+  à partir de la période réellement mesurée, `période ÷ 67`.
 - **Si vous recalez les rubans à leur origine quand la section approche** —
   pour qu'on les voie partir plutôt que de les prendre en pleine course —
   faites-le **avant** qu'ils n'entrent dans le champ, et ne faites rien quand

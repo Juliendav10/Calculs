@@ -167,9 +167,52 @@
     //
     // La marge basse est là pour que ce soit fait AVANT qu'on les voie : remis
     // à zéro sous les yeux du visiteur, le ruban sautait de trois cents pixels.
+    // Vitesse de la référence, mesurée image par image sur sa vidéo.
+    var VITESSE = 67;   // pixels par seconde
+
+    // La durée ne peut pas être fixe : la période dépend du nombre de tuiles
+    // affichées et de leur taille, qui suivent tous deux la largeur de la
+    // fenêtre. On la calcule donc à partir de la période réellement mesurée,
+    // sans quoi le ruban ralentit sur les petits écrans.
+    function caler() {
+      tracks.forEach(function (track) {
+        var tuiles = $$('.marquee__tile', track).filter(function (t) {
+          return window.getComputedStyle(t).display !== 'none';
+        });
+        if (tuiles.length < 2) { return; }
+        var moitie = tuiles.length / 2;
+        var periode = tuiles[moitie].getBoundingClientRect().left
+                    - tuiles[0].getBoundingClientRect().left;
+        if (periode > 0) {
+          track.style.setProperty('--marquee-dur', (periode / VITESSE).toFixed(2) + 's');
+        }
+      });
+    }
+
+    caler();
+    // Les images et les polices peuvent encore changer la mise en page : on
+    // recale une fois tout chargé.
+    window.addEventListener('load', caler, { once: true });
+
+    var minuteur;
+    window.addEventListener('resize', function () {
+      window.clearTimeout(minuteur);
+      minuteur = window.setTimeout(caler, 200);
+    }, { passive: true });
+
+    var premiere = true;
+
     var observer = new IntersectionObserver(function (entries) {
-      if (!entries.some(function (e) { return e.isIntersecting; })) { return; }
-      observer.disconnect();
+      var visible = entries.some(function (e) { return e.isIntersecting; });
+
+      // Hors du champ, on arrête les rubans : c'est ce qui libère la couche de
+      // composition. Les deux sont arrêtés et relancés dans le même calcul de
+      // style, donc ils restent en phase.
+      marquee.classList.toggle('est-cache', !visible);
+      if (!visible) { return; }
+
+      if (!premiere) { return; }
+      premiere = false;
 
       // Si le ruban est déjà à l'écran — arrivée par une ancre, rechargement
       // en cours de page — on ne touche à rien : la feuille de style les tient
