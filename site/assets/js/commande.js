@@ -586,63 +586,131 @@
   /* La carte, avec ses compteurs                                             */
   /* ------------------------------------------------------------------------ */
 
+  var categorieActive = CARTE.length ? CARTE[0].id : null;
+  var recherche = '';
+
+  function sansAccent(t) {
+    return t.normalize ? t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+                       : t.toLowerCase();
+  }
+
+  /* Les plats d'une catégorie, ou ceux qui répondent à la recherche — auquel
+     cas on cherche dans toute la carte, catégorie courante ou non. */
+  function platsAffiches() {
+    if (recherche) {
+      var q = sansAccent(recherche);
+      var out = [];
+      CARTE.forEach(function (sec) {
+        sec.plats.forEach(function (p) {
+          if (sansAccent(p.nom + ' ' + (p.desc || '')).indexOf(q) > -1) {
+            out.push({ plat: p, section: sec });
+          }
+        });
+      });
+      return out;
+    }
+    var sec = CARTE.filter(function (s) { return s.id === categorieActive; })[0];
+    return sec ? sec.plats.map(function (p) { return { plat: p, section: sec }; }) : [];
+  }
+
   function construireCarte() {
+    construireOnglets();
+    construireRecherche();
+    peindreListe();
+  }
+
+  /* ---- Les catégories, en onglets ---- */
+  function construireOnglets() {
+    var hote = $('[data-categories]');
+    if (!hote) { return; }
+
+    hote.innerHTML = '';
+    CARTE.forEach(function (sec) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'cmd-cat' + (sec.id === categorieActive ? ' est-actif' : '');
+      b.setAttribute('data-categorie', sec.id);
+      b.setAttribute('aria-pressed', sec.id === categorieActive ? 'true' : 'false');
+      b.innerHTML = '<span class="cmd-cat__nom">' + sec.titre + '</span>' +
+                    '<span class="cmd-cat__n" data-cat-n="' + sec.id + '" hidden>0</span>';
+      b.addEventListener('click', function () {
+        categorieActive = sec.id;
+        var champ = $('[data-recherche]');
+        if (champ && champ.value) { champ.value = ''; recherche = ''; }
+        construireOnglets();
+        peindreListe();
+        rendre();
+      });
+      hote.appendChild(b);
+    });
+  }
+
+  function construireRecherche() {
+    var champ = $('[data-recherche]');
+    if (!champ) { return; }
+    champ.addEventListener('input', function () {
+      recherche = champ.value.trim();
+      peindreListe();
+      rendre();
+    });
+  }
+
+  /* ---- La liste des plats de la catégorie courante ---- */
+  function peindreListe() {
     var hote = $('[data-carte]');
     if (!hote) { return; }
 
-    CARTE.forEach(function (sec) {
-      var bloc = document.createElement('div');
-      bloc.className = 'menu-section';
-      bloc.id = 'cmd-' + sec.id;
+    var liste = platsAffiches();
+    var titre = $('[data-carte-titre]');
+    if (titre) {
+      var sec = CARTE.filter(function (s) { return s.id === categorieActive; })[0];
+      titre.innerHTML = recherche
+        ? 'Recherche <span class="cmd-liste__sous">' + liste.length +
+          (liste.length > 1 ? ' plats trouvés' : ' plat trouvé') + '</span>'
+        : (sec ? sec.titre + '<span class="cmd-liste__sous">' + sec.sous + '</span>' : '');
+    }
 
-      var tete = document.createElement('div');
-      tete.className = 'menu-section__head';
-      tete.innerHTML = '<h2>' + sec.titre + '</h2><span class="rule"></span>' +
-                       '<span class="menu-section__sub">' + sec.sous + '</span>';
-      bloc.appendChild(tete);
+    hote.innerHTML = '';
 
-      var liste = document.createElement('div');
-      liste.className = 'menu-list menu-list--two';
+    if (!liste.length) {
+      hote.innerHTML = '<p class="cmd-vide">Aucun plat ne correspond. ' +
+        'Essayez un autre mot, ou appelez-nous au ' +
+        '<a class="link-line" href="tel:' + CONFIG.telephone + '">' +
+        CONFIG.telephoneAffiche + '</a>.</p>';
+      return;
+    }
 
-      sec.plats.forEach(function (p) {
-        var art = document.createElement('article');
-        art.className = 'menu-item commande-item' + (p.surPlace ? ' est-sur-place' : '');
-
-        var tags = (p.tags || []).map(function (t) {
-          return '<span class="tag">' + t + '</span>';
-        }).join('');
-
-        art.innerHTML =
-          '<div class="menu-item__head">' +
-            '<h3 class="menu-item__name">' + p.nom +
-              (tags ? ' <span class="tags">' + tags + '</span>' : '') + '</h3>' +
-            '<span class="menu-item__leader" aria-hidden="true"></span>' +
-            '<span class="menu-item__price">' + p.prix + ' €</span>' +
-          '</div>' +
-          /* Tous les plats n'ont pas de description : la référence en laisse
-             plusieurs sans. On n'écrit alors pas de paragraphe vide. */
-          (p.desc ? '<p class="menu-item__desc">' + p.desc + '</p>' : '');
-
-        if (p.surPlace) {
-          var note = document.createElement('p');
-          note.className = 'commande-item__note';
-          note.textContent = p.surPlace;
-          art.appendChild(note);
-        } else {
-          art.appendChild(compteur(p));
-        }
-
-        liste.appendChild(art);
-      });
-
-      bloc.appendChild(liste);
-      hote.appendChild(bloc);
+    liste.forEach(function (e) {
+      hote.appendChild(ligneDePlat(e.plat, recherche ? e.section : null));
     });
+  }
+
+  function ligneDePlat(p, section) {
+    var art = document.createElement('article');
+    art.className = 'cmd-plat';
+    art.setAttribute('data-plat-ligne', p.id);
+
+    var tags = (p.tags || []).map(function (t) {
+      return '<span class="tag">' + t + '</span>';
+    }).join('');
+
+    art.innerHTML =
+      '<div class="cmd-plat__tete">' +
+        '<h3 class="cmd-plat__nom">' + p.nom +
+          (tags ? ' <span class="tags">' + tags + '</span>' : '') + '</h3>' +
+        '<span class="cmd-plat__filet" aria-hidden="true"></span>' +
+        '<span class="cmd-plat__prix">' + euros(p.prix) + '</span>' +
+      '</div>' +
+      (section ? '<p class="cmd-plat__cat">' + section.titre + '</p>' : '') +
+      (p.desc ? '<p class="cmd-plat__desc">' + p.desc + '</p>' : '');
+
+    art.appendChild(compteur(p));
+    return art;
   }
 
   function compteur(p) {
     var box = document.createElement('div');
-    box.className = 'stepper-plat';
+    box.className = 'stepper-plat cmd-plat__ctrl';
     box.setAttribute('data-plat', p.id);
 
     box.innerHTML =
@@ -679,12 +747,39 @@
       $('.stepper-plat__btn[data-pas="-1"]', box).disabled = q === 0;
     });
 
+    // Les plats déjà pris se repèrent dans la liste sans ouvrir le panier.
+    $$('[data-plat-ligne]').forEach(function (l) {
+      l.classList.toggle('est-choisi', quantite(l.getAttribute('data-plat-ligne')) > 0);
+    });
+
     // Pastille de l'en-tête, sur toutes les pages
     $$('[data-panier-nombre]').forEach(function (el) {
       el.textContent = n;
       var lien = el.closest('[data-panier-lien]') || el.parentElement;
       if (lien) { lien.hidden = n === 0; }
     });
+
+    // Combien d'articles par catégorie : l'onglet le porte, on voit d'un coup
+    // d'œil ce qu'on a déjà pris sans ouvrir le panier.
+    CARTE.forEach(function (sec) {
+      var c = sec.plats.reduce(function (s2, p) { return s2 + quantite(p.id); }, 0);
+      $$('[data-cat-n="' + sec.id + '"]').forEach(function (el) {
+        el.textContent = c;
+        el.hidden = c === 0;
+      });
+    });
+
+    // Barre du bas, sur les petits écrans : le panier est loin sous la carte.
+    var barre = $('[data-barre]');
+    if (barre) {
+      barre.hidden = n === 0;
+      var bn = $('[data-barre-n]', barre);
+      var bt = $('[data-barre-total]', barre);
+      if (bn) { bn.textContent = n + (n > 1 ? ' articles' : ' article'); }
+      if (bt) { bt.textContent = euros(total()); }
+      // De quoi ne pas masquer le bas de page sous la barre.
+      document.body.classList.toggle('commande-ouverte', n > 0);
+    }
 
     var corps = $('[data-panier-lignes]');
     if (!corps) { return; }
@@ -732,6 +827,30 @@
 
     var suite = $('[data-vers-coordonnees]');
     if (suite) { suite.disabled = n === 0; }
+  }
+
+  function initPanier() {
+    var vider = $('[data-vider]');
+    if (vider) {
+      vider.addEventListener('click', function () {
+        if (!articles()) { return; }
+        panier = {};
+        ecrire();
+        rendre();
+      });
+    }
+
+    // Sur mobile, la barre du bas amène au panier.
+    var versPanier = $('[data-vers-panier]');
+    if (versPanier) {
+      versPanier.addEventListener('click', function (e) {
+        e.preventDefault();
+        var cible = $('.summary');
+        if (!cible) { return; }
+        var y = cible.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      });
+    }
   }
 
   /* ------------------------------------------------------------------------ */
@@ -972,6 +1091,7 @@
 
   function demarrer() {
     construireCarte();
+    initPanier();
     construireCreneaux();
     var aller = initEtapes();
     initEnvoi(aller);

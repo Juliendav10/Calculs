@@ -1460,6 +1460,11 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 }
 
 .booking__panel {
+  /* Un élément de grille vaut « min-width: auto » par défaut : il refuse de
+     descendre sous la largeur minimale de son contenu. Le ruban d'onglets,
+     en « nowrap », imposait alors ses 600 px à toute la page — 665 px de
+     rendu au lieu de 390 sur un téléphone. */
+  min-width: 0;
   border: 1px solid var(--line);
   background: var(--ink-2);
   padding: clamp(1.5rem, 3.5vw, 3rem);
@@ -1688,6 +1693,7 @@ html.is-navigating .curtain span { transform: scaleY(1); transform-origin: top; 
 
 /* Récapitulatif */
 .summary {
+  min-width: 0;
   border: 1px solid var(--line);
   background:
     radial-gradient(90% 60% at 50% 0%, rgba(142,42,51,.06), transparent 60%),
@@ -2154,12 +2160,231 @@ body.home .site-header:not(.is-stuck) .panier-pastille {
   font-size: 1rem;
 }
 
-/* ---- La carte, resserrée dans la colonne de commande ---- */
-.commande .menu-section + .menu-section { margin-top: clamp(2rem, 4vw, 3rem); }
-.commande .menu-section__head { margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem); }
-.commande .menu-list { gap: clamp(1.25rem, 2.2vw, 1.75rem); }
-@media (min-width: 1100px) {
-  .commande .menu-list--two { grid-template-columns: minmax(0, 1fr); }
+/* ---- Chercher un plat ---- */
+.cmd-chercher {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--line);
+  color: var(--text-faint);
+  transition: border-color 0.3s var(--ease);
+}
+.cmd-chercher:focus-within { border-color: var(--or); color: var(--or-fonce); }
+.cmd-chercher input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-strong);
+  font-size: var(--fs-body);
+  padding: 0;
+}
+.cmd-chercher input:focus { outline: none; }
+.cmd-chercher input::placeholder { color: var(--text-faint); }
+.cmd-chercher input::-webkit-search-cancel-button { cursor: pointer; }
+
+/* ---- Les catégories, en onglets ----
+   Sur la carte complète les sections s'enchaînent ; ici on en montre une à la
+   fois. Soixante-six plats d'affilée, c'est une page qu'on ne finit pas. */
+.cmd-cats {
+  display: flex;
+  flex-wrap: wrap;          /* au large, tout tient sur deux rangs */
+  gap: 0.4rem;
+  margin-bottom: 1.6rem;
+  min-width: 0;
+}
+@media (max-width: 620px) {
+  /* à l'étroit, un ruban qu'on fait glisser plutôt que six rangs de boutons */
+  /* Pas de marge négative ici : le ruban vit dans un panneau déjà rembourré,
+     et déborder de sa largeur élargissait toute la page — 665 px de rendu au
+     lieu de 390. Il défile à l'intérieur du panneau. */
+  .cmd-cats {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+    scrollbar-width: none;
+  }
+  .cmd-cats::-webkit-scrollbar { display: none; }
+}
+.cmd-cat {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--fs-body);
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 0.3s var(--ease), color 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+.cmd-cat:hover { border-color: var(--line-strong); color: var(--text-strong); }
+.cmd-cat.est-actif {
+  background: var(--encre-forte);
+  border-color: var(--encre-forte);
+  color: var(--blanc);
+}
+.cmd-cat__n {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 0.3rem;
+  background: var(--or);
+  color: var(--encre-forte);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+.cmd-cat__n[hidden] { display: none; }
+
+/* ---- Le titre de la catégorie affichée ---- */
+.cmd-liste__titre {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin: 0 0 0.35rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--or);
+  font-size: var(--fs-h3);
+}
+.cmd-liste__sous {
+  margin-left: auto;
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+/* ---- Une ligne de plat ----
+   Nom et prix sur une ligne, description dessous, compteur à droite sur toute
+   la hauteur : l'œil descend la colonne des prix sans obstacle. */
+.cmd-plat {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.3rem 1.25rem;
+  align-items: start;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.cmd-plat:last-child { border-bottom: 0; }
+.cmd-plat__tete {
+  grid-column: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+.cmd-plat__nom {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  line-height: 1.2;
+  color: var(--text-strong);
+}
+.cmd-plat__filet {
+  flex: 1;
+  min-width: 1rem;
+  height: 1px;
+  transform: translateY(-3px);
+  background-image: linear-gradient(to right, var(--line) 40%, transparent 40%);
+  background-size: 6px 1px;
+  background-repeat: repeat-x;
+}
+.cmd-plat__prix {
+  font-size: var(--fs-body);
+  font-variant-numeric: tabular-nums;
+  color: var(--or-fonce);
+  white-space: nowrap;
+}
+.cmd-plat__desc {
+  grid-column: 1;
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.cmd-plat__cat {
+  grid-column: 1;
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--or);
+}
+.cmd-plat__ctrl {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: center;
+  justify-content: flex-end;
+  margin-top: 0;
+  /* Largeur constante : le bouton « Ajouter » disparaît une fois le plat pris,
+     et sans cela toute la colonne des prix se décalerait. */
+  min-width: 148px;
+}
+/* À l'étroit, la ligne se déplie : nom et prix, description, puis le compteur
+   sur son propre rang. À deux colonnes, le nom se brisait en trois. */
+@media (max-width: 560px) {
+  .cmd-plat { grid-template-columns: minmax(0, 1fr); }
+  .cmd-plat__ctrl {
+    grid-column: 1;
+    grid-row: auto;
+    align-self: start;
+    justify-content: flex-start;
+    min-width: 0;
+    margin-top: 0.5rem;
+  }
+  .cmd-plat__nom { font-size: 1.05rem; }
+}
+.cmd-plat.est-choisi { background: linear-gradient(to right, rgba(191,157,93,.07), transparent 60%); }
+
+.cmd-vide {
+  padding: 2rem 0;
+  font-size: var(--fs-body);
+  color: var(--text-muted);
+}
+
+/* ---- Vider le panier ---- */
+.panier-vider-ligne { margin: 1rem 0 0; text-align: right; }
+.panier-vider {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--text-faint);
+  font-size: 0.75rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.panier-vider:hover { color: var(--terracotta); }
+
+/* ---- Barre de rappel du panier, sur les petits écrans ---- */
+.cmd-barre {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 800;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem var(--gutter);
+  background: var(--blanc);
+  border-top: 1px solid var(--or);
+  box-shadow: 0 -6px 24px rgba(28, 28, 28, 0.07);
+}
+.cmd-barre[hidden] { display: none; }
+.cmd-barre__texte { display: grid; gap: 0.1rem; }
+.cmd-barre__n { font-size: 0.75rem; color: var(--text-faint); }
+.cmd-barre__total {
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-strong);
+}
+.cmd-barre .btn { min-width: 0; padding: 0.55rem 1.1rem; }
+@media (max-width: 999px) {
+  .cmd-barre:not([hidden]) { display: flex; }
+  /* de quoi ne pas masquer le bas de page sous la barre */
+  body.commande-ouverte { padding-bottom: 72px; }
 }
 
 /* =========================== 13. PIED DE PAGE ============================ */

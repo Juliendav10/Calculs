@@ -130,6 +130,17 @@ règle sur place, au retrait.
 
 Comment ça marche :
 
+- **Les plats sont rangés par catégorie**, en onglets : entrées, viandes,
+  pâtes, gratins, risottos, pizzas, desserts, softs. On en voit une à la fois —
+  soixante-six plats d'affilée, c'est une page qu'on ne finit pas. Chaque
+  onglet porte le nombre d'articles déjà pris dans sa catégorie.
+- **Un champ de recherche** cherche dans toute la carte, nom et description,
+  sans tenir compte des accents. Chaque résultat indique sa catégorie.
+- Les plats déjà au panier sont teintés dans la liste, et leur bouton
+  « Ajouter » cède la place au compteur.
+- Sur les petits écrans, **une barre fixe en bas de page** rappelle le nombre
+  d'articles et le total, et mène au panier d'un geste : le récapitulatif est
+  loin sous la carte.
 - Le panier vit dans le navigateur du visiteur (`localStorage`) jusqu'à
   l'envoi. Il survit à un rechargement, il ne quitte pas sa machine.
 - Les créneaux de retrait suivent le service continu, de 12h à 22h30, par pas
